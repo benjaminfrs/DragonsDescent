@@ -1,0 +1,12 @@
+[gd_scene load_steps=3 format=3 uid="uid://xkkx82nj786d"]
+
+[ext_resource type="Texture2D" uid="uid://c3rqi86lnb1ts" path="res://resource/spritesheet.png" id="1_kdyg8"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m4m7c"]
+atlas = ExtResource("1_kdyg8")
+region = Rect2(360, 36, 24, 36)
+
+[node name="downSprite" type="Sprite2D"]
+modulate = Color(0.670588, 0.698039, 0.74902, 1)
+position = Vector2(58, 8)
+texture = SubResource("AtlasTexture_m4m7c")
