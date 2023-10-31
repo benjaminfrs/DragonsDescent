@@ -1,0 +1,11 @@
+[gd_scene load_steps=2 format=3 uid="uid://bqietraj1ohmp"]
+
+[ext_resource type="Texture2D" uid="uid://ctnor376pp521" path="res://resource/icon.svg" id="1_jlbdp"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Icon" type="Sprite2D" parent="."]
+position = Vector2(100, 100)
+scale = Vector2(1, 0.858)
+texture = ExtResource("1_jlbdp")
+centered = false
