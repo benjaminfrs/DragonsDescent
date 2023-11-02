@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bc71rvxjiwr0q"]
+
+[ext_resource type="Texture2D" uid="uid://c3rqi86lnb1ts" path="res://resource/spritesheet.png" id="1_vw5ba"]
+
+[node name="floorSprite" type="Sprite2D"]
+modulate = Color(0.670588, 0.698039, 0.74902, 1)
+texture = ExtResource("1_vw5ba")
+region_enabled = true
+region_rect = Rect2(312, 72, 24, 36)

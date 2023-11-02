@@ -6,7 +6,7 @@
 atlas = ExtResource("1_vw5ba")
 region = Rect2(72, 72, 24, 36)
 
-[node name="floorSprite" type="Sprite2D"]
+[node name="wallSprite" type="Sprite2D"]
 modulate = Color(0.670588, 0.698039, 0.74902, 1)
 position = Vector2(11, -1)
 texture = SubResource("AtlasTexture_3h5gj")

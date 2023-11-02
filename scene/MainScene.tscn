@@ -1,25 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://bqietraj1ohmp"]
+[gd_scene load_steps=3 format=3 uid="uid://bqietraj1ohmp"]
 
-[ext_resource type="PackedScene" uid="uid://c7eeji0f58vit" path="res://scene/pc.tscn" id="1_q0ne5"]
-[ext_resource type="PackedScene" uid="uid://ckae1m8jtd5n1" path="res://scene/d_sprite.tscn" id="2_a5y2r"]
-[ext_resource type="PackedScene" uid="uid://xkkx82nj786d" path="res://scene/down_sprite.tscn" id="3_353fn"]
-[ext_resource type="PackedScene" uid="uid://bxucabtdrbfbx" path="res://scene/up_sprite.tscn" id="4_wifdw"]
-[ext_resource type="PackedScene" uid="uid://c7yymr0s0nx0n" path="res://scene/floor_sprite.tscn" id="5_w3w2r"]
+[ext_resource type="Script" path="res://scene/InitWorld.gd" id="1_uni0w"]
+[ext_resource type="PackedScene" uid="uid://dcu2o1v0kyuwo" path="res://scene/gui/main_gui.tscn" id="2_3cx1u"]
 
 [node name="Node2D" type="Node2D"]
 position = Vector2(-33, 37)
 
-[node name="PC" parent="." instance=ExtResource("1_q0ne5")]
-position = Vector2(100, 100)
+[node name="InitWorld" type="Node2D" parent="."]
+script = ExtResource("1_uni0w")
 
-[node name="dSprite" parent="." instance=ExtResource("2_a5y2r")]
-position = Vector2(29, 0)
-
-[node name="downSprite" parent="." instance=ExtResource("3_353fn")]
-position = Vector2(-30, 43)
-
-[node name="upSprite" parent="." instance=ExtResource("4_wifdw")]
-position = Vector2(-30, 3)
-
-[node name="floorSprite" parent="." instance=ExtResource("5_w3w2r")]
-position = Vector2(0, 0)
+[node name="MainGUI" parent="." instance=ExtResource("2_3cx1u")]
