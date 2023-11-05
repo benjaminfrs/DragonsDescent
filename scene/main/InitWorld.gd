@@ -1,5 +1,7 @@
 extends Node2D
 
+signal sprite_created(new_sprite)
+
 const Player := preload("res://sprite/pc.tscn")
 const Dwarf := preload("res://sprite/d_sprite.tscn")
 const Floor := preload("res://sprite/floor_sprite.tscn")
@@ -10,14 +12,20 @@ const Wall := preload("res://sprite/wall_sprite.tscn")
 var _new_GroupName := preload("res://lib/GroupName.gd").new()
 var _new_ConvertCoords := preload("res://lib/ConvertCoords.gd").new()
 var _new_DungeonSize := preload("res://lib/DungeonSize.gd").new()
+var _new_InputName := preload("res://lib/InputName.gd").new()
 
+func _unhandled_input(event: InputEvent) -> void:
+	if event.is_action_pressed(_new_InputName.INIT_WORLD):
+		_init_floor()
+		_init_wall()
+		_init_PC()
+		_init_dwarf()
+		_init_indicator()
+
+		set_process_unhandled_input(false)
 
 func _ready() -> void:
-	_init_floor()
-	_init_wall()
-	_init_dwarf()
-	_init_PC()
-	_init_indicator()
+	pass
 
 
 func _init_dwarf() -> void:
@@ -63,6 +71,7 @@ func _create_sprite(prefab: PackedScene, group: String, x: int, y: int,
 	new_sprite.add_to_group(group)
 
 	add_child(new_sprite)
+	emit_signal("sprite_created", new_sprite)
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):
