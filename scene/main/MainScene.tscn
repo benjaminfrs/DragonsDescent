@@ -1,9 +1,11 @@
-[gd_scene load_steps=5 format=3 uid="uid://bqietraj1ohmp"]
+[gd_scene load_steps=7 format=3 uid="uid://bqietraj1ohmp"]
 
 [ext_resource type="Script" path="res://scene/main/MainScene.gd" id="1_i68nt"]
 [ext_resource type="Script" path="res://scene/main/InitWorld.gd" id="2_s4hn8"]
 [ext_resource type="PackedScene" uid="uid://dcu2o1v0kyuwo" path="res://scene/gui/main_gui.tscn" id="3_5xmog"]
 [ext_resource type="Script" path="res://scene/main/PCMove.gd" id="4_ft5m1"]
+[ext_resource type="Script" path="res://scene/main/Schedule.gd" id="5_dn8oy"]
+[ext_resource type="Script" path="res://scene/main/EnemyAI.gd" id="6_2o3gm"]
 
 [node name="Node2D" type="Node2D"]
 position = Vector2(-33, 37)
@@ -16,3 +18,9 @@ script = ExtResource("2_s4hn8")
 
 [node name="PCMove" type="Node2D" parent="."]
 script = ExtResource("4_ft5m1")
+
+[node name="Schedule" type="Node2D" parent="."]
+script = ExtResource("5_dn8oy")
+
+[node name="EnemyAI" type="Node2D" parent="."]
+script = ExtResource("6_2o3gm")
