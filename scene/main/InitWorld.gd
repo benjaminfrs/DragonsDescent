@@ -72,6 +72,8 @@ func _create_sprite(prefab: PackedScene, group: String, x: int, y: int,
 
 	add_child(new_sprite)
 	emit_signal("sprite_created", new_sprite)
+	if new_sprite.is_in_group(_new_GroupName.PC):
+		print(new_sprite.get_groups())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

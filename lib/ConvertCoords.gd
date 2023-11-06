@@ -3,7 +3,6 @@ const START_Y: int = 54
 const STEP_X: int = 26
 const STEP_Y: int = 34
 
-
 func vector_to_array(vector_coord: Vector2) -> Array:
 	var x: int = ((vector_coord.x - START_X) / STEP_X) as int
 	var y: int = ((vector_coord.y - START_Y) / STEP_Y) as int
