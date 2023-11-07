@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://bqietraj1ohmp"]
+[gd_scene load_steps=10 format=3 uid="uid://bqietraj1ohmp"]
 
 [ext_resource type="Script" path="res://scene/main/MainScene.gd" id="1_i68nt"]
 [ext_resource type="Script" path="res://scene/main/InitWorld.gd" id="2_s4hn8"]
@@ -7,10 +7,8 @@
 [ext_resource type="Script" path="res://scene/main/PCAttack.gd" id="5_tcjt4"]
 [ext_resource type="Script" path="res://scene/main/EnemyAI.gd" id="6_2o3gm"]
 [ext_resource type="Script" path="res://scene/main/DungeonGrid.gd" id="7_5pbrr"]
-[ext_resource type="FontFile" uid="uid://b1day01kiq4ll" path="res://resource/FiraCode-Regular.ttf" id="9_cjhmu"]
+[ext_resource type="PackedScene" uid="uid://tclgxlccwliq" path="res://scene/gui/MainGUI.tscn" id="9_65kgn"]
 [ext_resource type="Script" path="res://scene/main/RemoveObject.gd" id="9_no2xi"]
-[ext_resource type="Script" path="res://scene/main/Mode Line.gd" id="10_gwwe3"]
-[ext_resource type="Script" path="res://scene/main/SidebarVBox.gd" id="10_tvu8q"]
 
 [node name="MainScene" type="Node2D"]
 position = Vector2(-33, 37)
@@ -37,37 +35,4 @@ script = ExtResource("7_5pbrr")
 [node name="RemoveObject" type="Node2D" parent="."]
 script = ExtResource("9_no2xi")
 
-[node name="MainGUI" type="MarginContainer" parent="."]
-offset_right = 40.0
-offset_bottom = 40.0
-theme_override_constants/margin_left = 20
-theme_override_constants/margin_top = 20
-theme_override_constants/margin_right = 1180
-theme_override_constants/margin_bottom = 1180
-
-[node name="MainHBox" type="HBoxContainer" parent="MainGUI"]
-layout_mode = 2
-
-[node name="ModeLine" type="Label" parent="MainGUI/MainHBox"]
-layout_mode = 2
-size_flags_horizontal = 3
-size_flags_vertical = 8
-theme_override_colors/font_color = Color(0.670588, 0.698039, 0.74902, 1)
-theme_override_fonts/font = ExtResource("9_cjhmu")
-script = ExtResource("10_gwwe3")
-
-[node name="SidebarVBox" type="VBoxContainer" parent="MainGUI"]
-custom_minimum_size = Vector2(180, 0)
-layout_mode = 2
-script = ExtResource("10_tvu8q")
-
-[node name="Turn" type="Label" parent="MainGUI/SidebarVBox"]
-layout_mode = 2
-size_flags_vertical = 3
-theme_override_colors/font_color = Color(0.670588, 0.698039, 0.74902, 1)
-theme_override_fonts/font = ExtResource("9_cjhmu")
-
-[node name="Help" type="Label" parent="MainGUI/SidebarVBox"]
-layout_mode = 2
-theme_override_colors/font_color = Color(0.670588, 0.698039, 0.74902, 1)
-theme_override_fonts/font = ExtResource("9_cjhmu")
+[node name="MainGUI" parent="." instance=ExtResource("9_65kgn")]
