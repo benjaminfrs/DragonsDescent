@@ -1,6 +1,7 @@
 extends Node2D
 
 signal turn_started(current_sprite)
+signal turn_ended(current_sprite)
 
 var _pointer: int = 0
 
@@ -9,6 +10,7 @@ var _actors: Array = [null]
 
 func end_turn() -> void:
 	#print("{0}: End turn.".format([_get_current().name]))
+	emit_signal("turn_ended", _get_current())
 	_goto_next()
 	emit_signal("turn_started", _get_current())
 

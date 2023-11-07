@@ -1,5 +1,7 @@
 extends Node2D
 
+signal pc_attacked(message)
+
 const DungeonGrid := preload("res://scene/main/DungeonGrid.gd")
 var _ref_DungeonGrid: DungeonGrid
 const Schedule := preload("res://scene/main/Schedule.gd")
@@ -19,5 +21,5 @@ func _process(delta):
 	pass
 
 func attack(x: int, y: int):
-	print("You swing at the dwarf!")
+	emit_signal("pc_attacked", "You swing at the dwarf!")
 	_ref_RemoveObject.remove(x, y)

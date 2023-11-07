@@ -1,5 +1,7 @@
 extends Node2D
 
+signal illegal_move(message)
+
 const InitWorld := preload("res://scene/main/InitWorld.gd")
 var _ref_InitWorld: InitWorld
 
@@ -21,11 +23,11 @@ func is_inside_dungeon(x: int, y: int) -> bool:
 
 func is_legal_move(x: int, y: int) -> bool:
 	if not is_inside_dungeon(x, y):
-		print("Cannot leave dungeon")
+		emit_signal("illegal_move", "You cannot leave the dungeon >:D")
 		return false
 	if get_sprite_at_pos(x, y):
 		if get_sprite_at_pos(x, y).is_in_group(_new_GroupName.WALL):
-			print("You cannot move through walls...yet")
+			emit_signal("illegal_move", "You cannot move through walls...yet")
 			return false
 	return true
 
