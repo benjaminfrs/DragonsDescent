@@ -1,7 +1,6 @@
 extends Node2D
 
-const DungeonGrid := preload("res://scene/main/World/DungeonGrid.gd")
-var _ref_DungeonGrid: DungeonGrid
+var _ref_DungeonGrid
 
 signal sprite_removed(remove_sprite, x, y)
 

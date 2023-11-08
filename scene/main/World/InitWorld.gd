@@ -9,10 +9,10 @@ const xArrow := preload("res://sprite/x_sprite.tscn")
 const yArrow := preload("res://sprite/y_sprite.tscn")
 const Wall := preload("res://sprite/wall_sprite.tscn")
 
-var _new_GroupName := preload("res://lib/GroupName.gd").new()
-var _new_ConvertCoords := preload("res://lib/ConvertCoords.gd").new()
-var _new_DungeonSize := preload("res://lib/DungeonSize.gd").new()
-var _new_InputName := preload("res://lib/InputName.gd").new()
+var _new_GroupName
+var _new_ConvertCoords
+var _new_DungeonSize
+var _new_InputName
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(_new_InputName.INIT_WORLD):
@@ -66,14 +66,13 @@ func _create_sprite(prefab: PackedScene, group: String, x: int, y: int,
 		x_offset: int = 0, y_offset: int = 0) -> void:
 
 	var new_sprite: Sprite2D = prefab.instantiate() as Sprite2D
-	new_sprite.position = _new_ConvertCoords.index_to_vector(
-			x, y, x_offset, y_offset)
+	new_sprite.position = _new_ConvertCoords.index_to_vector(x, y, x_offset, y_offset)
 	new_sprite.add_to_group(group)
 
 	add_child(new_sprite)
 	emit_signal("sprite_created", new_sprite)
-	if new_sprite.is_in_group(_new_GroupName.PC):
-		print(new_sprite.get_groups())
+	#if new_sprite.is_in_group(_new_GroupName.PC):
+		#print(new_sprite.get_groups())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta):

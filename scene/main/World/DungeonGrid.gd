@@ -2,18 +2,20 @@ extends Node2D
 
 signal illegal_move(message)
 
-const InitWorld := preload("res://scene/main/World/InitWorld.gd")
-var _ref_InitWorld: InitWorld
+var _ref_InitWorld
 
-var _new_DungeonSize := preload("res://lib/DungeonSize.gd").new()
-var _new_ConvertCoords := preload("res://lib/ConvertCoords.gd").new()
-var _new_GroupName := preload("res://lib/GroupName.gd").new()
+var _new_DungeonSize
+var _new_ConvertCoords
+var _new_GroupName
 
 const Floor := preload("res://sprite/floor_sprite.tscn")
 
 var _arr : Array
 
 func _ready() -> void:
+	pass
+
+func _on_Main_game_ready():
 	_arr.resize(_new_DungeonSize.MAX_X * _new_DungeonSize.MAX_Y)
 	_arr.fill(0)
 
@@ -46,8 +48,8 @@ func set_sprite_at_pos(x:int, y: int, new_sprite: Sprite2D):
 	
 
 func _on_InitWorld_sprite_created(new_sprite: Sprite2D):
-	var pos := _new_ConvertCoords.vector_to_array(new_sprite.position)
-	print(pos, new_sprite.get_groups())
+	var pos = _new_ConvertCoords.vector_to_array(new_sprite.position)
+	#print(pos, new_sprite.get_groups())
 	set_sprite_at_pos(pos[0], pos[1], new_sprite)
 
 func _on_RemoveObject_sprite_removed(sprite: Sprite2D, x: int, y: int):

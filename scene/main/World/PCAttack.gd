@@ -2,14 +2,11 @@ extends Node2D
 
 signal pc_attacked(message)
 
-const DungeonGrid := preload("res://scene/main/World/DungeonGrid.gd")
-var _ref_DungeonGrid: DungeonGrid
-const Schedule := preload("res://scene/main/World/Schedule.gd")
-var _ref_Schedule: Schedule
-const RemoveObject := preload("res://scene/main/World/RemoveObject.gd")
-var _ref_RemoveObject: RemoveObject
+var _ref_DungeonGrid
+var _ref_Schedule
+var _ref_RemoveObject
 
-var _new_GroupName := preload("res://lib/GroupName.gd").new()
+var _new_GroupName
 
 # Called when the node enters the scene tree for the first time.
 func _ready():

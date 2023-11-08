@@ -1,6 +1,6 @@
 extends VBoxContainer
 
-var _new_GroupName := preload("res://lib/GroupName.gd").new()
+var _new_GroupName
 
 var _turn_counter: int = 0
 var _turn_text: String = "Turn: {0}"

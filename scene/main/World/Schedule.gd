@@ -5,7 +5,7 @@ signal turn_ended(current_sprite)
 
 var _pointer: int = 0
 
-var _new_GroupName := preload("res://lib/GroupName.gd").new()
+var _new_GroupName
 var _actors: Array = [null]
 
 func end_turn() -> void:

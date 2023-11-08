@@ -1,29 +1,31 @@
 extends Node2D
 
-const Schedule := preload("res://scene/main/World/Schedule.gd")
-var _ref_Schedule: Schedule
+#const Schedule := preload("res://scene/main/World/Schedule.gd")
+var _ref_Schedule
 
-const DungeonGrid := preload("res://scene/main/World/DungeonGrid.gd")
-var _ref_DungeonGrid: DungeonGrid
+var _ref_DungeonGrid
 
-var _new_ConvertCoord := preload("res://lib/ConvertCoords.gd").new()
-var _new_InputName := preload("res://lib/InputName.gd").new()
-var _new_GroupName := preload("res://lib/GroupName.gd").new()
+var _new_ConvertCoords
+var _new_InputName
+var _new_GroupName
 
 var _pc: Sprite2D
 
-var _move_inputs: Array = [
-	_new_InputName.MOVE_LEFT,
-	_new_InputName.MOVE_RIGHT,
-	_new_InputName.MOVE_UP,
-	_new_InputName.MOVE_DOWN,
-]
+var _move_inputs: Array
 
 func _ready() -> void:
 	set_process_unhandled_input(false)
 
+func _on_Main_game_ready():
+	_move_inputs = [
+		_new_InputName.MOVE_LEFT,
+		_new_InputName.MOVE_RIGHT,
+		_new_InputName.MOVE_UP,
+		_new_InputName.MOVE_DOWN,
+	]
+
 func _unhandled_input(event: InputEvent) -> void:
-	var source: Array = _new_ConvertCoord.vector_to_array(_pc.position)
+	var source: Array = _new_ConvertCoords.vector_to_array(_pc.position)
 	var target: Array
 
 	if _is_move_input(event):
@@ -62,11 +64,11 @@ func _get_new_position(event: InputEvent, source: Array) -> Array:
 
 	return [x, y]
 
-func _try_move(x: int, y: int) -> void:
+func _try_move(x: int, y: int):
 	if _ref_DungeonGrid.is_legal_move(x, y):
 		if _ref_DungeonGrid.check_sprite_group_at_pos(x, y) == _new_GroupName.DWARF:
 			set_process_unhandled_input(false)
 			get_node("PCAttack").attack(x, y)
 		else:
-			_pc.position = _new_ConvertCoord.index_to_vector(x, y)
+			_pc.position = _new_ConvertCoords.index_to_vector(x, y)
 		_ref_Schedule.end_turn()
