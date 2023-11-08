@@ -11,9 +11,9 @@ func _on_Schedule_turn_ended(current_sprite: Sprite2D):
 		text = ""
 
 
-func _on_DungeonGrid_illegal_move(message: String):
+func _on_DungeonGrid_illegal_move(message: String) -> void:
 	text = message
 
 
-func _on_PCAttack_pc_attacked(message: String):
+func _on_PCAttack_pc_attacked(message: String) -> void:
 	text = message

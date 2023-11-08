@@ -1,9 +1,9 @@
 extends Node2D
 
-const Schedule := preload("res://scene/main/Schedule.gd")
+const Schedule := preload("res://scene/main/World/Schedule.gd")
 var _ref_Schedule: Schedule
 
-const DungeonGrid := preload("res://scene/main/DungeonGrid.gd")
+const DungeonGrid := preload("res://scene/main/World/DungeonGrid.gd")
 var _ref_DungeonGrid: DungeonGrid
 
 var _new_ConvertCoord := preload("res://lib/ConvertCoords.gd").new()

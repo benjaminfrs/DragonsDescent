@@ -1,6 +1,6 @@
 extends Node2D
 
-const Schedule := preload("res://scene/main/Schedule.gd")
+const Schedule := preload("res://scene/main/World/Schedule.gd")
 var _ref_Schedule: Schedule
 
 var _new_GroupName := preload("res://lib/GroupName.gd").new()

@@ -2,7 +2,7 @@ extends Node2D
 
 signal illegal_move(message)
 
-const InitWorld := preload("res://scene/main/InitWorld.gd")
+const InitWorld := preload("res://scene/main/World/InitWorld.gd")
 var _ref_InitWorld: InitWorld
 
 var _new_DungeonSize := preload("res://lib/DungeonSize.gd").new()

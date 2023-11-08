@@ -1,5 +1,5 @@
-const START_X: int = 100
-const START_Y: int = 54
+const START_X: int = 240
+const START_Y: int = 140
 const STEP_X: int = 26
 const STEP_Y: int = 34
 

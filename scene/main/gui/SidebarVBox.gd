@@ -10,7 +10,7 @@ var _turn_text: String = "Turn: {0}"
 
 
 func _ready() -> void:
-	_label_help.text = "RL Demo"
+	_label_help.text = "RL !!!!"
 	_update_turn()
 
 

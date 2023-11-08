@@ -1,0 +1,35 @@
+[gd_scene load_steps=9 format=3 uid="uid://bqietraj1ohmp"]
+
+[ext_resource type="Script" path="res://scene/main/World/World.gd" id="1_i68nt"]
+[ext_resource type="Script" path="res://scene/main/World/InitWorld.gd" id="2_s4hn8"]
+[ext_resource type="Script" path="res://scene/main/World/PCMove.gd" id="4_ft5m1"]
+[ext_resource type="Script" path="res://scene/main/World/Schedule.gd" id="5_dn8oy"]
+[ext_resource type="Script" path="res://scene/main/World/PCAttack.gd" id="5_tcjt4"]
+[ext_resource type="Script" path="res://scene/main/World/EnemyAI.gd" id="6_2o3gm"]
+[ext_resource type="Script" path="res://scene/main/World/DungeonGrid.gd" id="7_5pbrr"]
+[ext_resource type="Script" path="res://scene/main/World/RemoveObject.gd" id="9_no2xi"]
+
+[node name="World" type="Node2D"]
+position = Vector2(-33, 37)
+script = ExtResource("1_i68nt")
+
+[node name="InitWorld" type="Node2D" parent="."]
+script = ExtResource("2_s4hn8")
+
+[node name="PCMove" type="Node2D" parent="."]
+script = ExtResource("4_ft5m1")
+
+[node name="PCAttack" type="Node2D" parent="PCMove"]
+script = ExtResource("5_tcjt4")
+
+[node name="Schedule" type="Node2D" parent="."]
+script = ExtResource("5_dn8oy")
+
+[node name="EnemyAI" type="Node2D" parent="."]
+script = ExtResource("6_2o3gm")
+
+[node name="DungeonGrid" type="Node2D" parent="."]
+script = ExtResource("7_5pbrr")
+
+[node name="RemoveObject" type="Node2D" parent="."]
+script = ExtResource("9_no2xi")

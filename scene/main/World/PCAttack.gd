@@ -2,11 +2,11 @@ extends Node2D
 
 signal pc_attacked(message)
 
-const DungeonGrid := preload("res://scene/main/DungeonGrid.gd")
+const DungeonGrid := preload("res://scene/main/World/DungeonGrid.gd")
 var _ref_DungeonGrid: DungeonGrid
-const Schedule := preload("res://scene/main/Schedule.gd")
+const Schedule := preload("res://scene/main/World/Schedule.gd")
 var _ref_Schedule: Schedule
-const RemoveObject := preload("res://scene/main/RemoveObject.gd")
+const RemoveObject := preload("res://scene/main/World/RemoveObject.gd")
 var _ref_RemoveObject: RemoveObject
 
 var _new_GroupName := preload("res://lib/GroupName.gd").new()
