@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://bbynvyp8dw4sx"]
+
+[ext_resource type="Texture2D" uid="uid://c3rqi86lnb1ts" path="res://resource/spritesheet.png" id="1_72c01"]
+
+[node name="failed_sprite" type="Sprite2D"]
+modulate = Color(1, 0, 0, 1)
+texture = ExtResource("1_72c01")
+region_enabled = true
+region_rect = Rect2(240, 72, 24, 36)

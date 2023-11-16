@@ -12,6 +12,7 @@ const PC_MOVE: String = "World/PCMove"
 const PC_ATTACK: String = "World/PCMove/PCAttack"
 const SCHEDULE: String = "World/Schedule"
 const REMOVE_OBJECT: String = "World/RemoveObject"
+const MAP_GENERATOR: String = "MapGenerator"
 const WORLD: String = ""
 
 #GUI references
@@ -35,6 +36,16 @@ const SIGNAL_BIND: Array = [
 		MODELINE,
 	],
 	[
+		"tile_placed", "_on_MapGenerator_tile_placed",
+		MAP_GENERATOR,
+		INIT_WORLD,
+	],
+	[
+		"map_finished", "_on_MapGenerator_map_finished",
+		MAP_GENERATOR,
+		INIT_WORLD,
+	],
+	[
 		"turn_started", "_on_Schedule_turn_started",
 		SCHEDULE,
 		ENEMY_AI, PC_MOVE, SIDEBAR,
@@ -52,7 +63,7 @@ const SIGNAL_BIND: Array = [
 	[
 		"game_ready", "_on_Main_game_ready",
 		WORLD,
-		PC_MOVE, DUNGEON_GRID,
+		PC_MOVE, DUNGEON_GRID, MAP_GENERATOR,
 	],
 ]
 
@@ -88,12 +99,12 @@ const LIB_REF: Array = [
 	[
 	"_new_DungeonSize",
 	"res://lib/DungeonSize.gd",
-	INIT_WORLD, DUNGEON_GRID,
+	INIT_WORLD, DUNGEON_GRID, MAP_GENERATOR,
 	],
 	[
 	"_new_GroupName",
 	"res://lib/GroupName.gd",
-	INIT_WORLD, PC_MOVE, PC_ATTACK, SCHEDULE, ENEMY_AI, DUNGEON_GRID, MODELINE, SIDEBAR,
+	INIT_WORLD, PC_MOVE, PC_ATTACK, SCHEDULE, ENEMY_AI, DUNGEON_GRID, MODELINE, SIDEBAR, MAP_GENERATOR,
 	],
 	[
 	"_new_InputName",

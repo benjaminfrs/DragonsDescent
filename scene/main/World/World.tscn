@@ -1,6 +1,5 @@
 [gd_scene load_steps=9 format=3 uid="uid://bqietraj1ohmp"]
 
-[ext_resource type="Script" path="res://scene/main/World/World.gd" id="1_i68nt"]
 [ext_resource type="Script" path="res://scene/main/World/InitWorld.gd" id="2_s4hn8"]
 [ext_resource type="Script" path="res://scene/main/World/PCMove.gd" id="4_ft5m1"]
 [ext_resource type="Script" path="res://scene/main/World/Schedule.gd" id="5_dn8oy"]
@@ -9,9 +8,16 @@
 [ext_resource type="Script" path="res://scene/main/World/DungeonGrid.gd" id="7_5pbrr"]
 [ext_resource type="Script" path="res://scene/main/World/RemoveObject.gd" id="9_no2xi"]
 
+[sub_resource type="GDScript" id="GDScript_awxea"]
+script/source = "extends Node2D
+
+func _ready():
+	pass
+"
+
 [node name="World" type="Node2D"]
 position = Vector2(-33, 37)
-script = ExtResource("1_i68nt")
+script = SubResource("GDScript_awxea")
 
 [node name="InitWorld" type="Node2D" parent="."]
 script = ExtResource("2_s4hn8")

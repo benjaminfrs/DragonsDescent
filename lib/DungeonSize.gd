@@ -1,3 +1,5 @@
+class_name DungeonSize
+
 const MAX_X: int = 16
 const MAX_Y: int = 16
 

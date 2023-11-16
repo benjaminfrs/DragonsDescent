@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://o8xbfwprxtef"]
+
+[ext_resource type="Texture2D" uid="uid://c3rqi86lnb1ts" path="res://resource/spritesheet.png" id="1_guq75"]
+
+[node name="rewall_sprite" type="Sprite2D"]
+modulate = Color(0.670588, 0.698039, 0.74902, 1)
+rotation = -1.5708
+texture = ExtResource("1_guq75")
+region_enabled = true
+region_rect = Rect2(360, 180, 24, 36)

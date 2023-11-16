@@ -1,4 +1,4 @@
-class_name GroupName
+class_name TileTypes extends Object
 
 const DWARF: String = "dwarf"
 const PC: String = "pc"
