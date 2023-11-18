@@ -35,20 +35,30 @@ func _ready() -> void:
 func _on_MapGenerator_tile_placed(groupName: String, x: int, y: int, x_offset: int = 0, y_offset: int = 0):
 	var new_sprite: Sprite2D = _get_asset(groupName).instantiate() as Sprite2D
 	new_sprite.position = ConvertCoords.index_to_vector(x, y, x_offset, y_offset)
-	new_sprite.add_to_group(groupName)
+	if groupName.contains("wall"):
+		new_sprite.add_to_group("wall")
+	else:
+		new_sprite.add_to_group(groupName)
 
 	add_child(new_sprite)
 	emit_signal("sprite_created", new_sprite)
 
 func _on_MapGenerator_map_finished(map: Array):
+	var pc_placed = false
 	for i in range(DungeonSize.MAX_X):
 		for j in range(DungeonSize.MAX_Y):
 			var new_sprite: Sprite2D = _get_asset(map[i + j * DungeonSize.MAX_Y]).instantiate() as Sprite2D
 			new_sprite.position = ConvertCoords.index_to_vector(i, j, 0, 0)
 			new_sprite.add_to_group(map[i + j * DungeonSize.MAX_Y])
-
 			add_child(new_sprite)
 			emit_signal("sprite_created", new_sprite)
+			if not pc_placed and map[i + j * DungeonSize.MAX_Y] == TileTypes.FLOOR:
+				var pc : Sprite2D = Player.instantiate() as Sprite2D
+				pc.position = ConvertCoords.index_to_vector(i, j, 0, 0)
+				pc.add_to_group(TileTypes.PC)
+				pc_placed = true
+				add_child(pc)
+				emit_signal("sprite_created", pc)
 
 
 func _get_asset(groupName: String) -> PackedScene:

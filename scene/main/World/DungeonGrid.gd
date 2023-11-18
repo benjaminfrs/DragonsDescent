@@ -24,9 +24,11 @@ func is_legal_move(x: int, y: int) -> bool:
 		emit_signal("illegal_move", "You cannot leave the dungeon >:D")
 		return false
 	if get_sprite_at_pos(x, y):
-		if get_sprite_at_pos(x, y).is_in_group(TileTypes.WALL):
-			emit_signal("illegal_move", "You cannot move through walls...yet")
-			return false
+		var s = get_sprite_at_pos(x, y).get_groups()
+		for g in s:
+			if g.contains("wall"):
+				emit_signal("illegal_move", "You cannot move through walls...yet")
+				return false
 	return true
 
 func check_sprite_group_at_pos(x: int, y: int) -> String:
