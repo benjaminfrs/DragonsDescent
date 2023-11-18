@@ -1,5 +1,4 @@
 extends "res://lib/RootNodeTemplate.gd"
-#extends Node
 
 #game ready signal
 signal game_ready()
@@ -91,26 +90,6 @@ const NODE_REF: Array = [
 ]
 
 const LIB_REF: Array = [
-	[
-	"_new_ConvertCoords",
-	"res://lib/ConvertCoords.gd",
-	INIT_WORLD, PC_MOVE, DUNGEON_GRID,
-	],
-	[
-	"_new_DungeonSize",
-	"res://lib/DungeonSize.gd",
-	INIT_WORLD, DUNGEON_GRID,
-	],
-	[
-	"_new_GroupName",
-	"res://lib/GroupName.gd",
-	INIT_WORLD, PC_MOVE, PC_ATTACK, SCHEDULE, ENEMY_AI, DUNGEON_GRID, MODELINE, SIDEBAR,
-	],
-	[
-	"_new_InputName",
-	"res://lib/InputName.gd",
-	INIT_WORLD, PC_MOVE,
-	],
 ]
 
 func _init():

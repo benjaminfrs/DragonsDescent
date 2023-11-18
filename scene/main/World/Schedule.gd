@@ -5,7 +5,6 @@ signal turn_ended(current_sprite)
 
 var _pointer: int = 0
 
-var _new_GroupName
 var _actors: Array = [null]
 
 func end_turn() -> void:
@@ -26,9 +25,9 @@ func _goto_next() -> void:
 		_pointer = 0
 
 func _on_InitWorld_sprite_created(new_sprite: Sprite2D) -> void:
-	if new_sprite.is_in_group(_new_GroupName.PC):
+	if new_sprite.is_in_group(TileTypes.PC):
 		_actors[0] = new_sprite
-	elif new_sprite.is_in_group(_new_GroupName.DWARF):
+	elif new_sprite.is_in_group(TileTypes.DWARF):
 		_actors.append(new_sprite)
 
 func _on_RemoveObject_sprite_removed(sprite: Sprite2D, x: int, y: int):

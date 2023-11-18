@@ -1,7 +1,5 @@
 extends VBoxContainer
 
-var _new_GroupName
-
 var _turn_counter: int = 0
 var _turn_text: String = "Turn: {0}"
 
@@ -15,7 +13,7 @@ func _ready() -> void:
 
 
 func _on_Schedule_turn_started(current_sprite: Sprite2D):
-	if current_sprite.is_in_group(_new_GroupName.PC):
+	if current_sprite.is_in_group(TileTypes.PC):
 		_turn_counter += 1
 		_update_turn()
 

@@ -6,8 +6,6 @@ var _ref_DungeonGrid
 var _ref_Schedule
 var _ref_RemoveObject
 
-var _new_GroupName
-
 # Called when the node enters the scene tree for the first time.
 func _ready():
 	pass # Replace with function body.

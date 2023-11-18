@@ -18,14 +18,9 @@ const Rewall := preload ("res://sprite/rewall_sprite.tscn")
 const Lewall := preload ("res://sprite/lewall_sprite.tscn")
 const Failed := preload("res://sprite/failed_sprite.tscn")
 
-var _new_GroupName
-var _new_ConvertCoords
-var _new_DungeonSize
-var _new_InputName
-
 func _unhandled_input(event: InputEvent) -> void:
 	pass
-	#if event.is_action_pressed(_new_InputName.INIT_WORLD):
+	#if event.is_action_pressed(InputNames.INIT_WORLD):
 	#	_init_floor()
 	#	_init_wall()
 	#	_init_PC()
@@ -39,18 +34,18 @@ func _ready() -> void:
 
 func _on_MapGenerator_tile_placed(groupName: String, x: int, y: int, x_offset: int = 0, y_offset: int = 0):
 	var new_sprite: Sprite2D = _get_asset(groupName).instantiate() as Sprite2D
-	new_sprite.position = _new_ConvertCoords.index_to_vector(x, y, x_offset, y_offset)
+	new_sprite.position = ConvertCoords.index_to_vector(x, y, x_offset, y_offset)
 	new_sprite.add_to_group(groupName)
 
 	add_child(new_sprite)
 	emit_signal("sprite_created", new_sprite)
 
 func _on_MapGenerator_map_finished(map: Array):
-	for i in range(_new_DungeonSize.MAX_X):
-		for j in range(_new_DungeonSize.MAX_Y):
-			var new_sprite: Sprite2D = _get_asset(map[i + j * _new_DungeonSize.MAX_Y]).instantiate() as Sprite2D
-			new_sprite.position = _new_ConvertCoords.index_to_vector(i, j, 0, 0)
-			new_sprite.add_to_group(map[i + j * _new_DungeonSize.MAX_Y])
+	for i in range(DungeonSize.MAX_X):
+		for j in range(DungeonSize.MAX_Y):
+			var new_sprite: Sprite2D = _get_asset(map[i + j * DungeonSize.MAX_Y]).instantiate() as Sprite2D
+			new_sprite.position = ConvertCoords.index_to_vector(i, j, 0, 0)
+			new_sprite.add_to_group(map[i + j * DungeonSize.MAX_Y])
 
 			add_child(new_sprite)
 			emit_signal("sprite_created", new_sprite)
@@ -84,49 +79,49 @@ func _get_asset(groupName: String) -> PackedScene:
 	return null
 
 func _init_dwarf() -> void:
-	_create_sprite(Dwarf, _new_GroupName.DWARF, 3, 3)
-	_create_sprite(Dwarf, _new_GroupName.DWARF, 14, 5)
-	_create_sprite(Dwarf, _new_GroupName.DWARF, 7, 11)
+	_create_sprite(Dwarf, TileTypes.DWARF, 3, 3)
+	_create_sprite(Dwarf, TileTypes.DWARF, 14, 5)
+	_create_sprite(Dwarf, TileTypes.DWARF, 7, 11)
 
 
 func _init_PC() -> void:
-	_create_sprite(Player, _new_GroupName.PC, 0, 0)
+	_create_sprite(Player, TileTypes.PC, 0, 0)
 
 func _init_wall() -> void:
 	var shift: int = 2
-	var min_x: int = _new_DungeonSize.CENTER_X - shift
-	var max_x: int = _new_DungeonSize.CENTER_X + shift + 1
-	var min_y: int = _new_DungeonSize.CENTER_Y - shift
-	var max_y: int = _new_DungeonSize.CENTER_Y + shift + 1
+	var min_x: int = DungeonSize.CENTER_X - shift
+	var max_x: int = DungeonSize.CENTER_X + shift + 1
+	var min_y: int = DungeonSize.CENTER_Y - shift
+	var max_y: int = DungeonSize.CENTER_Y + shift + 1
 
 	for i in range(min_x, max_x):
 		for j in range(min_y, max_y):
-			_create_sprite(Wall, _new_GroupName.WALL, i, j)
+			_create_sprite(Wall, TileTypes.WALL, i, j)
 
 
 func _init_floor() -> void:
-	for i in range(_new_DungeonSize.MAX_X):
-		for j in range(_new_DungeonSize.MAX_Y):
-			_create_sprite(Floor, _new_GroupName.FLOOR, i, j)
+	for i in range(DungeonSize.MAX_X):
+		for j in range(DungeonSize.MAX_Y):
+			_create_sprite(Floor, TileTypes.FLOOR, i, j)
 
 
 func _init_indicator() -> void:
-	_create_sprite(xArrow, _new_GroupName.ARROW, 0, 12,
-			-_new_DungeonSize.ARROW_MARGIN, 0)
-	_create_sprite(yArrow, _new_GroupName.ARROW, 5, 0,
-			0, -_new_DungeonSize.ARROW_MARGIN)
+	_create_sprite(xArrow, TileTypes.ARROW, 0, 12,
+			-DungeonSize.ARROW_MARGIN, 0)
+	_create_sprite(yArrow, TileTypes.ARROW, 5, 0,
+			0, -DungeonSize.ARROW_MARGIN)
 
 
 func _create_sprite(prefab: PackedScene, group: String, x: int, y: int,
 		x_offset: int = 0, y_offset: int = 0) -> void:
 
 	var new_sprite: Sprite2D = prefab.instantiate() as Sprite2D
-	new_sprite.position = _new_ConvertCoords.index_to_vector(x, y, x_offset, y_offset)
+	new_sprite.position = ConvertCoords.index_to_vector(x, y, x_offset, y_offset)
 	new_sprite.add_to_group(group)
 
 	add_child(new_sprite)
 	emit_signal("sprite_created", new_sprite)
-	#if new_sprite.is_in_group(_new_GroupName.PC):
+	#if new_sprite.is_in_group(TileTypes.PC):
 		#print(new_sprite.get_groups())
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.

@@ -1,3 +1,5 @@
+class_name InputNames
+
 const MOVE_LEFT: String = "move_left"
 const MOVE_RIGHT: String = "move_right"
 const MOVE_UP: String = "move_up"
