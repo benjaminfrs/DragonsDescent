@@ -1,10 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://b6sl5op7vu7hn"]
 
-[ext_resource type="Texture2D" uid="uid://c3rqi86lnb1ts" path="res://resource/spritesheet.png" id="1_38lc1"]
+[ext_resource type="Texture2D" uid="uid://1gyfj67iptxy" path="res://resource/dungeon_tiles.png" id="1_pdqhe"]
 
 [node name="uewall_sprite" type="Sprite2D"]
 modulate = Color(0.670588, 0.698039, 0.74902, 1)
-rotation = 3.14159
-texture = ExtResource("1_38lc1")
+texture = ExtResource("1_pdqhe")
 region_enabled = true
-region_rect = Rect2(360, 180, 24, 36)
+region_rect = Rect2(48, 32, 16, 16)

@@ -1,9 +1,8 @@
 [gd_scene load_steps=2 format=3 uid="uid://bc71rvxjiwr0q"]
 
-[ext_resource type="Texture2D" uid="uid://c3rqi86lnb1ts" path="res://resource/spritesheet.png" id="1_vw5ba"]
+[ext_resource type="Texture2D" uid="uid://8iykb86ryh2s" path="res://resource/basictiles.png" id="1_sojtw"]
 
 [node name="floorSprite" type="Sprite2D"]
-modulate = Color(0.815686, 0.690196, 0, 1)
-texture = ExtResource("1_vw5ba")
+texture = ExtResource("1_sojtw")
 region_enabled = true
-region_rect = Rect2(312, 72, 24, 36)
+region_rect = Rect2(0, 16, 16, 16)

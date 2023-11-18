@@ -1,10 +1,9 @@
 [gd_scene load_steps=2 format=3 uid="uid://cw0x33swmqp4n"]
 
-[ext_resource type="Texture2D" uid="uid://c3rqi86lnb1ts" path="res://resource/spritesheet.png" id="1_hu6b8"]
+[ext_resource type="Texture2D" uid="uid://1gyfj67iptxy" path="res://resource/dungeon_tiles.png" id="1_y65wk"]
 
 [node name="lewall_sprite" type="Sprite2D"]
 modulate = Color(0.670588, 0.698039, 0.74902, 1)
-rotation = 1.5708
-texture = ExtResource("1_hu6b8")
+texture = ExtResource("1_y65wk")
 region_enabled = true
-region_rect = Rect2(360, 180, 24, 36)
+region_rect = Rect2(32, 48, 16, 16)

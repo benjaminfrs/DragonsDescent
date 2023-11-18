@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://c5m81ek6gikel"]
+
+[ext_resource type="Texture2D" uid="uid://1gyfj67iptxy" path="res://resource/dungeon_tiles.png" id="1_l4rm6"]
+
+[node name="blwall_sprite" type="Sprite2D"]
+modulate = Color(0.670588, 0.698039, 0.74902, 1)
+texture = ExtResource("1_l4rm6")
+region_enabled = true
+region_rect = Rect2(32, 96, 16, 16)

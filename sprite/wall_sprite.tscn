@@ -1,12 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://c7yymr0s0nx0n"]
+[gd_scene load_steps=2 format=3 uid="uid://c7yymr0s0nx0n"]
 
-[ext_resource type="Texture2D" uid="uid://c3rqi86lnb1ts" path="res://resource/spritesheet.png" id="1_vw5ba"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_3h5gj"]
-atlas = ExtResource("1_vw5ba")
-region = Rect2(72, 72, 24, 36)
+[ext_resource type="Texture2D" uid="uid://1gyfj67iptxy" path="res://resource/dungeon_tiles.png" id="1_kvxf4"]
 
 [node name="wallSprite" type="Sprite2D"]
 modulate = Color(0.670588, 0.698039, 0.74902, 1)
 position = Vector2(11, -1)
-texture = SubResource("AtlasTexture_3h5gj")
+texture = ExtResource("1_kvxf4")
+region_enabled = true
+region_rect = Rect2(64, 64, 16, 16)

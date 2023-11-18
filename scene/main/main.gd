@@ -99,12 +99,12 @@ const LIB_REF: Array = [
 	[
 	"_new_DungeonSize",
 	"res://lib/DungeonSize.gd",
-	INIT_WORLD, DUNGEON_GRID, MAP_GENERATOR,
+	INIT_WORLD, DUNGEON_GRID,
 	],
 	[
 	"_new_GroupName",
 	"res://lib/GroupName.gd",
-	INIT_WORLD, PC_MOVE, PC_ATTACK, SCHEDULE, ENEMY_AI, DUNGEON_GRID, MODELINE, SIDEBAR, MAP_GENERATOR,
+	INIT_WORLD, PC_MOVE, PC_ATTACK, SCHEDULE, ENEMY_AI, DUNGEON_GRID, MODELINE, SIDEBAR,
 	],
 	[
 	"_new_InputName",

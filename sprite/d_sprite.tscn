@@ -1,12 +1,10 @@
-[gd_scene load_steps=3 format=3 uid="uid://ckae1m8jtd5n1"]
+[gd_scene load_steps=2 format=3 uid="uid://ckae1m8jtd5n1"]
 
-[ext_resource type="Texture2D" uid="uid://c3rqi86lnb1ts" path="res://resource/spritesheet.png" id="1_wswl1"]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_1vpn5"]
-atlas = ExtResource("1_wswl1")
-region = Rect2(96, 216, 24, 36)
+[ext_resource type="Texture2D" uid="uid://8iykb86ryh2s" path="res://resource/basictiles.png" id="1_dauq4"]
 
 [node name="dSprite" type="Sprite2D"]
 modulate = Color(0.670588, 0.698039, 0.74902, 1)
 position = Vector2(-33, 10)
-texture = SubResource("AtlasTexture_1vpn5")
+texture = ExtResource("1_dauq4")
+region_enabled = true
+region_rect = Rect2(48, 16, 16, 16)

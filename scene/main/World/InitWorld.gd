@@ -11,6 +11,7 @@ const Wall := preload("res://sprite/wall_sprite.tscn")
 const Ulwall := preload("res://sprite/ulwall_sprite.tscn")
 const Urwall := preload("res://sprite/urwall_sprite.tscn")
 const Brwall := preload("res://sprite/brwall_sprite.tscn")
+const Blwall := preload("res://sprite/blwall_sprite.tscn")
 const Bewall := preload ("res://sprite/bewall_sprite.tscn")
 const Uewall := preload ("res://sprite/uewall_sprite.tscn")
 const Rewall := preload ("res://sprite/rewall_sprite.tscn")
@@ -56,6 +57,8 @@ func _on_MapGenerator_map_finished(map: Array):
 
 
 func _get_asset(groupName: String) -> PackedScene:
+	if groupName == "blwall":
+		return Blwall
 	if groupName == "failed":
 		return Failed
 	if groupName == "lewall":
