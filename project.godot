@@ -17,8 +17,8 @@ config/icon="res://resource/icon.svg"
 
 [display]
 
-window/size/viewport_width=1900
-window/size/viewport_height=1200
+window/size/viewport_width=2600
+window/size/viewport_height=2600
 window/size/resizable=false
 window/energy_saving/keep_screen_on=false
 window/stretch/aspect="expand"

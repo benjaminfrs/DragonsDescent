@@ -50,6 +50,7 @@ func _on_MapGenerator_map_finished(map: Array):
 			var new_sprite: Sprite2D = _get_asset(map[i + j * DungeonSize.MAX_Y]).instantiate() as Sprite2D
 			new_sprite.position = ConvertCoords.index_to_vector(i, j, 0, 0)
 			new_sprite.add_to_group(map[i + j * DungeonSize.MAX_Y])
+			new_sprite.scale = Vector2(3, 3)
 			add_child(new_sprite)
 			emit_signal("sprite_created", new_sprite)
 			if not pc_placed and map[i + j * DungeonSize.MAX_Y] == TileTypes.FLOOR:

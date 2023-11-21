@@ -2,8 +2,8 @@ class_name ConvertCoords
 
 const START_X: int = 240
 const START_Y: int = 140
-const STEP_X: int = 16
-const STEP_Y: int = 16
+const STEP_X: int = 52
+const STEP_Y: int = 52
 
 static func vector_to_array(vector_coord: Vector2) -> Array:
 	var x: int = ((vector_coord.x - START_X) / STEP_X) as int
