@@ -4,6 +4,7 @@
 
 [node name="dSprite" type="Sprite2D"]
 modulate = Color(0.670588, 0.698039, 0.74902, 1)
+z_index = 1
 position = Vector2(-33, 10)
 texture = ExtResource("1_dauq4")
 region_enabled = true

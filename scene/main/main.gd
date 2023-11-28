@@ -5,12 +5,12 @@ signal game_ready()
 
 #World references
 const DUNGEON_GRID: String = "World/DungeonGrid"
+const DWARF_MOVE: String = "World/DwarfMove"
 const ENEMY_AI: String = "World/EnemyAI"
 const INIT_WORLD: String = "World/InitWorld"
 const PC_MOVE: String = "World/PCMove"
 const PC_ATTACK: String = "World/PCMove/PCAttack"
 const SCHEDULE: String = "World/Schedule"
-const REMOVE_OBJECT: String = "World/RemoveObject"
 const MAP_GENERATOR: String = "MapGenerator"
 const WORLD: String = ""
 
@@ -34,11 +34,11 @@ const SIGNAL_BIND: Array = [
 		PC_ATTACK,
 		MODELINE,
 	],
-	[
-		"tile_placed", "_on_MapGenerator_tile_placed",
-		MAP_GENERATOR,
-		INIT_WORLD,
-	],
+	#[
+	#	"tile_placed", "_on_MapGenerator_tile_placed",
+	#	MAP_GENERATOR,
+	#	INIT_WORLD,
+	#],
 	[
 		"map_finished", "_on_MapGenerator_map_finished",
 		MAP_GENERATOR,
@@ -47,7 +47,17 @@ const SIGNAL_BIND: Array = [
 	[
 		"turn_started", "_on_Schedule_turn_started",
 		SCHEDULE,
-		ENEMY_AI, PC_MOVE, SIDEBAR,
+		ENEMY_AI, SIDEBAR,
+	],
+	[
+		"turn_started_pc", "_on_Schedule_turn_started_pc",
+		SCHEDULE,
+		PC_MOVE
+	],
+	[
+		"turn_started_dwarf", "_on_Schedule_turn_started_dwarf",
+		SCHEDULE,
+		DWARF_MOVE
 	],
 	[
 		"turn_ended", "_on_Schedule_turn_ended",
@@ -55,9 +65,9 @@ const SIGNAL_BIND: Array = [
 		MODELINE,
 	],
 	[
-		"sprite_removed", "_on_RemoveObject_sprite_removed",
-		REMOVE_OBJECT,
-		DUNGEON_GRID, SCHEDULE,
+		"sprite_removed", "_on_DungeonGrid_sprite_removed",
+		DUNGEON_GRID,
+		SCHEDULE,
 	],
 	[
 		"game_ready", "_on_Main_game_ready",
@@ -70,7 +80,7 @@ const NODE_REF: Array = [
 	[
 		"_ref_DungeonGrid",
 		DUNGEON_GRID,
-		PC_MOVE, PC_ATTACK, REMOVE_OBJECT,
+		PC_MOVE, PC_ATTACK, INIT_WORLD, DWARF_MOVE,
 	],
 	[
 		"_ref_InitWorld",
@@ -80,12 +90,7 @@ const NODE_REF: Array = [
 	[
 		"_ref_Schedule",
 		SCHEDULE,
-		PC_MOVE, PC_ATTACK, ENEMY_AI,
-	],
-	[
-		"_ref_RemoveObject",
-		REMOVE_OBJECT,
-		PC_ATTACK,
+		DWARF_MOVE, PC_MOVE, PC_ATTACK, ENEMY_AI,
 	],
 ]
 

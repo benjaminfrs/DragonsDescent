@@ -1,5 +1,7 @@
 extends Node2D
 
+signal turn_started_pc(current_sprite)
+signal turn_started_dwarf(current_sprite)
 signal turn_started(current_sprite)
 signal turn_ended(current_sprite)
 
@@ -11,6 +13,8 @@ func end_turn() -> void:
 	#print("{0}: End turn.".format([_get_current().name]))
 	emit_signal("turn_ended", _get_current())
 	_goto_next()
+	var turn_signal = "turn_started_" + _get_current().get_groups()[0]
+	emit_signal(turn_signal, _get_current())
 	emit_signal("turn_started", _get_current())
 
 
@@ -30,8 +34,7 @@ func _on_InitWorld_sprite_created(new_sprite: Sprite2D) -> void:
 	elif new_sprite.is_in_group(TileTypes.DWARF):
 		_actors.append(new_sprite)
 
-func _on_RemoveObject_sprite_removed(sprite: Sprite2D, x: int, y: int):
-	#var current_sprite: Sprite2D = _get_current()
-
+func _on_DungeonGrid_sprite_removed(pos : Vector2i, sprite : Sprite2D):
 	_actors.erase(sprite)
+	sprite.queue_free()
 	_pointer = _actors.find(_get_current())

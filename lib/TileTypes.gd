@@ -30,6 +30,7 @@ const ARROW: String = "arrow"
 
 const mapTileNames: Array = [DWARF, FLOOR, WALL, ULWALL, BLWALL, URWALL, BRWALL, BEWALL, LEWALL, REWALL, UEWALL]
 const basic_tiles: Array = [FLOOR, WALL, ULWALL, URWALL, BLWALL, BRWALL, BEWALL, LEWALL, REWALL, UEWALL]
+const actor_types: Array = [DWARF, PC]
 #const basic_tile_weights = {
 #	FLOOR : 0.35,
 #	WALL : 0.05,
@@ -44,13 +45,13 @@ const basic_tiles: Array = [FLOOR, WALL, ULWALL, URWALL, BLWALL, BRWALL, BEWALL,
 #}
 const basic_tile_weights = {
 	FLOOR : 0.45,
-	WALL : 0.35,
-	ULWALL : 0.02,
-	URWALL : 0.02,
-	BLWALL : 0.02,
-	BRWALL : 0.02,
-	LEWALL : 0.09,
-	REWALL : 0.09,
-	BEWALL : 0.09,
-	UEWALL : 0.09,
+	WALL : 0.2,
+	ULWALL : 0.05,
+	URWALL : 0.05,
+	BLWALL : 0.05,
+	BRWALL : 0.05,
+	LEWALL : 0.1,
+	REWALL : 0.1,
+	BEWALL : 0.1,
+	UEWALL : 0.1,
 }

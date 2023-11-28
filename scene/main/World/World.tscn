@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://bqietraj1ohmp"]
+[gd_scene load_steps=8 format=3 uid="uid://bqietraj1ohmp"]
 
 [ext_resource type="Script" path="res://scene/main/World/InitWorld.gd" id="2_s4hn8"]
 [ext_resource type="Script" path="res://scene/main/World/PCMove.gd" id="4_ft5m1"]
@@ -6,18 +6,10 @@
 [ext_resource type="Script" path="res://scene/main/World/PCAttack.gd" id="5_tcjt4"]
 [ext_resource type="Script" path="res://scene/main/World/EnemyAI.gd" id="6_2o3gm"]
 [ext_resource type="Script" path="res://scene/main/World/DungeonGrid.gd" id="7_5pbrr"]
-[ext_resource type="Script" path="res://scene/main/World/RemoveObject.gd" id="9_no2xi"]
-
-[sub_resource type="GDScript" id="GDScript_awxea"]
-script/source = "extends Node2D
-
-func _ready():
-	pass
-"
+[ext_resource type="Script" path="res://scene/main/World/DwarfMove.gd" id="7_r2uu8"]
 
 [node name="World" type="Node2D"]
 position = Vector2(-33, 37)
-script = SubResource("GDScript_awxea")
 
 [node name="InitWorld" type="Node2D" parent="."]
 script = ExtResource("2_s4hn8")
@@ -37,5 +29,5 @@ script = ExtResource("6_2o3gm")
 [node name="DungeonGrid" type="Node2D" parent="."]
 script = ExtResource("7_5pbrr")
 
-[node name="RemoveObject" type="Node2D" parent="."]
-script = ExtResource("9_no2xi")
+[node name="DwarfMove" type="Node2D" parent="."]
+script = ExtResource("7_r2uu8")
