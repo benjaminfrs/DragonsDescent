@@ -121,3 +121,9 @@ const Directions = {
 #Up left
 	"BR" : Vector2i(1, 1),
 }
+
+static func get_neighbors(pos : Vector2i) -> Array:
+	var neighbors = []
+	for d in DungeonSize.get_valid_dirs(pos):
+		neighbors.append(pos + TileRules.Directions[d])
+	return neighbors

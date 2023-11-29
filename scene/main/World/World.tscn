@@ -1,18 +1,13 @@
-[gd_scene load_steps=8 format=3 uid="uid://bqietraj1ohmp"]
+[gd_scene load_steps=6 format=3 uid="uid://bqietraj1ohmp"]
 
-[ext_resource type="Script" path="res://scene/main/World/InitWorld.gd" id="2_s4hn8"]
 [ext_resource type="Script" path="res://scene/main/World/PCMove.gd" id="4_ft5m1"]
 [ext_resource type="Script" path="res://scene/main/World/Schedule.gd" id="5_dn8oy"]
 [ext_resource type="Script" path="res://scene/main/World/PCAttack.gd" id="5_tcjt4"]
-[ext_resource type="Script" path="res://scene/main/World/EnemyAI.gd" id="6_2o3gm"]
 [ext_resource type="Script" path="res://scene/main/World/DungeonGrid.gd" id="7_5pbrr"]
 [ext_resource type="Script" path="res://scene/main/World/DwarfMove.gd" id="7_r2uu8"]
 
 [node name="World" type="Node2D"]
 position = Vector2(-33, 37)
-
-[node name="InitWorld" type="Node2D" parent="."]
-script = ExtResource("2_s4hn8")
 
 [node name="PCMove" type="Node2D" parent="."]
 script = ExtResource("4_ft5m1")
@@ -22,9 +17,6 @@ script = ExtResource("5_tcjt4")
 
 [node name="Schedule" type="Node2D" parent="."]
 script = ExtResource("5_dn8oy")
-
-[node name="EnemyAI" type="Node2D" parent="."]
-script = ExtResource("6_2o3gm")
 
 [node name="DungeonGrid" type="Node2D" parent="."]
 script = ExtResource("7_5pbrr")

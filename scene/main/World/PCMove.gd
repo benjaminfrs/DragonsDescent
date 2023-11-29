@@ -19,10 +19,12 @@ func _on_Main_game_ready():
 
 func _unhandled_input(event: InputEvent) -> void:
 	var source: Vector2i = ConvertCoords.get_world_coords(_pc.position)
+	if event.is_action_pressed(InputNames.WAIT):
+		_ref_Schedule.end_turn()
 	if _is_move_input(event):
 		_try_move(_get_new_position(event, source), source)
 
-func _on_InitWorld_sprite_created(new_sprite: Sprite2D) -> void:
+func _on_DungeonGrid_sprite_created(new_sprite: Sprite2D) -> void:
 	if new_sprite.is_in_group(TileTypes.PC):
 		_pc = new_sprite
 		set_process_unhandled_input(true)
@@ -61,5 +63,5 @@ func _try_move(pos : Vector2i, old_pos : Vector2i):
 		else:
 			_ref_DungeonGrid.move_sprite(old_pos, pos, _pc)
 			_pc.position = ConvertCoords.get_local_coords(pos)
-			print(ConvertCoords.get_world_coords(_pc.position))
+			#print(ConvertCoords.get_world_coords(_pc.position))
 		_ref_Schedule.end_turn()

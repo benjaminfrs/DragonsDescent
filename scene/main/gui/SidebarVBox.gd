@@ -12,7 +12,7 @@ func _ready() -> void:
 	_update_turn()
 
 
-func _on_Schedule_turn_started(current_sprite: Sprite2D):
+func _on_Schedule_turn_started_pc(current_sprite: Sprite2D):
 	if current_sprite.is_in_group(TileTypes.PC):
 		_turn_counter += 1
 		_update_turn()

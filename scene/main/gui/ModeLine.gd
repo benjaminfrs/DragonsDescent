@@ -13,3 +13,6 @@ func _on_DungeonGrid_illegal_move(message: String):
 
 func _on_PCAttack_pc_attacked(message: String):
 	text = message
+
+func _on_DwarfMove_dwarf_attacks(message):
+	text = message

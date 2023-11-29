@@ -2,10 +2,7 @@ extends Node2D
 
 signal illegal_move(message)
 signal sprite_removed(pos, sprite)
-
-var _ref_InitWorld
-
-const Floor := preload("res://sprite/floor_sprite.tscn")
+signal sprite_created(sprite)
 
 var _arr : Array
 var _pc_ref
@@ -34,17 +31,11 @@ func is_legal_move(pos : Vector2i) -> bool:
 		return false
 	return true
 
-func get_neighbors(pos : Vector2i) -> Array:
-	var neighbors = []
-	for d in DungeonSize.get_valid_dirs(pos):
-		neighbors.append(pos + TileRules.Directions[d])
-	return neighbors
-
 func _is_not_tile_floor(pos : Vector2i) -> bool:
 	return not does_tile_contain_sprite(pos, TileTypes.FLOOR)
 	
 func _are_neighbors_floors(pos : Vector2i) -> bool:
-	if get_neighbors(pos).any(_is_not_tile_floor):
+	if TileRules.get_neighbors(pos).any(_is_not_tile_floor):
 		return false
 	return true
 
@@ -54,7 +45,6 @@ func get_floor_groups(n_groups : int) -> Array:
 		for y in range(DungeonSize.MAX_Y):
 			if _are_neighbors_floors(Vector2i(x, y)):
 				groups.append(Vector2i(x, y))
-	print(groups)
 	return groups
 
 func get_actor_at_pos(pos : Vector2i) -> Sprite2D:
@@ -66,8 +56,13 @@ func get_actor_at_pos(pos : Vector2i) -> Sprite2D:
 
 func does_tile_contain_sprite(pos : Vector2i, sprite_type : String) -> bool:
 	for sprite in _arr[pos.x + pos.y * DungeonSize.MAX_Y]:
-		if sprite.get_groups().find(sprite_type) > -1:
+		if is_sprite_in_group(sprite, sprite_type):
 			return true
+	return false
+
+func is_sprite_in_group(sprite : Sprite2D, group : String) -> bool:
+	if sprite.get_groups().find(group) > -1:
+		return true
 	return false
 
 func tile_type_fuzzy_search(pos : Vector2i, fuzzy_sprite : String) -> bool:
@@ -80,9 +75,14 @@ func tile_type_fuzzy_search(pos : Vector2i, fuzzy_sprite : String) -> bool:
 func move_sprite(old_pos : Vector2i, new_pos : Vector2i, sprite : Sprite2D):
 	_arr[old_pos.x + old_pos.y * DungeonSize.MAX_Y].erase(sprite)
 	set_sprite_at_pos(new_pos, sprite)
+	if is_sprite_in_group(sprite, TileTypes.DWARF):
+		_astargrid.set_point_solid(old_pos, false)
+		_astargrid.set_point_solid(new_pos, true)
 
 func remove_sprite_at_pos(pos : Vector2i, sprite : Sprite2D):
+	#print(_arr[pos.x + pos.y * DungeonSize.MAX_Y])
 	_arr[pos.x + pos.y * DungeonSize.MAX_Y].erase(sprite)
+	#print(_arr[pos.x + pos.y * DungeonSize.MAX_Y])
 	emit_signal("sprite_removed", pos, sprite)
 
 func set_sprite_at_pos(pos : Vector2i, new_sprite: Sprite2D):
@@ -92,10 +92,50 @@ func set_sprite_at_pos(pos : Vector2i, new_sprite: Sprite2D):
 	else:
 		_arr[pos.x + pos.y * DungeonSize.MAX_Y] = [new_sprite]
 
-func _on_InitWorld_sprite_created(new_sprite: Sprite2D):
-	if new_sprite.get_groups().find(TileTypes.PC) > -1:
-		_pc_ref = new_sprite 
-	var pos = ConvertCoords.get_world_coords(new_sprite.position)
-	set_sprite_at_pos(pos, new_sprite)
-	if tile_type_fuzzy_search(pos, "wall"):
-		_astargrid.set_point_solid(pos, true)
+func _on_MapGenerator_map_finished(map: Array):
+	for x in range(DungeonSize.MAX_X):
+		for y in range(DungeonSize.MAX_Y):
+			var pos = Vector2i(x, y)
+			var new_sprite: Sprite2D = AssetLoader.get_asset(map[pos.x + pos.y * DungeonSize.MAX_Y]).instantiate() as Sprite2D
+			new_sprite.position = ConvertCoords.get_local_coords(pos, 0, 0)
+			new_sprite.add_to_group(map[pos.x + pos.y * DungeonSize.MAX_Y])
+			new_sprite.scale = Vector2(3, 3)
+			add_child(new_sprite)
+			emit_signal("sprite_created", new_sprite)
+			set_sprite_at_pos(pos, new_sprite)
+			if tile_type_fuzzy_search(pos, "wall"):
+				_astargrid.set_point_solid(pos, true)
+	_init_actors(3)
+
+func _init_actors(n_dwarves : int):
+	var floor_groups = get_floor_groups(0)
+	#print(floor_groups)
+	var pc_pos = floor_groups.pop_front()
+	
+	var pc = AssetLoader.Player.instantiate() as Sprite2D
+	_pc_ref = pc
+	pc.position = ConvertCoords.get_local_coords(pc_pos)
+	pc.scale = Vector2(2, 2)
+	pc.add_to_group(TileTypes.PC)
+	add_child(pc)
+	emit_signal("sprite_created", pc)
+	set_sprite_at_pos(pc_pos, pc)
+	
+	for _ind in range(n_dwarves):
+		var new_dwarf = AssetLoader.Dwarf.instantiate() as Sprite2D
+		var new_pos = floor_groups.pop_back()
+		
+		new_dwarf.position = ConvertCoords.get_local_coords(new_pos)
+		new_dwarf.scale = Vector2(2, 2)
+		new_dwarf.add_to_group(TileTypes.DWARF)
+		add_child(new_dwarf)
+		emit_signal("sprite_created", new_dwarf)
+		set_sprite_at_pos(new_pos, new_dwarf)
+
+#func _on_InitWorld_sprite_created(new_sprite: Sprite2D):
+#	if new_sprite.get_groups().find(TileTypes.PC) > -1:
+#		_pc_ref = new_sprite 
+#	var pos = ConvertCoords.get_world_coords(new_sprite.position)
+#	set_sprite_at_pos(pos, new_sprite)
+#	if tile_type_fuzzy_search(pos, "wall"):
+#		_astargrid.set_point_solid(pos, true)
