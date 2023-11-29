@@ -1,5 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://bqietraj1ohmp"]
+[gd_scene load_steps=7 format=3 uid="uid://bqietraj1ohmp"]
 
+[ext_resource type="Script" path="res://scene/main/World/World.gd" id="1_njd3w"]
 [ext_resource type="Script" path="res://scene/main/World/PCMove.gd" id="4_ft5m1"]
 [ext_resource type="Script" path="res://scene/main/World/Schedule.gd" id="5_dn8oy"]
 [ext_resource type="Script" path="res://scene/main/World/PCAttack.gd" id="5_tcjt4"]
@@ -8,6 +9,7 @@
 
 [node name="World" type="Node2D"]
 position = Vector2(-33, 37)
+script = ExtResource("1_njd3w")
 
 [node name="PCMove" type="Node2D" parent="."]
 script = ExtResource("4_ft5m1")

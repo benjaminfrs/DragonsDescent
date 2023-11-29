@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://urg13bl7x4iw"]
+
+[ext_resource type="Texture2D" uid="uid://8iykb86ryh2s" path="res://resource/basictiles.png" id="1_kfkkk"]
+
+[node name="stair_down" type="Sprite2D"]
+modulate = Color(0.670588, 0.698039, 0.74902, 1)
+z_index = 1
+texture = ExtResource("1_kfkkk")
+region_enabled = true
+region_rect = Rect2(16, 112, 16, 16)

@@ -49,7 +49,8 @@ func _propagate_tile_rules(pos : Vector2i, tile_matrix : Array):
 
 
 func _on_Main_game_ready():
-	emit_signal("map_finished", generate())
+	pass
+	#emit_signal("map_finished", generate())
 
 func generate() -> Array:
 	var tile_matrix : Array

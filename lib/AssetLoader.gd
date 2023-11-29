@@ -3,8 +3,6 @@ class_name AssetLoader
 const Player := preload("res://sprite/pc.tscn")
 const Dwarf := preload("res://sprite/d_sprite.tscn")
 const Floor := preload("res://sprite/floor_sprite.tscn")
-const xArrow := preload("res://sprite/x_sprite.tscn")
-const yArrow := preload("res://sprite/y_sprite.tscn")
 const Wall := preload("res://sprite/wall_sprite.tscn")
 const Ulwall := preload("res://sprite/ulwall_sprite.tscn")
 const Urwall := preload("res://sprite/urwall_sprite.tscn")

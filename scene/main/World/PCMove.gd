@@ -8,14 +8,16 @@ var _move_inputs: Array
 
 func _ready() -> void:
 	set_process_unhandled_input(false)
-
-func _on_Main_game_ready():
 	_move_inputs = [
 		InputNames.MOVE_LEFT,
 		InputNames.MOVE_RIGHT,
 		InputNames.MOVE_UP,
 		InputNames.MOVE_DOWN,
 	]
+
+func _on_Main_game_ready():
+	pass
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	var source: Vector2i = ConvertCoords.get_world_coords(_pc.position)
@@ -31,8 +33,7 @@ func _on_DungeonGrid_sprite_created(new_sprite: Sprite2D) -> void:
 
 
 func _on_Schedule_turn_started_pc(current_sprite: Sprite2D) -> void:
-	if current_sprite.is_in_group(TileTypes.PC):
-		set_process_unhandled_input(true)
+	set_process_unhandled_input(true)
 
 func _is_move_input(event: InputEvent) -> bool:
 	for m in _move_inputs:
@@ -55,13 +56,12 @@ func _get_new_position(event: InputEvent, source: Vector2i) -> Vector2i:
 
 	return temp
 
-func _try_move(pos : Vector2i, old_pos : Vector2i):
-	if _ref_DungeonGrid.is_legal_move(pos):
-		if _ref_DungeonGrid.does_tile_contain_sprite(pos, TileTypes.DWARF):
-			set_process_unhandled_input(false)
-			get_node("PCAttack").attack(pos)
+func _try_move(new_pos : Vector2i, old_pos : Vector2i):
+	if _ref_DungeonGrid.is_legal_move(new_pos):
+		if _ref_DungeonGrid.does_tile_contain_sprite(new_pos, TileTypes.DWARF):
+			get_node("PCAttack").attack(new_pos)
 		else:
-			_ref_DungeonGrid.move_sprite(old_pos, pos, _pc)
-			_pc.position = ConvertCoords.get_local_coords(pos)
-			#print(ConvertCoords.get_world_coords(_pc.position))
+			_ref_DungeonGrid.move_sprite(old_pos, new_pos, _pc)
+			_pc.position = ConvertCoords.get_local_coords(new_pos)
+		set_process_unhandled_input(false)
 		_ref_Schedule.end_turn()

@@ -3,18 +3,33 @@ extends Node2D
 signal illegal_move(message)
 signal sprite_removed(pos, sprite)
 signal sprite_created(sprite)
+signal dungeon_complete()
 
 var _arr : Array
 var _pc_ref
 var _astargrid : AStarGrid2D
+var _number_of_dwarves : int
 
-func _on_Main_game_ready():
+func _ready():
 	_arr.resize(DungeonSize.MAX_X * DungeonSize.MAX_Y)
 	
 	_astargrid = AStarGrid2D.new()
 	_astargrid.size = Vector2i(DungeonSize.MAX_X, DungeonSize.MAX_Y)
 	_astargrid.cell_size = Vector2i(ConvertCoords.STEP_X, ConvertCoords.STEP_Y)
 	_astargrid.update()
+
+func _setup(number_of_dwarves : int = 0):
+	_number_of_dwarves = number_of_dwarves
+	print("n dwarves: ", _number_of_dwarves)
+
+func _on_Main_game_ready():
+	pass
+#	_arr.resize(DungeonSize.MAX_X * DungeonSize.MAX_Y)
+#
+#	_astargrid = AStarGrid2D.new()
+#	_astargrid.size = Vector2i(DungeonSize.MAX_X, DungeonSize.MAX_Y)
+#	_astargrid.cell_size = Vector2i(ConvertCoords.STEP_X, ConvertCoords.STEP_Y)
+#	_astargrid.update()
 
 func get_pc_pos() -> Vector2i:
 	return ConvertCoords.get_world_coords(_pc_ref.position)
@@ -92,7 +107,7 @@ func set_sprite_at_pos(pos : Vector2i, new_sprite: Sprite2D):
 	else:
 		_arr[pos.x + pos.y * DungeonSize.MAX_Y] = [new_sprite]
 
-func _on_MapGenerator_map_finished(map: Array):
+func _init_dungeon(map: Array):
 	for x in range(DungeonSize.MAX_X):
 		for y in range(DungeonSize.MAX_Y):
 			var pos = Vector2i(x, y)
@@ -105,7 +120,7 @@ func _on_MapGenerator_map_finished(map: Array):
 			set_sprite_at_pos(pos, new_sprite)
 			if tile_type_fuzzy_search(pos, "wall"):
 				_astargrid.set_point_solid(pos, true)
-	_init_actors(3)
+	_init_actors(_number_of_dwarves)
 
 func _init_actors(n_dwarves : int):
 	var floor_groups = get_floor_groups(0)
@@ -132,10 +147,9 @@ func _init_actors(n_dwarves : int):
 		emit_signal("sprite_created", new_dwarf)
 		set_sprite_at_pos(new_pos, new_dwarf)
 
-#func _on_InitWorld_sprite_created(new_sprite: Sprite2D):
-#	if new_sprite.get_groups().find(TileTypes.PC) > -1:
-#		_pc_ref = new_sprite 
-#	var pos = ConvertCoords.get_world_coords(new_sprite.position)
-#	set_sprite_at_pos(pos, new_sprite)
-#	if tile_type_fuzzy_search(pos, "wall"):
-#		_astargrid.set_point_solid(pos, true)
+func _on_PCAttack_pc_killed_dwarf(pos : Vector2i, dwarf : Sprite2D):
+	remove_sprite_at_pos(pos, dwarf)
+	_number_of_dwarves -= 1
+	if not _number_of_dwarves:
+		emit_signal("dungeon_complete")
+
