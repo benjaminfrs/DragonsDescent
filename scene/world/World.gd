@@ -11,36 +11,16 @@ var _level : int
 
 
 @onready var SIGNAL_BIND: Array = [
-	#[
-	#	"illegal_move", "_on_DungeonGrid_illegal_move",
-	#	DUNGEON_GRID,
-	#	MODELINE,
-	#],
-	#[
-	#	"pc_attacked", "_on_PCAttack_pc_attacked",
-	#	PC_ATTACK,
-	#	MODELINE,
-	#],
+	[
+		"down_stairs", "_on_PCMove_down_stairs",
+		PC_MOVE,
+		DUNGEON_GRID,
+	],
 	[
 		"pc_killed_dwarf", "_on_PCAttack_pc_killed_dwarf",
 		PC_ATTACK,
 		DUNGEON_GRID,
 	],
-	#[
-	#	"dwarf_attacks", "_on_DwarfMove_dwarf_attacks",
-	#	DWARF_MOVE,
-	#	MODELINE, HEALTHLINE,
-	#],
-	#[
-	#	"map_finished", "_on_MapGenerator_map_finished",
-	#	MAP_GENERATOR,
-	#	DUNGEON_GRID,
-	#],
-	#[
-	#	"turn_started", "_on_Schedule_turn_started",
-	#	SCHEDULE,
-	#	SIDEBAR,
-	#],
 	[
 		"turn_started_pc", "_on_Schedule_turn_started_pc",
 		SCHEDULE,
@@ -51,11 +31,6 @@ var _level : int
 		SCHEDULE,
 		DWARF_MOVE
 	],
-	#[
-	#	"turn_ended", "_on_Schedule_turn_ended",
-	#	SCHEDULE,
-	#	MODELINE,
-	#],
 	[
 		"sprite_created", "_on_DungeonGrid_sprite_created",
 		DUNGEON_GRID,
@@ -66,16 +41,6 @@ var _level : int
 		DUNGEON_GRID,
 		SCHEDULE,
 	],
-	#[
-	#	"game_ready", "_on_Main_game_ready",
-	#	WORLD,
-	#	PC_MOVE, DUNGEON_GRID, MAP_GENERATOR,
-	#],
-#	[
-#		"map_ready", "_on_Main_map_ready",
-#		WORLD,
-#		DUNGEON_GRID,
-#	],
 ]
 
 @onready var NODE_REF: Array = [
@@ -138,7 +103,7 @@ func _set_node_ref():
 			#get_node(_get_path(n[i]))[n[0]] = get_node(_get_path(n[1]))
 			n[i][n[0]] = n[1]
 
-func build_level(map : Array):
+func build_level(map : Dictionary):
 	_set_signal()
 	_set_node_ref()
 	DUNGEON_GRID._init_dungeon(map)

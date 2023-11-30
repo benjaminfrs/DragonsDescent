@@ -1,5 +1,7 @@
 extends Node2D
 
+signal down_stairs(pos)
+
 var _ref_Schedule
 var _ref_DungeonGrid
 
@@ -23,6 +25,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	var source: Vector2i = ConvertCoords.get_world_coords(_pc.position)
 	if event.is_action_pressed(InputNames.WAIT):
 		_ref_Schedule.end_turn()
+	if event.is_action_pressed(InputNames.GO_DOWN):
+		emit_signal("down_stairs", ConvertCoords.get_world_coords(_pc.position))
 	if _is_move_input(event):
 		_try_move(_get_new_position(event, source), source)
 

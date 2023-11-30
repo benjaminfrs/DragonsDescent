@@ -20,5 +20,6 @@ static func get_valid_dirs(pos : Vector2i) -> Array:
 	
 	for d in TileRules.Directions:
 		if DungeonSize.is_inside_dungeon(pos + TileRules.Directions[d]):
+			#print(d, " ", pos, " ", TileRules.Directions[d], " ", pos + TileRules.Directions[d] )
 			dirs.append(d)
 	return dirs

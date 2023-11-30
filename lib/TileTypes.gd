@@ -25,6 +25,7 @@ const REWALL: String = "rewall"
 #upper edge
 const UEWALL: String = "uewall"
 
+const DOWN_STAIRS: String = "down_stairs"
 
 const ARROW: String = "arrow"
 
@@ -46,12 +47,12 @@ const actor_types: Array = [DWARF, PC]
 const basic_tile_weights = {
 	FLOOR : 0.45,
 	WALL : 0.2,
-	ULWALL : 0.05,
-	URWALL : 0.05,
-	BLWALL : 0.05,
-	BRWALL : 0.05,
-	LEWALL : 0.1,
-	REWALL : 0.1,
-	BEWALL : 0.1,
-	UEWALL : 0.1,
+	ULWALL : 0.025,
+	URWALL : 0.025,
+	BLWALL : 0.025,
+	BRWALL : 0.025,
+	LEWALL : 0.05,
+	REWALL : 0.05,
+	BEWALL : 0.05,
+	UEWALL : 0.05,
 }
