@@ -147,9 +147,18 @@ func _init_actors(n_dwarves : int):
 		emit_signal("sprite_created", new_dwarf)
 		set_sprite_at_pos(new_pos, new_dwarf)
 
+func place_stairs():
+	var stair_pos = get_floor_groups(0).pick_random()
+	var stairs = AssetLoader.DownStairs.instantiate() as Sprite2D
+	stairs.position = ConvertCoords.get_local_coords(stair_pos)
+	stairs.scale = Vector2(2, 2)
+	add_child(stairs)
+	set_sprite_at_pos(stair_pos, stairs)
+
 func _on_PCAttack_pc_killed_dwarf(pos : Vector2i, dwarf : Sprite2D):
 	remove_sprite_at_pos(pos, dwarf)
 	_number_of_dwarves -= 1
 	if not _number_of_dwarves:
 		emit_signal("dungeon_complete")
+		place_stairs()
 

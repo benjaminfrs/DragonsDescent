@@ -4,7 +4,7 @@
 
 [node name="PC" type="Sprite2D"]
 modulate = Color(0.670588, 0.698039, 0.74902, 1)
-z_index = 1
+z_index = 2
 texture = ExtResource("1_jxw05")
 region_enabled = true
 region_rect = Rect2(64, 144, 16, 16)

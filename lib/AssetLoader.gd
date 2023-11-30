@@ -13,6 +13,7 @@ const Uewall := preload ("res://sprite/uewall_sprite.tscn")
 const Rewall := preload ("res://sprite/rewall_sprite.tscn")
 const Lewall := preload ("res://sprite/lewall_sprite.tscn")
 const Failed := preload("res://sprite/failed_sprite.tscn")
+const DownStairs := preload("res://sprite/stair_down_sprite.tscn")
 
 static func get_asset(groupName: String) -> PackedScene:
 	if groupName == "blwall":
