@@ -32,6 +32,12 @@ const ARROW: String = "arrow"
 const mapTileNames: Array = [DWARF, FLOOR, WALL, ULWALL, BLWALL, URWALL, BRWALL, BEWALL, LEWALL, REWALL, UEWALL]
 const basic_tiles: Array = [FLOOR, WALL, ULWALL, URWALL, BLWALL, BRWALL, BEWALL, LEWALL, REWALL, UEWALL]
 const actor_types: Array = [DWARF, PC]
+
+static func is_sprite_actor(sprite : Sprite2D) -> bool:
+	for group in sprite.get_groups():
+		if actor_types.find(group) > -1:
+			return true
+	return false
 #const basic_tile_weights = {
 #	FLOOR : 0.35,
 #	WALL : 0.05,

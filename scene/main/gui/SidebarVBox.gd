@@ -17,6 +17,10 @@ func _on_Schedule_turn_started_pc(current_sprite: Sprite2D):
 		_turn_counter += 1
 		_update_turn()
 
+func _on_PCMove_pc_ended_turn():
+	_turn_counter += 1
+	_update_turn()
+
 
 func _update_turn() -> void:
 	_label_turn.text = _turn_text.format([_turn_counter])

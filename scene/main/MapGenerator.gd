@@ -5,6 +5,9 @@ signal map_finished(map)
 const MAX_X = DungeonSize.MAX_X
 const MAX_Y = DungeonSize.MAX_Y
 
+enum MAP_STATE {FULLY_COLLAPSED, FAILED, NOT_COLLAPSED}
+
+
 var rng = RandomNumberGenerator.new()
 
 func _generate_tile_matrix(max_x : int, max_y : int, possible_tiles : Array) -> Dictionary:
@@ -23,14 +26,8 @@ func _remove_illegal_tiles(pos : Vector2i, illegal_tiles : Array, tile_matrix : 
 	var temp = tile_matrix[pos].duplicate(true)
 	for t in illegal_tiles:
 		_get_legal_tiles(pos, tile_matrix).erase(t)
-	if tile_matrix[pos].size() == 0:
-		print(pos)
-		print(illegal_tiles)
-		print(temp)
 
 func _tiles_are_compatable(t1 : String, t2 : String, dir : String) -> bool:
-	if not t1:
-		return false
 	if TileRules.TileRule[t1][dir].find(t2) >= 0:
 		return false
 	return true
@@ -63,9 +60,12 @@ func _on_Main_game_ready():
 	#emit_signal("map_finished", generate())
 
 func generate() -> Dictionary:
+	var FLAG = MAP_STATE.FAILED
 	var tile_matrix = {}
-	tile_matrix = _generate_tile_matrix(MAX_X, MAX_Y, TileTypes.basic_tiles)
-	_generate_map(tile_matrix)
+	while not FLAG == MAP_STATE.FULLY_COLLAPSED:
+		tile_matrix = _generate_tile_matrix(MAX_X, MAX_Y, TileTypes.basic_tiles)
+		FLAG = _generate_map(tile_matrix)
+	
 	#return _get_fully_collapsed(tile_matrix)
 	return tile_matrix
 
@@ -109,23 +109,22 @@ func _collapse(pos : Vector2i, tile_matrix : Dictionary) -> String:
 			return t
 	return chosen_tile
 
-func _is_fully_collapsed(tile_matrix : Dictionary) -> bool:
+func _is_fully_collapsed(tile_matrix : Dictionary) -> int:
 	#print(tile_matrix)
 	for tile in tile_matrix.values():
+		if tile.size() == 0:
+			return MAP_STATE.FAILED
 		if not tile.size() == 1:
-			return false
-	return true
+			return MAP_STATE.NOT_COLLAPSED
+	return MAP_STATE.FULLY_COLLAPSED
 
-#func _get_fully_collapsed(tile_matrix : Dictionary) -> Array:
-#	var res = []
-#	for tile in tile_matrix.values():
-#		res.append(tile[0])
-#	return res
-
-func _generate_map(tile_matrix : Dictionary):
-		while not _is_fully_collapsed(tile_matrix):
+func _generate_map(tile_matrix : Dictionary) -> int:
+		var FLAG = MAP_STATE.NOT_COLLAPSED
+		while FLAG == MAP_STATE.NOT_COLLAPSED:
 			var random_pos = _get_low_entropy_pos(tile_matrix)
 			var random_tile = _collapse(random_pos, tile_matrix)
 			#print(random_tile)
 			tile_matrix[random_pos] = [random_tile]
 			_propagate_tile_rules(random_pos, tile_matrix)
+			FLAG = _is_fully_collapsed(tile_matrix)
+		return FLAG

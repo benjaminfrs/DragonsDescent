@@ -1,0 +1,20 @@
+[gd_scene load_steps=5 format=3 uid="uid://ws6qyufiuuf5"]
+
+[ext_resource type="Script" path="res://scene/player/Player.gd" id="1_4npkv"]
+[ext_resource type="Texture2D" uid="uid://8iykb86ryh2s" path="res://resource/basictiles.png" id="1_p2hhv"]
+[ext_resource type="Script" path="res://scene/player/PCMove.gd" id="2_fcww1"]
+[ext_resource type="Script" path="res://scene/player/PCAttack.gd" id="3_wh8yq"]
+
+[node name="Player" type="Sprite2D"]
+modulate = Color(0.670588, 0.698039, 0.74902, 1)
+z_index = 2
+texture = ExtResource("1_p2hhv")
+region_enabled = true
+region_rect = Rect2(64, 144, 16, 16)
+script = ExtResource("1_4npkv")
+
+[node name="PCMove" type="Node2D" parent="."]
+script = ExtResource("2_fcww1")
+
+[node name="PCAttack" type="Node2D" parent="PCMove"]
+script = ExtResource("3_wh8yq")

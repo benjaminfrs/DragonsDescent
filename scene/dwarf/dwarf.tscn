@@ -1,0 +1,17 @@
+[gd_scene load_steps=4 format=3 uid="uid://b80x35xcum34m"]
+
+[ext_resource type="Texture2D" uid="uid://8iykb86ryh2s" path="res://resource/basictiles.png" id="1_4oqc3"]
+[ext_resource type="Script" path="res://scene/dwarf/Dwarf.gd" id="2_pjxnw"]
+[ext_resource type="Script" path="res://scene/dwarf/DwarfMove.gd" id="3_mwoqm"]
+
+[node name="Dwarf" type="Sprite2D"]
+modulate = Color(0.670588, 0.698039, 0.74902, 1)
+z_index = 1
+position = Vector2(-33, 10)
+texture = ExtResource("1_4oqc3")
+region_enabled = true
+region_rect = Rect2(48, 16, 16, 16)
+script = ExtResource("2_pjxnw")
+
+[node name="DwarfMove" type="Node" parent="."]
+script = ExtResource("3_mwoqm")

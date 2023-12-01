@@ -1,6 +1,7 @@
 extends Node2D
 
 signal down_stairs(pos)
+signal pc_ended_turn()
 
 var _ref_Schedule
 var _ref_DungeonGrid
@@ -17,6 +18,9 @@ func _ready() -> void:
 		InputNames.MOVE_DOWN,
 	]
 
+func _setup(pc) -> void:
+	_pc = pc
+
 func _on_Main_game_ready():
 	pass
 
@@ -24,7 +28,7 @@ func _on_Main_game_ready():
 func _unhandled_input(event: InputEvent) -> void:
 	var source: Vector2i = ConvertCoords.get_world_coords(_pc.position)
 	if event.is_action_pressed(InputNames.WAIT):
-		_ref_Schedule.end_turn()
+		emit_signal("pc_ended_turn")
 	if event.is_action_pressed(InputNames.GO_DOWN):
 		emit_signal("down_stairs", ConvertCoords.get_world_coords(_pc.position))
 	if _is_move_input(event):
@@ -32,12 +36,16 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func _on_DungeonGrid_sprite_created(new_sprite: Sprite2D) -> void:
 	if new_sprite.is_in_group(TileTypes.PC):
-		_pc = new_sprite
-		set_process_unhandled_input(true)
+		#_pc = new_sprite
+		self.set_process_unhandled_input(true)
 
 
 func _on_Schedule_turn_started_pc(current_sprite: Sprite2D) -> void:
-	set_process_unhandled_input(true)
+	pass
+#	print("PC_starting turn")
+#	set_process_unhandled_input(true)
+func take_turn():
+	self.set_process_unhandled_input(true)
 
 func _is_move_input(event: InputEvent) -> bool:
 	for m in _move_inputs:
@@ -68,4 +76,5 @@ func _try_move(new_pos : Vector2i, old_pos : Vector2i):
 			_ref_DungeonGrid.move_sprite(old_pos, new_pos, _pc)
 			_pc.position = ConvertCoords.get_local_coords(new_pos)
 		set_process_unhandled_input(false)
-		_ref_Schedule.end_turn()
+		emit_signal("pc_ended_turn")
+		#_ref_Schedule.end_turn()

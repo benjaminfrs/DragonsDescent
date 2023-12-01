@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://djyrtjk4co4c0"]
+
+[ext_resource type="Script" path="res://scene/reward/RewardGrid.gd" id="1_7e8un"]
+
+[node name="RewardMain" type="Node"]
+
+[node name="RewardLevel" type="Node2D" parent="."]
+
+[node name="RewardGrid" type="Node2D" parent="RewardLevel"]
+script = ExtResource("1_7e8un")

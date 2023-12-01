@@ -23,21 +23,11 @@ const HEALTHLINE: String = "MainGUI/MainHBox/HealthLine"
 const MODELINE: String = "MainGUI/MainHBox/ModeLine"
 const SIDEBAR: String = "MainGUI/SidebarVBox"
 #
-const SIGNAL_BIND: Array = [
+const SIGNAL_BIND_LEVEL: Array = [
 	[
 		"illegal_move", "_on_DungeonGrid_illegal_move",
 		DUNGEON_GRID,
 		MODELINE,
-	],
-	[
-		"pc_attacked", "_on_PCAttack_pc_attacked",
-		PC_ATTACK,
-		MODELINE,
-	],
-	[
-		"dwarf_attacks", "_on_DwarfMove_dwarf_attacks",
-		DWARF_MOVE,
-		MODELINE, HEALTHLINE,
 	],
 	[
 		"turn_started_pc", "_on_Schedule_turn_started_pc",
@@ -49,15 +39,41 @@ const SIGNAL_BIND: Array = [
 		SCHEDULE,
 		MODELINE,
 	],
-	[
-		"dungeon_complete", "_on_DungeonGrid_dungeon_complete",
-		DUNGEON_GRID,
-		MAIN,
-	],
+#	[
+#		"dungeon_complete", "_on_DungeonGrid_dungeon_complete",
+#		DUNGEON_GRID,
+#		MAIN,
+#	],
 	[
 		"leaving_dungeon", "_on_DungeonGrid_leaving_dungeon",
 		DUNGEON_GRID,
 		MAIN,
+	],
+	[
+		"dwarf_placed", "_on_DungeonGrid_dwarf_placed",
+		DUNGEON_GRID,
+		MAIN,
+	],
+]
+
+const SIGNAL_BIND_PLAYER = [
+	[
+		"pc_attacked", "_on_PCAttack_pc_attacked",
+		PC_ATTACK,
+		MODELINE,
+	],
+	[
+		"pc_ended_turn", "_on_PCMove_pc_ended_turn",
+		PC_MOVE,
+		SIDEBAR,
+	],
+]
+
+const SIGNAL_BIND_DWARVES = [
+	[
+		"dwarf_attacks", "_on_DwarfMove_dwarf_attacks",
+		DWARF_MOVE,
+		MODELINE, HEALTHLINE,
 	],
 ]
 
@@ -66,35 +82,36 @@ func _init():
 	#super._init(SIGNAL_BIND, NODE_REF, LIB_REF)
 
 func _ready():
+	Globals.setup_globals()
+	_setup_signals(Globals.Player, SIGNAL_BIND_PLAYER)
 	_setup_level()
 
-func _on_DungeonGrid_dungeon_complete():
-	print("Level finished!")
-	#current_level[DUNGEON_GRID].place_stairs()
+#func _on_DungeonGrid_dungeon_complete():
+#	print("Level finished!")
 
 func _on_DungeonGrid_leaving_dungeon():
 	print("Leaving dungeon!")
 	level_ind += 1
+	
+	current_level.close_level()
 	self.remove_child(current_level)
 	_setup_level()
-	#current_level[DUNGEON_GRID].place_stairs()
+
+func _on_DungeonGrid_dwarf_placed(dwarf : Sprite2D):
+	_setup_signals(dwarf, SIGNAL_BIND_DWARVES)
 
 func _setup_level():
 	current_level = world_scene.instantiate()
+	current_level.add_child(Globals.Player)
 	add_child(current_level)
 	current_level._setup(level_ind)
-	_setup_signals_for_level(current_level)
+	_setup_signals(current_level, SIGNAL_BIND_LEVEL)
 
-	#print(self.get_children())
-	#print(get_node(world_test).get_children(false))
-	print(current_level.get_children())
-	print(current_level.get_node("DungeonGrid"))
-
-	#self.remove_child(get_node(world_test))
 	current_level.build_level(get_node("MapGenerator").generate())
-	#current_level.DUNGEON_GRID["dungeon_complete"].connect(_on_DungeonGrid_dungeon_complete)
 
-func _setup_signals_for_level(node : Node2D):
-	for s in SIGNAL_BIND:
+func _setup_signals(node : Node2D, signals : Array):
+	for s in signals:
 		for i in range(3, len(s)):
+			#print(node[s[2]])
+
 			node[s[2]][s[0]].connect(get_node(s[i])[s[1]])

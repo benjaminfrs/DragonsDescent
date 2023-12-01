@@ -1,27 +1,15 @@
-[gd_scene load_steps=7 format=3 uid="uid://bqietraj1ohmp"]
+[gd_scene load_steps=4 format=3 uid="uid://bqietraj1ohmp"]
 
 [ext_resource type="Script" path="res://scene/world/World.gd" id="1_0ucl0"]
-[ext_resource type="Script" path="res://scene/world/PCMove.gd" id="2_x5x5o"]
-[ext_resource type="Script" path="res://scene/world/PCAttack.gd" id="3_n6tra"]
 [ext_resource type="Script" path="res://scene/world/Schedule.gd" id="4_x8ice"]
 [ext_resource type="Script" path="res://scene/world/DungeonGrid.gd" id="5_dan13"]
-[ext_resource type="Script" path="res://scene/world/DwarfMove.gd" id="6_n22ua"]
 
 [node name="World" type="Node2D"]
 position = Vector2(-33, 37)
 script = ExtResource("1_0ucl0")
-
-[node name="PCMove" type="Node2D" parent="."]
-script = ExtResource("2_x5x5o")
-
-[node name="PCAttack" type="Node2D" parent="PCMove"]
-script = ExtResource("3_n6tra")
 
 [node name="Schedule" type="Node2D" parent="."]
 script = ExtResource("4_x8ice")
 
 [node name="DungeonGrid" type="Node2D" parent="."]
 script = ExtResource("5_dan13")
-
-[node name="DwarfMove" type="Node2D" parent="."]
-script = ExtResource("6_n22ua")

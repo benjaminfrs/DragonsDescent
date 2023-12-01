@@ -5,18 +5,13 @@ signal dwarf_attacks(message)
 var _ref_DungeonGrid
 var _ref_Schedule
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
-
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta):
-	pass
+func setup(ref_DungeonGrid, ref_Schedule):
+	_ref_DungeonGrid = ref_DungeonGrid
+	_ref_Schedule = ref_Schedule
 
 func _on_Schedule_turn_started_dwarf(current_sprite : Sprite2D) -> void:
 	#print(current_sprite, " is moving")
-	var pc_pos = _ref_DungeonGrid.get_pc_pos()
+	var pc_pos = Globals.Player.get_player_grid_pos()
 	if _get_distance_from_pc(current_sprite) == 1:
 		emit_signal("dwarf_attacks", "The dwarf attacks you!")
 	var shortest = _ref_DungeonGrid.get_astar_path(ConvertCoords.get_world_coords(current_sprite.position), pc_pos)
@@ -31,6 +26,6 @@ func _on_Schedule_turn_started_dwarf(current_sprite : Sprite2D) -> void:
 	_ref_Schedule.end_turn()
 
 func _get_distance_from_pc(current_sprite : Sprite2D) -> int:
-	var pc_pos : Vector2 = _ref_DungeonGrid.get_pc_pos()
+	var pc_pos : Vector2 = Globals.Player.get_player_grid_pos()
 	var current_pos = Vector2(ConvertCoords.get_world_coords(current_sprite.position))
 	return pc_pos.distance_to(current_pos)
