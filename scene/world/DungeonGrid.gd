@@ -1,4 +1,5 @@
 extends DungeonGridTemplate
+class_name DungeonGrid
 
 signal dungeon_complete()
 signal dwarf_placed(dwarf)
@@ -13,8 +14,8 @@ func _on_Main_game_ready():
 	pass
 
 func _init_dungeon(map: Dictionary):
-	for x in range(DungeonSize.MAX_X):
-		for y in range(DungeonSize.MAX_Y):
+	for x in range(_max_x):
+		for y in range(_max_y):
 			var pos = Vector2i(x, y)
 			var new_sprite: Sprite2D = AssetLoader.get_asset(map[pos][0]).instantiate() as Sprite2D
 			new_sprite.position = ConvertCoords.get_local_coords(pos, 0, 0)

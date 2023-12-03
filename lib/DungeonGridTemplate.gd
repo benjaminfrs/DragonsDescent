@@ -10,17 +10,34 @@ signal leaving_dungeon()
 var _arr : Dictionary
 var _astargrid : AStarGrid2D
 
-func _ready():
+var _max_x : int
+var _max_y : int
+
+func set_dungeon_size(max_x : int, max_y : int):
+	_max_x = max_x
+	_max_y = max_y
+	print(self, _max_x, _max_y)
 	_astargrid = AStarGrid2D.new()
-	_astargrid.size = Vector2i(DungeonSize.MAX_X, DungeonSize.MAX_Y)
+	_astargrid.size = Vector2i(_max_x, _max_y)
 	_astargrid.cell_size = Vector2i(ConvertCoords.STEP_X, ConvertCoords.STEP_Y)
 	_astargrid.update()
+
+func is_inside_dungeon(pos : Vector2i) -> bool:
+	if pos.x < 0 or pos.x >= _max_x:
+		return false
+	if pos.y < 0 or pos.y >= _max_y:
+		return false
+	return true
+
+
+func _ready():
+	print(self, "READYYYYYYYY")
 
 func get_astar_path(a : Vector2i, b : Vector2i) -> Array:
 	return _astargrid.get_id_path(a, b)
 
 func is_legal_move(pos : Vector2i) -> bool:
-	if not DungeonSize.is_inside_dungeon(pos):
+	if not is_inside_dungeon(pos):
 		emit_signal("illegal_move", "You cannot leave the dungeon >:D")
 		return false
 	if tile_type_fuzzy_search(pos, "wall"):
@@ -38,8 +55,8 @@ func _are_neighbors_floors(pos : Vector2i) -> bool:
 
 func get_floor_groups(n_groups : int) -> Array:
 	var groups = []
-	for x in range(DungeonSize.MAX_X):
-		for y in range(DungeonSize.MAX_Y):
+	for x in range(_max_x):
+		for y in range(_max_y):
 			if _are_neighbors_floors(Vector2i(x, y)):
 				groups.append(Vector2i(x, y))
 	return groups
@@ -77,12 +94,12 @@ func move_sprite(old_pos : Vector2i, new_pos : Vector2i, sprite : Sprite2D):
 		_astargrid.set_point_solid(new_pos, true)
 
 func remove_sprite_at_pos(pos : Vector2i, sprite : Sprite2D):
-	#print(_arr[pos.x + pos.y * DungeonSize.MAX_Y])
+	#print(_arr[pos.x + pos.y * _max_y])
 	_arr[pos].erase(sprite)
 	for group in sprite.get_groups():
 		if TileTypes.actor_types.find(group) > -1:
 			_astargrid.set_point_solid(pos, false)
-	#print(_arr[pos.x + pos.y * DungeonSize.MAX_Y])
+	#print(_arr[pos.x + pos.y * _max_y])
 	emit_signal("sprite_removed", pos, sprite)
 
 func set_sprite_at_pos(pos : Vector2i, new_sprite: Sprite2D):
@@ -92,6 +109,15 @@ func set_sprite_at_pos(pos : Vector2i, new_sprite: Sprite2D):
 	else:
 		_arr[pos] = [new_sprite]
 
+func _init_player():
+	var floor_groups = get_floor_groups(0)
+	var pc_pos = floor_groups.pop_front()
+	
+	Globals.Player.set_grid_pos(pc_pos)
+	emit_signal("sprite_created", Globals.Player.get_pc())
+	set_sprite_at_pos(pc_pos, Globals.Player.get_pc())
+
+
 func place_stairs():
 	var stair_pos = get_floor_groups(0).pick_random()
 	var stairs = AssetLoader.DownStairs.instantiate() as Sprite2D
@@ -100,3 +126,9 @@ func place_stairs():
 	stairs.add_to_group(TileTypes.DOWN_STAIRS)
 	add_child(stairs)
 	set_sprite_at_pos(stair_pos, stairs)
+
+
+func _on_PCMove_down_stairs(pos : Vector2i):
+	#print("moving down stairs")
+	if does_tile_contain_sprite(pos, TileTypes.DOWN_STAIRS):
+		emit_signal("leaving_dungeon")

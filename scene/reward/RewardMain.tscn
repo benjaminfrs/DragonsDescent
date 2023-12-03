@@ -1,10 +1,14 @@
-[gd_scene load_steps=2 format=3 uid="uid://djyrtjk4co4c0"]
+[gd_scene load_steps=4 format=3 uid="uid://djyrtjk4co4c0"]
 
 [ext_resource type="Script" path="res://scene/reward/RewardGrid.gd" id="1_7e8un"]
+[ext_resource type="Script" path="res://scene/reward/RewardLevel.gd" id="1_87nyo"]
+[ext_resource type="Script" path="res://scene/reward/Schedule.gd" id="3_iljie"]
 
-[node name="RewardMain" type="Node"]
+[node name="RewardLevel" type="Node2D"]
+script = ExtResource("1_87nyo")
 
-[node name="RewardLevel" type="Node2D" parent="."]
-
-[node name="RewardGrid" type="Node2D" parent="RewardLevel"]
+[node name="RewardGrid" type="Node2D" parent="."]
 script = ExtResource("1_7e8un")
+
+[node name="Schedule" type="Node" parent="."]
+script = ExtResource("3_iljie")
