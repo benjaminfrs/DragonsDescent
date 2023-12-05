@@ -1,0 +1,8 @@
+[gd_scene load_steps=2 format=3 uid="uid://cgls6cpojqbna"]
+
+[ext_resource type="Texture2D" uid="uid://fvo6iefgx2st" path="res://resource/blue_bg32x32.png" id="1_82314"]
+
+[node name="TextureRect" type="TextureRect"]
+custom_minimum_size = Vector2(90, 40)
+size_flags_horizontal = 0
+texture = ExtResource("1_82314")

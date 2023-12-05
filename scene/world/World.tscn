@@ -8,8 +8,8 @@
 position = Vector2(-33, 37)
 script = ExtResource("1_0ucl0")
 
-[node name="Schedule" type="Node2D" parent="."]
-script = ExtResource("4_x8ice")
-
 [node name="DungeonGrid" type="Node2D" parent="."]
 script = ExtResource("5_dan13")
+
+[node name="Schedule" type="Node2D" parent="."]
+script = ExtResource("4_x8ice")

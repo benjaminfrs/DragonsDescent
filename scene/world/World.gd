@@ -10,6 +10,7 @@ var _level : int
 @onready var PLAYER = Globals.Player
 @onready var PC_MOVE = PLAYER.get_node("PCMove")
 @onready var PC_ATTACK = PC_MOVE.get_node("PCAttack")
+@onready var RELIC_INVENTORY = PLAYER.RELIC_INVENTORY
 
 var WORLD = self
 
@@ -29,13 +30,13 @@ var dwarf_map = {}
 		PC_MOVE,
 	],
 	[
-		"pc_ended_turn", "_on_PCMove_pc_ended_turn",
-		PC_MOVE,
+		"ended_turn", "_on_Player_ended_turn",
+		PLAYER,
 		SCHEDULE,
 	],
 	[
-		"down_stairs", "_on_PCMove_down_stairs",
-		PC_MOVE,
+		"down_stairs", "_on_Player_down_stairs",
+		PLAYER,
 		DUNGEON_GRID,
 	],
 	[
@@ -53,18 +54,18 @@ var dwarf_map = {}
 		DUNGEON_GRID,
 		WORLD,
 	],
-#	[
-#		"dwarf_removed", "_on_DungeonGrid_dwarf_removed",
-#		DUNGEON_GRID,
-#		WORLD,
-#	],
+	[
+		"dungeon_initialized", "_on_DungeonGrid_dungeon_initialized",
+		DUNGEON_GRID,
+		WORLD,
+	],
 ]
 
 @onready var NODE_REF: Array = [
 	[
 		"_ref_DungeonGrid",
 		DUNGEON_GRID,
-		PC_MOVE, PC_ATTACK,
+		PC_MOVE, PC_ATTACK, RELIC_INVENTORY,
 	],
 	[
 		"_ref_Schedule",
@@ -72,12 +73,6 @@ var dwarf_map = {}
 		PC_MOVE, PC_ATTACK,
 	],
 ]
-
-func _ready():
-	pass
-	#_set_path()
-	#_set_signal()
-	#_set_node_ref()
 
 func _setup(level : int):
 	_level = level
@@ -106,29 +101,11 @@ func build_level(map : Dictionary):
 	DUNGEON_GRID.set_dungeon_size(DungeonSize.MAX_X, DungeonSize.MAX_Y)
 	DUNGEON_GRID._init_dungeon(map)
 
+func _on_DungeonGrid_dungeon_initialized():
+	SCHEDULE.end_turn()
+
 func _on_DungeonGrid_dwarf_placed(dwarf : Sprite2D):
-	#print("setting up da dwarf")
 	dwarf.setup(DUNGEON_GRID, SCHEDULE)
-	var SIGNALS_FOR_DWARVES: Array = [
-		[
-		"turn_started_dwarf", "_on_Schedule_turn_started_dwarf",
-		SCHEDULE,
-		dwarf.DWARF_MOVE,
-		],
-	]
-	_set_signal(SIGNALS_FOR_DWARVES)
-	
-
-#func _on_DungeonGrid_dwarf_removed(dwarf : Node2D):
-#	pass
-
-func _on_PCMove_down_stairs():
-	pass
-#	print("HELLO!", self.get_children())
-#	self.remove_child(Globals.Player)
-#	print(self.get_children())
 
 func close_level():
-	#print("HELLO!", self.get_children())
 	self.remove_child(Globals.Player)
-	#print("closing level", self.get_children())

@@ -1,7 +1,7 @@
 extends Node
 class_name ScheduleTemplate
 
-#signal turn_started_pc(current_sprite)
+signal turn_started_pc(current_sprite)
 #signal turn_started_dwarf(current_sprite)
 #signal turn_started(current_sprite)
 #signal turn_ended(current_sprite)
@@ -33,5 +33,5 @@ func _on_DungeonGrid_sprite_removed(pos : Vector2i, sprite : Sprite2D):
 	sprite.queue_free()
 	_pointer = _actors.find(_get_current())
 
-func _on_PCMove_pc_ended_turn():
+func _on_Player_ended_turn():
 	end_turn()

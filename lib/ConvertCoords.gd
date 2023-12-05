@@ -1,7 +1,7 @@
 class_name ConvertCoords
 
-const START_X: int = 240
-const START_Y: int = 140
+const START_X: int = 716
+const START_Y: int = 260
 const STEP_X: int = 48
 const STEP_Y: int = 48
 

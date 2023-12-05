@@ -8,23 +8,25 @@ const world_scene = preload("res://scene/world/World.tscn")
 const reward_scene = preload("res://scene/reward/RewardMain.tscn")
 
 var current_level : Node2D
-var level_ind : int = 1
+var level_ind : int = 2
 
+const PLAYER: String = "SELF"
+const PC_MOVE: String = "PC_MOVE"
+const PC_ATTACK: String = "PC_ATTACK"
+const RELIC_INVENTORY: String = "RELIC_INVENTORY"
 ##World references
 const DUNGEON_GRID: String = "DUNGEON_GRID"
 const REWARD_GRID: String = "REWARD_GRID"
 const DWARF_MOVE: String = "DWARF_MOVE"
-const PC_MOVE: String = "PC_MOVE"
-const PC_ATTACK: String = "PC_ATTACK"
 const SCHEDULE: String = "SCHEDULE"
 #const MAP_GENERATOR: String = "MapGenerator"
 const MAIN: String = "/root/Main"
 #const world_test: String = "World"
 #
 #GUI references
-const HEALTHLINE: String = "MainGUI/MainHBox/HealthLine"
-const MODELINE: String = "MainGUI/MainHBox/ModeLine"
-const SIDEBAR: String = "MainGUI/SidebarVBox"
+const HEALTHLINE: String = "MainGUI/MarginContainer/MainHBox/VBoxContainer/HealthLine"
+const MODELINE: String = "MainGUI/MarginContainer/MainHBox/ModeLine"
+const TURN_LINE: String = "MainGUI/MarginContainer/MainHBox/VBoxContainer/TurnLine"
 #
 const SIGNAL_BIND_LEVEL: Array = [
 	[
@@ -32,21 +34,6 @@ const SIGNAL_BIND_LEVEL: Array = [
 		DUNGEON_GRID,
 		MODELINE,
 	],
-	[
-		"turn_started_pc", "_on_Schedule_turn_started_pc",
-		SCHEDULE,
-		SIDEBAR,
-	],
-	[
-		"turn_ended", "_on_Schedule_turn_ended",
-		SCHEDULE,
-		MODELINE,
-	],
-#	[
-#		"dungeon_complete", "_on_DungeonGrid_dungeon_complete",
-#		DUNGEON_GRID,
-#		MAIN,
-#	],
 	[
 		"leaving_dungeon", "_on_DungeonGrid_leaving_dungeon",
 		DUNGEON_GRID,
@@ -65,16 +52,6 @@ const SIGNAL_BIND_REWARD_LEVEL: Array = [
 		REWARD_GRID,
 		MODELINE,
 	],
-#	[
-#		"turn_started_pc", "_on_Schedule_turn_started_pc",
-#		SCHEDULE,
-#		SIDEBAR,
-#	],
-#	[
-#		"turn_ended", "_on_Schedule_turn_ended",
-#		SCHEDULE,
-#		MODELINE,
-#	],
 	[
 		"leaving_dungeon", "_on_DungeonGrid_leaving_dungeon",
 		REWARD_GRID,
@@ -89,9 +66,19 @@ const SIGNAL_BIND_PLAYER = [
 		MODELINE,
 	],
 	[
-		"pc_ended_turn", "_on_PCMove_pc_ended_turn",
-		PC_MOVE,
-		SIDEBAR,
+		"ended_turn", "_on_Player_ended_turn",
+		PLAYER,
+		TURN_LINE,
+	],
+	[
+		"found_duplicate_relic", "_on_RelicInventory_found_duplicate_relic",
+		RELIC_INVENTORY,
+		MODELINE,
+	],
+	[
+		"equipped_duplicate_relic", "_on_RelicInventory_equipped_duplicate_relic",
+		RELIC_INVENTORY,
+		MODELINE,
 	],
 ]
 
@@ -103,18 +90,10 @@ const SIGNAL_BIND_DWARVES = [
 	],
 ]
 
-func _init():
-	pass
-	#super._init(SIGNAL_BIND, NODE_REF, LIB_REF)
-
 func _ready():
 	Globals.setup_globals()
 	_setup_signals(Globals.Player, SIGNAL_BIND_PLAYER)
-	#_setup_dungeon_level()
 	_build_next_level()
-
-#func _on_DungeonGrid_dungeon_complete():
-#	print("Level finished!")
 
 func _on_DungeonGrid_leaving_dungeon():
 	print("Leaving dungeon!")
@@ -123,7 +102,7 @@ func _on_DungeonGrid_leaving_dungeon():
 func _build_next_level():
 	if current_level:
 		current_level.close_level()
-		current_level.free()
+		current_level.queue_free()
 		
 	if not level_ind % 2:
 		_setup_reward_level()

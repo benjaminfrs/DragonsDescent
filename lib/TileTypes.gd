@@ -29,6 +29,12 @@ const DOWN_STAIRS: String = "down_stairs"
 
 const ARROW: String = "arrow"
 
+const REWARD: String = "reward"
+const ITEM_HOLDER: String = "item_holder"
+const RELIC: String = "relic"
+const BOOTS_OF_SPEED: String = "boots_of_speed_reward"
+
+const reward_items = [BOOTS_OF_SPEED]
 const mapTileNames: Array = [DWARF, FLOOR, WALL, ULWALL, BLWALL, URWALL, BRWALL, BEWALL, LEWALL, REWALL, UEWALL]
 const basic_tiles: Array = [FLOOR, WALL, ULWALL, URWALL, BLWALL, BRWALL, BEWALL, LEWALL, REWALL, UEWALL]
 const actor_types: Array = [DWARF, PC]

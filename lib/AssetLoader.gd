@@ -14,30 +14,40 @@ const Rewall := preload ("res://sprite/rewall_sprite.tscn")
 const Lewall := preload ("res://sprite/lewall_sprite.tscn")
 const Failed := preload("res://sprite/failed_sprite.tscn")
 const DownStairs := preload("res://sprite/stair_down_sprite.tscn")
+const ItemHolder := preload("res://sprite/test_item.tscn")
+const BootsOfSpeed := preload("res://scene/reward/reward_items/BootsOfSpeed.tscn")
+
+const SKILL_BAR := preload("res://scene/ui_elements/skill_slot.tscn")
 
 static func get_asset(groupName: String) -> PackedScene:
-	if groupName == "blwall":
+	if groupName == TileTypes.BLWALL:
 		return Blwall
 	if groupName == "failed":
 		return Failed
-	if groupName == "lewall":
+	if groupName == TileTypes.LEWALL:
 		return Lewall
-	if groupName == "rewall":
+	if groupName == TileTypes.REWALL:
 		return Rewall
-	if groupName == "uewall":
+	if groupName == TileTypes.UEWALL:
 		return Uewall
-	if groupName == "brwall":
+	if groupName == TileTypes.BRWALL:
 		return Brwall
-	if groupName == "bewall":
+	if groupName == TileTypes.BEWALL:
 		return Bewall
-	if groupName == "ulwall":
+	if groupName == TileTypes.ULWALL:
 		return Ulwall
-	if groupName == "urwall":
+	if groupName == TileTypes.URWALL:
 		return Urwall
-	if groupName == ("wall"):
+	if groupName == TileTypes.WALL:
 		return Wall
-	if groupName == "dwarf":
+	if groupName == TileTypes.DWARF:
 		return Dwarf
-	if groupName == "floor":
+	if groupName == TileTypes.FLOOR:
 		return Floor
+	if groupName == TileTypes.ITEM_HOLDER:
+		return ItemHolder
+	if groupName == TileTypes.BOOTS_OF_SPEED:
+		return BootsOfSpeed
 	return null
+
+const RewardItems = [BootsOfSpeed]

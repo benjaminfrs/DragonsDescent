@@ -3,6 +3,7 @@ class_name DungeonGrid
 
 signal dungeon_complete()
 signal dwarf_placed(dwarf)
+signal dungeon_initialized()
 
 var _number_of_dwarves : int
 
@@ -17,18 +18,10 @@ func _init_dungeon(map: Dictionary):
 	for x in range(_max_x):
 		for y in range(_max_y):
 			var pos = Vector2i(x, y)
-			var new_sprite: Sprite2D = AssetLoader.get_asset(map[pos][0]).instantiate() as Sprite2D
-			new_sprite.position = ConvertCoords.get_local_coords(pos, 0, 0)
-			new_sprite.add_to_group(map[pos][0])
-			new_sprite.scale = Vector2(3, 3)
-			add_child(new_sprite)
-			emit_signal("sprite_created", new_sprite)
-			set_sprite_at_pos(pos, new_sprite)
-			if tile_type_fuzzy_search(pos, "wall"):
-				_astargrid.set_point_solid(pos, true)
+			_create_sprite(map[pos][0], pos)
 	_init_actors()
-	#place_stairs()
 	_place_dwarves(_number_of_dwarves)
+	emit_signal("dungeon_initialized")
 
 
 func _init_actors():
@@ -42,27 +35,9 @@ func _init_actors():
 func _place_dwarves(n_dwarves : int):
 	var floor_groups = get_floor_groups(0)
 	while n_dwarves:
-		var new_dwarf = AssetLoader.Dwarf.instantiate() as Sprite2D
-		add_child(new_dwarf)
-		#print(new_dwarf.get_children())
-		var dwarf_pos = floor_groups.pop_back()
-		emit_signal("dwarf_placed", new_dwarf)
-		emit_signal("sprite_created", new_dwarf)
-		new_dwarf.position = ConvertCoords.get_local_coords(dwarf_pos)
-
-		set_sprite_at_pos(dwarf_pos, new_dwarf)
+		var dwarf = _create_sprite(TileTypes.DWARF, floor_groups.pop_back(), Vector2(1, 1))
+		emit_signal("dwarf_placed", dwarf)
 		n_dwarves -= 1
-
-	for _ind in range(n_dwarves):
-		var new_dwarf = AssetLoader.Dwarf.instantiate() as Sprite2D
-		var new_pos = floor_groups.pop_back()
-
-		new_dwarf.position = ConvertCoords.get_local_coords(new_pos)
-		new_dwarf.scale = Vector2(2, 2)
-		new_dwarf.add_to_group(TileTypes.DWARF)
-		add_child(new_dwarf)
-		emit_signal("sprite_created", new_dwarf)
-		set_sprite_at_pos(new_pos, new_dwarf)
 
 func place_stairs():
 	var stair_pos = get_floor_groups(0).pick_random()

@@ -6,24 +6,30 @@ extends Node2D
 @onready var PLAYER = Globals.Player
 @onready var PC_MOVE = PLAYER.get_node("PCMove")
 @onready var PC_ATTACK = PC_MOVE.get_node("PCAttack")
+@onready var RELIC_INVENTORY = PLAYER.RELIC_INVENTORY
 
 var REWARD_LEVEL = self
 
 @onready var SIGNAL_BIND: Array = [
 	[
-		"pc_ended_turn", "_on_PCMove_pc_ended_turn",
-		PC_MOVE,
+		"ended_turn", "_on_Player_ended_turn",
+		PLAYER,
 		SCHEDULE,
 	],
 	[
-		"down_stairs", "_on_PCMove_down_stairs",
-		PC_MOVE,
+		"down_stairs", "_on_Player_down_stairs",
+		PLAYER,
 		REWARD_GRID,
 	],
 	[
 		"sprite_created", "_on_DungeonGrid_sprite_created",
 		REWARD_GRID,
 		PC_MOVE, SCHEDULE,
+	],
+	[
+		"item_picked_up", "_on_Player_item_picked_up",
+		PLAYER,
+		REWARD_GRID,
 	],
 	[
 		"sprite_removed", "_on_DungeonGrid_sprite_removed",
@@ -36,7 +42,7 @@ var REWARD_LEVEL = self
 	[
 		"_ref_DungeonGrid",
 		REWARD_GRID,
-		PC_MOVE, PC_ATTACK,
+		PC_MOVE, PC_ATTACK, RELIC_INVENTORY,
 	],
 	[
 		"_ref_Schedule",
@@ -67,6 +73,7 @@ func build_level():
 	_set_node_ref()
 	REWARD_GRID.set_dungeon_size(4, 4)
 	REWARD_GRID._init_dungeon()
+	SCHEDULE.end_turn()
 
 func _on_PCMove_down_stairs():
 	pass

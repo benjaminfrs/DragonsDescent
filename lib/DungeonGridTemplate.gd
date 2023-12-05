@@ -68,6 +68,13 @@ func get_actor_at_pos(pos : Vector2i) -> Sprite2D:
 				return sprite
 	return null
 
+func get_item_at_pos(pos : Vector2i) -> Sprite2D:
+	for item in TileTypes.reward_items:
+		for sprite in _arr[pos]:
+			if sprite.get_groups().find(item) > -1:
+				return sprite
+	return null
+
 func does_tile_contain_sprite(pos : Vector2i, sprite_type : String) -> bool:
 	for sprite in _arr[pos]:
 		if is_sprite_in_group(sprite, sprite_type):
@@ -128,7 +135,20 @@ func place_stairs():
 	set_sprite_at_pos(stair_pos, stairs)
 
 
-func _on_PCMove_down_stairs(pos : Vector2i):
+func _on_Player_down_stairs(pos : Vector2i):
 	#print("moving down stairs")
 	if does_tile_contain_sprite(pos, TileTypes.DOWN_STAIRS):
 		emit_signal("leaving_dungeon")
+
+func _create_sprite(sprite_type : String, pos : Vector2i, s_scale : Vector2 = Vector2(3,3)) -> Sprite2D:
+	print("creating sprite: ", pos, ConvertCoords.get_local_coords(pos))
+	var new_sprite = AssetLoader.get_asset(sprite_type).instantiate() as Sprite2D
+	new_sprite.add_to_group(sprite_type)
+	new_sprite.scale = s_scale
+	new_sprite.position = ConvertCoords.get_local_coords(pos)
+	add_child(new_sprite)
+	emit_signal("sprite_created", new_sprite)
+	set_sprite_at_pos(pos, new_sprite)
+	if tile_type_fuzzy_search(pos, "wall"):
+		_astargrid.set_point_solid(pos, true)
+	return new_sprite

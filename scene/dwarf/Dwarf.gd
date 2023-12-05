@@ -11,7 +11,7 @@ func _ready():
 func setup(ref_DungeonGrid : Node2D, ref_Schedule : Node2D):
 	DWARF_MOVE.setup(ref_DungeonGrid, ref_Schedule, self)
 	self.add_to_group(TileTypes.DWARF)
-	self.scale = Scale
+	#self.scale = Scale
 
 func take_turn():
 	DWARF_MOVE.take_turn()
