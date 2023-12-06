@@ -16,6 +16,7 @@ const Failed := preload("res://sprite/failed_sprite.tscn")
 const DownStairs := preload("res://sprite/stair_down_sprite.tscn")
 const ItemHolder := preload("res://sprite/test_item.tscn")
 const BootsOfSpeed := preload("res://scene/reward/reward_items/BootsOfSpeed.tscn")
+const CloakOfInvisibility := preload("res://scene/reward/reward_items/CloakOfInvisibility.tscn")
 
 const SKILL_BAR := preload("res://scene/ui_elements/skill_slot.tscn")
 
@@ -48,6 +49,8 @@ static func get_asset(groupName: String) -> PackedScene:
 		return ItemHolder
 	if groupName == TileTypes.BOOTS_OF_SPEED:
 		return BootsOfSpeed
+	if groupName == TileTypes.CLOAK_OF_INVISIBILITY:
+		return CloakOfInvisibility
 	return null
 
 const RewardItems = [BootsOfSpeed]
