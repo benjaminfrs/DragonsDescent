@@ -23,6 +23,20 @@ func _init_dungeon(map: Dictionary):
 	_place_dwarves(_number_of_dwarves)
 	emit_signal("dungeon_initialized")
 
+func is_legal_move_dwarf(pos : Vector2i) -> bool:
+	if not is_inside_dungeon(pos):
+		#emit_signal("illegal_move", "You cannot leave the dungeon >:D")
+		return false
+	if tile_type_fuzzy_search(pos, "wall"):
+		#emit_signal("illegal_move", "You cannot move through walls...yet")
+		return false
+	if tile_type_fuzzy_search(pos, "dwarf"):
+		#emit_signal("illegal_move", "There is a dwarf there!")
+		return false
+	if tile_type_fuzzy_search(pos, "pc"):
+		#emit_signal("illegal_move", "Good thing that dwarf can't see you...")
+		return false
+	return true
 
 func _init_actors():
 	var floor_groups = get_floor_groups(0)

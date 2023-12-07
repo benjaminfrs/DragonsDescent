@@ -27,6 +27,7 @@ const MAIN: String = "/root/Main"
 const HEALTHLINE: String = "MainGUI/MarginContainer/MainHBox/VBoxContainer/HealthLine"
 const MODELINE: String = "MainGUI/MarginContainer/MainHBox/ModeLine"
 const TURN_LINE: String = "MainGUI/MarginContainer/MainHBox/VBoxContainer/TurnLine"
+const SKILL_BAR: String = "MainGUI/TextureRect/MarginContainer/SkillBar"
 #
 const SIGNAL_BIND_LEVEL: Array = [
 	[
@@ -71,6 +72,11 @@ const SIGNAL_BIND_PLAYER = [
 		TURN_LINE,
 	],
 	[
+		"pressed_skill", "_on_Player_pressed_skill",
+		PLAYER,
+		SKILL_BAR,
+	],
+	[
 		"found_duplicate_relic", "_on_RelicInventory_found_duplicate_relic",
 		RELIC_INVENTORY,
 		MODELINE,
@@ -79,6 +85,11 @@ const SIGNAL_BIND_PLAYER = [
 		"equipped_duplicate_relic", "_on_RelicInventory_equipped_duplicate_relic",
 		RELIC_INVENTORY,
 		MODELINE,
+	],
+	[
+		"equipped_useable_relic", "_on_RelicInventory_equipped_useable_relic",
+		RELIC_INVENTORY,
+		SKILL_BAR,
 	],
 ]
 
@@ -132,6 +143,7 @@ func _setup_reward_level():
 	current_level.build_level()
 
 func _setup_signals(node : Node2D, signals : Array):
+# [signal_name, func_name, source_node, target_node]
 	for s in signals:
 		for i in range(3, len(s)):
 			#print(node[s[2]])

@@ -81,10 +81,7 @@ func try_move(old_pos : Vector2i, event : InputEvent) -> bool:
 		if _ref_DungeonGrid.does_tile_contain_sprite(new_pos, TileTypes.DWARF):
 			get_node("PCAttack").attack(new_pos)
 			return true
-		else:
-			_ref_DungeonGrid.move_sprite(old_pos, new_pos, _pc)
-			_pc.position = ConvertCoords.get_local_coords(new_pos)
-			return true
+		_ref_DungeonGrid.move_sprite(old_pos, new_pos, _pc)
+		_pc.position = ConvertCoords.get_local_coords(new_pos)
+		return true
 	return false
-		#set_process_unhandled_input(false)
-		#emit_signal("pc_ended_turn")

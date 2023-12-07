@@ -17,6 +17,7 @@ const DownStairs := preload("res://sprite/stair_down_sprite.tscn")
 const ItemHolder := preload("res://sprite/test_item.tscn")
 const BootsOfSpeed := preload("res://scene/reward/reward_items/BootsOfSpeed.tscn")
 const CloakOfInvisibility := preload("res://scene/reward/reward_items/CloakOfInvisibility.tscn")
+const cloak_of_invisibility_reward_icon = "res://resource/textures/cloak_of_invisibility_icon.png"
 
 const SKILL_BAR := preload("res://scene/ui_elements/skill_slot.tscn")
 

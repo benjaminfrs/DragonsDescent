@@ -17,8 +17,15 @@ func _on_Schedule_turn_started_dwarf(current_sprite : Sprite2D) -> void:
 
 func take_turn():
 	var pc_pos = Globals.Player.get_grid_pos()
+	if Globals.Player.get_property("invisible"):
+		while not _try_random_step():
+			pass
+		_ref_Schedule.end_turn()
+		return
 	if _get_distance_from_pc(_dwarf) == 1:
 		emit_signal("dwarf_attacks", "The dwarf attacks you!")
+		_ref_Schedule.end_turn()
+		return
 	var shortest = _ref_DungeonGrid.get_astar_path(ConvertCoords.get_world_coords(_dwarf.position), pc_pos)
 	if shortest.size() > 2:
 			_ref_DungeonGrid.move_sprite(_dwarf.get_grid_pos(), shortest[1], _dwarf)
@@ -29,3 +36,11 @@ func _get_distance_from_pc(current_sprite : Sprite2D) -> int:
 	var pc_pos : Vector2 = Globals.Player.get_grid_pos()
 	var current_pos = Vector2(ConvertCoords.get_world_coords(current_sprite.position))
 	return pc_pos.distance_to(current_pos)
+
+func _try_random_step():
+	var new_pos = TileRules.get_neighbors(_dwarf.get_grid_pos()).pick_random()
+	if _ref_DungeonGrid.is_legal_move_dwarf(new_pos):
+		_ref_DungeonGrid.move_sprite(_dwarf.get_grid_pos(), new_pos, _dwarf)
+		_dwarf.set_grid_pos(new_pos)
+		return true
+	return false

@@ -7,7 +7,6 @@
 [ext_resource type="Script" path="res://scene/player/RelicInventory.gd" id="5_xfq7s"]
 
 [node name="Player" type="Sprite2D"]
-modulate = Color(0.670588, 0.698039, 0.74902, 1)
 z_index = 2
 texture = ExtResource("1_gb8ql")
 region_enabled = true

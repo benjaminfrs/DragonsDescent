@@ -1,8 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://cgls6cpojqbna"]
-
-[ext_resource type="Texture2D" uid="uid://dc3fmpbj6f4j0" path="res://resource/textures/cloak_of_invisibility_icon.png" id="1_4a1rp"]
+[gd_scene format=3 uid="uid://cgls6cpojqbna"]
 
 [node name="TextureRect" type="TextureRect"]
+z_index = 2
 custom_minimum_size = Vector2(90, 40)
 size_flags_horizontal = 0
-texture = ExtResource("1_4a1rp")

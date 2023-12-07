@@ -5,6 +5,9 @@ signal down_stairs(pos)
 signal ended_turn()
 signal took_action()
 signal item_picked_up(item)
+signal pressed_skill(skill_ind)
+
+enum {STATUS, STATUS_DURATION}
 
 const Scale = Vector2(1.5, 1.5)
 var PC_MOVE
@@ -12,15 +15,9 @@ var PC_ATTACK
 var RELIC_INVENTORY
 var SELF
 var _movement_speed = 1
-var _current_energy = _movement_speed
+var _current_energy : int
 var _most_recent_key : InputEvent
 
-#const move_inputs = [
-#		InputNames.MOVE_LEFT,
-#		InputNames.MOVE_RIGHT,
-#		InputNames.MOVE_UP,
-#		InputNames.MOVE_DOWN,
-#	]
 
 # Called when the node enters the scene tree for the first time.
 func setup_player():
@@ -33,7 +30,13 @@ func setup_player():
 	SELF = self
 	PC_MOVE._setup(self)
 	PC_ATTACK = PC_MOVE.get_node("PCAttack")
+	self.set_property("movement_speed", 1)
+	self.set_property("invisible", false)
+	self.set_property("status_list", [])
 	self.set_process_unhandled_input(false)
+
+#func set_status(status : Array):
+#
 
 func get_pc() -> Sprite2D:
 	return self
@@ -41,15 +44,31 @@ func get_pc() -> Sprite2D:
 func take_turn():
 	#print("Player taking turn - current energy: ", _current_energy)
 	#self.set_process_unhandled_input(true)
-	_current_energy = _movement_speed
+	_current_energy = _properties["movement_speed"]
 	self.set_process_unhandled_input(true)
+	self.process_status()
 	while _current_energy:
 		#print("Player taking turn - current energy: ", _current_energy)
 		await self.took_action
 
-	_current_energy = _movement_speed
+	#_current_energy = _movement_speed
+
 	self.set_process_unhandled_input(false)
 	emit_signal("ended_turn")
+
+func process_status():
+	for status in self.get_property("status_list"):
+		status[STATUS_DURATION] -= 1
+		if status[STATUS_DURATION] == 0:
+			var end_status_func = "_end_" + status[STATUS]
+			var callable = Callable(self, end_status_func)
+			callable.call(status)
+
+
+func _end_invisible(status):
+	self.set_property(status[STATUS], false)
+	self.get_property("status_list").erase(status)
+	self.self_modulate.a = 1
 
 func _on_Main_game_ready():
 	pass
@@ -62,6 +81,9 @@ func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed(InputNames.GO_DOWN):
 		_current_energy -= 1
 		emit_signal("down_stairs", ConvertCoords.get_world_coords(self.position))
+	var skill_ind = _is_skill_input(event)
+	if skill_ind > -1:
+		emit_signal("pressed_skill", skill_ind)
 	if _is_move_input(event):
 		if not try_get(source, event):
 			if PC_MOVE.try_move(source, event):
@@ -85,7 +107,8 @@ func try_get(source : Vector2i, event : InputEvent) -> bool:
 				RELIC_INVENTORY.add_child(item)
 				item.visible = false
 				if RELIC_INVENTORY.item_equipped(item):
-					item.equip(self)
+					var item_signals = item.equip(self)
+					_setup_item_signals(item_signals)
 				return true
 	return false
 
@@ -95,9 +118,27 @@ func _on_DungeonGrid_sprite_created(new_sprite: Sprite2D) -> void:
 #		#_pc = new_sprite
 #		self.set_process_unhandled_input(true)
 
+func _on_CloakOfInvisibility_used_item(status : String, status_duration : int, actor : Sprite2D):
+	if self == actor:
+		self.set_property(status, true)
+		self.get_property("status_list").append([status, status_duration])
+		self.self_modulate.a = 0.33
 
 func _is_move_input(event: InputEvent) -> bool:
 	for m in InputNames.MOVE_INPUTS:
 		if event.is_action_pressed(m):
 			return true
 	return false
+
+func _is_skill_input(event : InputEvent) -> int:
+	for input_ind in InputNames.SKILL_INPUTS.size():
+		if event.is_action_pressed(InputNames.SKILL_INPUTS[input_ind]):
+			return input_ind
+	return -1
+
+func _setup_item_signals(signals : Array):
+	#['signal_name', 'function_name', item]
+	for s in signals:
+		for i in range(2, len(s)):
+			#print(node[s[2]])
+			s[i][s[0]].connect(self[s[1]])
