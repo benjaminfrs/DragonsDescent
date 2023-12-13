@@ -17,10 +17,76 @@ func set_dungeon_size(max_x : int, max_y : int):
 	_max_x = max_x
 	_max_y = max_y
 	print(self, _max_x, _max_y)
+	
 	_astargrid = AStarGrid2D.new()
 	_astargrid.size = Vector2i(_max_x, _max_y)
 	_astargrid.cell_size = Vector2i(ConvertCoords.STEP_X, ConvertCoords.STEP_Y)
 	_astargrid.update()
+	_init_out_of_bounds_area()
+
+func _init_out_of_bounds_area():
+	var height = ProjectSettings.get_setting("display/window/size/viewport_height")
+	var screen_width_mid = ProjectSettings.get_setting("display/window/size/viewport_width") / 2.0
+	var screen_width = ProjectSettings.get_setting("display/window/size/viewport_width")
+	var grid_width = ConvertCoords.STEP_X * _max_x
+	var grid_height = ConvertCoords.STEP_Y * _max_y
+	var bottom_box_height_midpoint = height - ((height - ConvertCoords.START_Y - grid_height) / 2.0)
+	var right_box_width_midpoint = screen_width - ((screen_width - ConvertCoords.START_X - grid_width) / 2.0)
+	print("window size(width x height): ", screen_width, " x ", height, "  grid width x height", grid_width, " x ", grid_height)
+
+# Top OOB Box
+	var collision_shape_top = CollisionShape2D.new()
+	var OOB_rec1 = RectangleShape2D.new()
+	OOB_rec1.size = Vector2(screen_width, ConvertCoords.START_Y)
+	collision_shape_top.set_shape(OOB_rec1)
+	collision_shape_top.set_debug_color(Color(0.0, 1.0, 0.0, 0.3))
+
+	var OOB_area1 = Area2D.new()
+	OOB_area1.position = Vector2(screen_width_mid, (ConvertCoords.START_Y)/2 - ConvertCoords.STEP_Y/2)
+	OOB_area1.add_child(collision_shape_top)
+	OOB_area1.add_to_group("OutOfBounds1")
+
+# Bottom OOB Box	
+	var collision_shape_bottom = CollisionShape2D.new()
+	var OOB_rec2 = RectangleShape2D.new()
+	OOB_rec2.size = Vector2(screen_width, (height - ConvertCoords.START_Y - grid_height))
+	collision_shape_bottom.set_shape(OOB_rec2)
+	collision_shape_bottom.set_debug_color(Color(0.0, 1.0, 0.0, 0.3))
+
+	var OOB_area2 = Area2D.new()
+	OOB_area2.position = Vector2(screen_width_mid, bottom_box_height_midpoint - ConvertCoords.STEP_Y / 2)
+	OOB_area2.add_child(collision_shape_bottom)
+	OOB_area2.add_to_group("OutOfBounds2")
+
+# Left Side OOB Box
+	var collision_shape_left = CollisionShape2D.new()
+	var OOB_rec3 = RectangleShape2D.new()
+	OOB_rec3.size = Vector2(ConvertCoords.START_X, height)
+	collision_shape_left.set_shape(OOB_rec3)
+	collision_shape_left.set_debug_color(Color(0.0, 1.0, 0.0, 0.3))
+
+	var OOB_area3 = Area2D.new()
+	OOB_area3.position = Vector2(ConvertCoords.START_X / 2 - ConvertCoords.STEP_X / 2, height / 2)
+	OOB_area3.add_child(collision_shape_left)
+	OOB_area3.add_to_group("OutOfBounds3")
+
+# Right Side OOB Box
+	var collision_shape_right = CollisionShape2D.new()
+	var OOB_rec4 = RectangleShape2D.new()
+	OOB_rec4.size = Vector2((screen_width - ConvertCoords.START_X - grid_width), height)
+	collision_shape_right.set_shape(OOB_rec4)
+	collision_shape_right.set_debug_color(Color(0.0, 1.0, 0.0, 0.3))
+
+	var OOB_area4 = Area2D.new()
+	OOB_area4.position = Vector2(right_box_width_midpoint - ConvertCoords.STEP_X / 2, height / 2)
+	OOB_area4.add_child(collision_shape_right)
+	OOB_area4.add_to_group("OutOfBounds3")
+	
+	self.add_child(OOB_area1)
+	self.add_child(OOB_area2)
+	self.add_child(OOB_area3)
+	self.add_child(OOB_area4)
+	print(self.get_children())
 
 func is_inside_dungeon(pos : Vector2i) -> bool:
 	if pos.x < 0 or pos.x >= _max_x:
@@ -109,7 +175,7 @@ func remove_sprite_at_pos(pos : Vector2i, sprite : Sprite2D):
 	#print(_arr[pos.x + pos.y * _max_y])
 	emit_signal("sprite_removed", pos, sprite)
 
-func set_sprite_at_pos(pos : Vector2i, new_sprite: Sprite2D):
+func set_sprite_at_pos(pos : Vector2i, new_sprite):
 	#print("set_new_sprite", new_sprite)
 	if _arr.has(pos):
 		_arr[pos].append(new_sprite)
@@ -140,12 +206,18 @@ func _on_Player_down_stairs(pos : Vector2i):
 	if does_tile_contain_sprite(pos, TileTypes.DOWN_STAIRS):
 		emit_signal("leaving_dungeon")
 
-func _create_sprite(sprite_type : String, pos : Vector2i, s_scale : Vector2 = Vector2(3,3)) -> Sprite2D:
-	print("creating sprite: ", pos, ConvertCoords.get_local_coords(pos))
-	var new_sprite = AssetLoader.get_asset(sprite_type).instantiate() as Sprite2D
+func _on_Player_shot_projectile(bolt : Area2D):
+	print("adding bolt to dungeon: ", bolt)
+	add_child(bolt)
+	
+
+func _create_sprite(sprite_type : String, pos : Vector2i, s_scale : Vector2 = Vector2(3,3)):
+	#print("creating sprite: ", pos, ConvertCoords.get_local_coords(pos))
+	var new_sprite = AssetLoader.get_asset(sprite_type).instantiate()
 	new_sprite.add_to_group(sprite_type)
 	new_sprite.scale = s_scale
 	new_sprite.position = ConvertCoords.get_local_coords(pos)
+	print(new_sprite, new_sprite.position, s_scale)
 	add_child(new_sprite)
 	emit_signal("sprite_created", new_sprite)
 	set_sprite_at_pos(pos, new_sprite)

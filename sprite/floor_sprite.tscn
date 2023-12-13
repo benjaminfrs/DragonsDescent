@@ -5,4 +5,4 @@
 [node name="floorSprite" type="Sprite2D"]
 texture = ExtResource("1_sojtw")
 region_enabled = true
-region_rect = Rect2(0, 16, 16, 16)
+region_rect = Rect2(32, 16, 16, 16)

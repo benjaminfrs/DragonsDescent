@@ -5,7 +5,7 @@ signal used_item(status, duration, actor)
 const _TYPE = "CloakOfInvisibility"
 var _equipped = false
 
-var INVISIBILITY_CLOAK_SIGNALS = [
+@onready var INVISIBILITY_CLOAK_SIGNALS = [
 	[
 		"used_item", "_on_CloakOfInvisibility_used_item",
 		self
@@ -19,6 +19,7 @@ func _ready():
 	self.set_property("useable", true)
 	self.set_property("consumable", false)
 	self.set_property("status_duration", 3)
+	self.set_property("ranged_weapon", false)
 
 func equip(actor : Sprite2D) -> Array:
 	self.set_property("equipped", true)

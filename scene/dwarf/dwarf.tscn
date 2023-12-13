@@ -15,3 +15,8 @@ script = ExtResource("2_pjxnw")
 
 [node name="DwarfMove" type="Node" parent="."]
 script = ExtResource("3_mwoqm")
+
+[node name="DwarfBody" type="Area2D" parent="."]
+
+[node name="DwarfHitBox" type="CollisionPolygon2D" parent="DwarfBody"]
+polygon = PackedVector2Array(0, -15, -6, -13, -8, -6, -8, -1, -12, -3, -13, 1, -10, 4, -10, 11, -5, 12, -6, 15, 10, 16, 9, 13, 12, 10, 12, 5, 13, 3, 12, -2, 15, -2, 15, -5, 12, -9, 9, -12, 6, -13)

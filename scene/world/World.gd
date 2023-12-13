@@ -59,6 +59,11 @@ var dwarf_map = {}
 		DUNGEON_GRID,
 		WORLD,
 	],
+	[
+		"shot_projectile", "_on_Player_shot_projectile",
+		PLAYER,
+		DUNGEON_GRID,
+	],
 ]
 
 @onready var NODE_REF: Array = [

@@ -17,6 +17,11 @@ var REWARD_LEVEL = self
 		SCHEDULE,
 	],
 	[
+		"shot_projectile", "_on_Player_shot_projectile",
+		PLAYER,
+		REWARD_GRID,
+	],
+	[
 		"down_stairs", "_on_Player_down_stairs",
 		PLAYER,
 		REWARD_GRID,

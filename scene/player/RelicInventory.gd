@@ -18,6 +18,8 @@ func try_pickup_relic(relic : Sprite2D) -> bool:
 
 func item_equipped(relic : Sprite2D) -> bool:
 	for equipped_relic in EquippedRelics:
+		if relic.get_property("ranged_weapon") and equipped_relic.get_property("ranged_weapon"):
+			return false
 		if equipped_relic.get_property("type") == relic.get_property("type"):
 			emit_signal("equipped_duplicate_relic", "You can't wear more of those...")
 			return false

@@ -5,7 +5,8 @@ func _ready():
 	self.set_property("movement_speed", 0)
 	self.set_property("useable", false)
 	self.set_property("consumable", false)
-	self.set_property("type", "BootsOfSpeed")
+	self.set_property("type", TileTypes.BOOTS_OF_SPEED)
+	self.set_property("ranged_weapon", false)
 
 func equip(actor : Sprite2D):
 	actor.set_property("movement_speed", actor.get_property("movement_speed") + 1)

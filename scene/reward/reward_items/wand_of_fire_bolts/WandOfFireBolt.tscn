@@ -1,0 +1,17 @@
+[gd_scene load_steps=3 format=3 uid="uid://cx5l2ejherjqy"]
+
+[ext_resource type="Script" path="res://scene/reward/reward_items/wand_of_fire_bolts/WandOfFireBolt.gd" id="1_cpega"]
+[ext_resource type="Texture2D" uid="uid://c8ut5jkuw1r44" path="res://resource/tile_sets/crawl_tiles.png" id="2_0uc8j"]
+
+[node name="WandOfFireBolt" type="Area2D"]
+script = ExtResource("1_cpega")
+
+[node name="Bolt" type="Sprite2D" parent="."]
+z_index = 4
+rotation = 1.5708
+texture = ExtResource("2_0uc8j")
+region_enabled = true
+region_rect = Rect2(160, 1376, 32, 32)
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="."]
+polygon = PackedVector2Array(13, 0, 5, -4, 3, -4, 1, -2, -1, -1, -4, -1, -5, -2, -9, -4, -12, -3, -13, 0, -12, 3, -9, 4, -7, 6, -4, 5, -2, 5, 1, 4, 3, 3, 5, 1, 7, 3, 9, 2, 11, 1)

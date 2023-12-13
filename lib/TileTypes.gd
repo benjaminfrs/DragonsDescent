@@ -34,8 +34,9 @@ const ITEM_HOLDER: String = "item_holder"
 const RELIC: String = "relic"
 const BOOTS_OF_SPEED: String = "boots_of_speed_reward"
 const CLOAK_OF_INVISIBILITY: String = "cloak_of_invisibility_reward"
+const WAND_OF_FIRE: String = "wand_of_fire_reward"
 
-const reward_items = [BOOTS_OF_SPEED, CLOAK_OF_INVISIBILITY]
+const reward_items = [BOOTS_OF_SPEED, CLOAK_OF_INVISIBILITY, WAND_OF_FIRE]
 const mapTileNames: Array = [DWARF, FLOOR, WALL, ULWALL, BLWALL, URWALL, BRWALL, BEWALL, LEWALL, REWALL, UEWALL]
 const basic_tiles: Array = [FLOOR, WALL, ULWALL, URWALL, BLWALL, BRWALL, BEWALL, LEWALL, REWALL, UEWALL]
 const actor_types: Array = [DWARF, PC]
@@ -43,6 +44,12 @@ const actor_types: Array = [DWARF, PC]
 static func is_sprite_actor(sprite : Sprite2D) -> bool:
 	for group in sprite.get_groups():
 		if actor_types.find(group) > -1:
+			return true
+	return false
+
+static func object_group_fuzzy_search(obj, fuzz_word : String) -> bool:
+	for group in obj.get_groups():
+		if group.contains(fuzz_word):
 			return true
 	return false
 #const basic_tile_weights = {

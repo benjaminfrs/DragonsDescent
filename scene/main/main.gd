@@ -11,6 +11,7 @@ var current_level : Node2D
 var level_ind : int = 2
 
 const PLAYER: String = "SELF"
+const PLAYER_REF: = "Player"
 const PC_MOVE: String = "PC_MOVE"
 const PC_ATTACK: String = "PC_ATTACK"
 const RELIC_INVENTORY: String = "RELIC_INVENTORY"

@@ -6,6 +6,7 @@ signal ended_turn()
 signal took_action()
 signal item_picked_up(item)
 signal pressed_skill(skill_ind)
+signal shot_projectile(bolt)
 
 enum {STATUS, STATUS_DURATION}
 
@@ -33,6 +34,7 @@ func setup_player():
 	self.set_property("movement_speed", 1)
 	self.set_property("invisible", false)
 	self.set_property("status_list", [])
+	self.set_property("can_shoot", false)
 	self.set_process_unhandled_input(false)
 
 #func set_status(status : Array):
@@ -84,12 +86,23 @@ func _unhandled_input(event: InputEvent) -> void:
 	var skill_ind = _is_skill_input(event)
 	if skill_ind > -1:
 		emit_signal("pressed_skill", skill_ind)
-	if _is_move_input(event):
-		if not try_get(source, event):
+	if _is_dir_input(event):
+		if _most_recent_key and _most_recent_key.is_action(InputNames.SHOOT):
+			if try_shoot(source, event):
+				_current_energy -= 1
+				emit_signal("took_action")
+		elif not try_get(source, event):
 			if PC_MOVE.try_move(source, event):
 				_current_energy -= 1
 	_most_recent_key = event
 	emit_signal("took_action")
+
+func try_shoot(source : Vector2i, event : InputEvent) -> bool:
+	if self.get_property("can_shoot"):
+		print("Preparing to shoot wand!")
+		self.get_property("equipped_wand").shoot(source, event)
+		return true
+	return false
 
 func try_get(source : Vector2i, event : InputEvent) -> bool:
 	if _most_recent_key and _most_recent_key.is_action(InputNames.GET):
@@ -109,6 +122,10 @@ func try_get(source : Vector2i, event : InputEvent) -> bool:
 				if RELIC_INVENTORY.item_equipped(item):
 					var item_signals = item.equip(self)
 					_setup_item_signals(item_signals)
+					if item.get_property("ranged_weapon"):
+						self.set_property("can_shoot", true)
+						self.set_property("equipped_wand", item)
+						print(self.get_property("can_shoot"))
 				return true
 	return false
 
@@ -124,7 +141,11 @@ func _on_CloakOfInvisibility_used_item(status : String, status_duration : int, a
 		self.get_property("status_list").append([status, status_duration])
 		self.self_modulate.a = 0.33
 
-func _is_move_input(event: InputEvent) -> bool:
+func _on_WandOfFire_fired_wand(bolt : Area2D):
+	print(bolt)
+	emit_signal("shot_projectile", bolt)
+
+func _is_dir_input(event: InputEvent) -> bool:
 	for m in InputNames.MOVE_INPUTS:
 		if event.is_action_pressed(m):
 			return true

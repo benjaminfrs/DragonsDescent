@@ -1,9 +1,17 @@
-[gd_scene load_steps=2 format=3 uid="uid://o8xbfwprxtef"]
+[gd_scene load_steps=3 format=3 uid="uid://o8xbfwprxtef"]
 
 [ext_resource type="Texture2D" uid="uid://1gyfj67iptxy" path="res://resource/dungeon_tiles.png" id="1_oregr"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_rg4df"]
+size = Vector2(16, 16)
 
 [node name="rewall_sprite" type="Sprite2D"]
 modulate = Color(0.670588, 0.698039, 0.74902, 1)
 texture = ExtResource("1_oregr")
 region_enabled = true
 region_rect = Rect2(96, 48, 16, 16)
+
+[node name="Area2D" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource("RectangleShape2D_rg4df")
