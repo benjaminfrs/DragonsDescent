@@ -35,8 +35,9 @@ const RELIC: String = "relic"
 const BOOTS_OF_SPEED: String = "boots_of_speed_reward"
 const CLOAK_OF_INVISIBILITY: String = "cloak_of_invisibility_reward"
 const WAND_OF_FIRE: String = "wand_of_fire_reward"
+const SMOKE_BOMB: String = "smoke_bomb_reward"
 
-const reward_items = [BOOTS_OF_SPEED, CLOAK_OF_INVISIBILITY, WAND_OF_FIRE]
+const reward_items = [BOOTS_OF_SPEED, CLOAK_OF_INVISIBILITY, WAND_OF_FIRE, SMOKE_BOMB]
 const mapTileNames: Array = [DWARF, FLOOR, WALL, ULWALL, BLWALL, URWALL, BRWALL, BEWALL, LEWALL, REWALL, UEWALL]
 const basic_tiles: Array = [FLOOR, WALL, ULWALL, URWALL, BLWALL, BRWALL, BEWALL, LEWALL, REWALL, UEWALL]
 const actor_types: Array = [DWARF, PC]

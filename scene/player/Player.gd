@@ -140,6 +140,8 @@ func _on_CloakOfInvisibility_used_item(status : String, status_duration : int, a
 		self.set_property(status, true)
 		self.get_property("status_list").append([status, status_duration])
 		self.self_modulate.a = 0.33
+func _on_SmokeBomb_used_item():
+	print("Player uses smoke bomb")
 
 func _on_WandOfFire_fired_wand(bolt : Area2D, signals : Array):
 	print(bolt)

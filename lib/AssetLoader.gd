@@ -18,8 +18,11 @@ const ItemHolder := preload("res://sprite/test_item.tscn")
 const BootsOfSpeed := preload("res://scene/reward/reward_items/BootsOfSpeed.tscn")
 const CloakOfInvisibility := preload("res://scene/reward/reward_items/CloakOfInvisibility.tscn")
 const WandOfFire := preload("res://scene/reward/reward_items/WandOfFire.tscn")
+const SmokeBomb := preload("res://scene/reward/reward_items/SmokeBomb.tscn")
+
 const cloak_of_invisibility_reward_icon = "res://resource/textures/cloak_of_invisibility_icon.png"
 const wand_of_fire_reward_icon = "res://resource/textures/wand_of_fire_icon.png"
+const smoke_bomb_reward_icon = "res://resource/textures/smoke_bomb_icon.png"
 
 const SKILL_BAR := preload("res://scene/ui_elements/skill_slot.tscn")
 
@@ -56,6 +59,8 @@ static func get_asset(groupName: String) -> PackedScene:
 		return CloakOfInvisibility
 	if groupName == TileTypes.WAND_OF_FIRE:
 		return WandOfFire
+	if groupName == TileTypes.SMOKE_BOMB:
+		return SmokeBomb
 	return null
 
 const RewardItems = [BootsOfSpeed]
