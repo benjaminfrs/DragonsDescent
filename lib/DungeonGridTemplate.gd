@@ -19,7 +19,11 @@ func set_dungeon_size(max_x : int, max_y : int):
 	print(self, _max_x, _max_y)
 	
 	_astargrid = AStarGrid2D.new()
-	_astargrid.size = Vector2i(_max_x, _max_y)
+	_astargrid.region = Rect2i(
+		Vector2i(0, 0),
+		#Vector2i(ConvertCoords.START_X, ConvertCoords.START_Y),
+		Vector2i(_max_x, _max_y),
+		)
 	_astargrid.cell_size = Vector2i(ConvertCoords.STEP_X, ConvertCoords.STEP_Y)
 	_astargrid.update()
 	_init_out_of_bounds_area()
@@ -119,7 +123,7 @@ func _are_neighbors_floors(pos : Vector2i) -> bool:
 		return false
 	return true
 
-func get_floor_groups(n_groups : int) -> Array:
+func get_floor_groups() -> Array:
 	var groups = []
 	for x in range(_max_x):
 		for y in range(_max_y):
@@ -183,7 +187,7 @@ func set_sprite_at_pos(pos : Vector2i, new_sprite):
 		_arr[pos] = [new_sprite]
 
 func _init_player():
-	var floor_groups = get_floor_groups(0)
+	var floor_groups = get_floor_groups()
 	var pc_pos = floor_groups.pop_front()
 	
 	Globals.Player.set_grid_pos(pc_pos)
@@ -192,8 +196,8 @@ func _init_player():
 
 
 func place_stairs():
-	var stair_pos = get_floor_groups(0).pick_random()
-	var stairs = AssetLoader.DownStairs.instantiate() as Sprite2D
+	var stair_pos = get_floor_groups().pick_random()
+	var stairs = AssetLoader.get_asset(TileTypes.DOWN_STAIRS).instantiate() as Sprite2D
 	stairs.position = ConvertCoords.get_local_coords(stair_pos)
 	stairs.scale = Vector2(2, 2)
 	stairs.add_to_group(TileTypes.DOWN_STAIRS)
@@ -212,9 +216,7 @@ func _on_Player_shot_projectile(bolt : Area2D, signals : Array):
 	for s in signals:
 		s[1][s[0]].connect(self._on_WandOfFireBolt_hit_dwarf)
 
-func _on_WandOfFireBolt_hit_dwarf(dwarf : Sprite2D):
-	remove_sprite_at_pos(dwarf.get_grid_pos(), dwarf)
-	print("Dwarf killed!", dwarf)
+
 
 func _create_sprite(sprite_type : String, pos : Vector2i, s_scale : Vector2 = Vector2(3,3)):
 	#print("creating sprite: ", pos, ConvertCoords.get_local_coords(pos))

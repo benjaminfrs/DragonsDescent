@@ -33,7 +33,7 @@ func _init_dungeon():
 	_place_rewards()
 
 func place_stairs_reward(pos : Vector2i):
-	var stairs = AssetLoader.DownStairs.instantiate() as Sprite2D
+	var stairs = AssetLoader.get_asset(TileTypes.DOWN_STAIRS).instantiate() as Sprite2D
 	stairs.position = ConvertCoords.get_local_coords(pos)
 	stairs.scale = Vector2(2, 2)
 	stairs.add_to_group(TileTypes.DOWN_STAIRS)

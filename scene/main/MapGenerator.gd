@@ -23,7 +23,6 @@ func _get_legal_tiles(pos : Vector2i, tile_matrix : Dictionary) -> Array:
 	return tile_matrix[pos]
 
 func _remove_illegal_tiles(pos : Vector2i, illegal_tiles : Array, tile_matrix : Dictionary):
-	var temp = tile_matrix[pos].duplicate(true)
 	for t in illegal_tiles:
 		_get_legal_tiles(pos, tile_matrix).erase(t)
 
@@ -36,11 +35,8 @@ func _propagate_tile_rules(pos : Vector2i, tile_matrix : Dictionary):
 	var stack = [pos]
 	
 	while stack.size() > 0:
-		#print("stack: ", stack)
 		var cur_pos = stack.pop_front()
-		var legal_tiles = _get_legal_tiles(cur_pos, tile_matrix)
-		#print(cur_pos, " - propagating from this tile - legal tiles: ", legal_tiles,)
-		
+
 		for d in DungeonSize.get_valid_dirs(cur_pos):
 			var tile_to_update_pos = cur_pos + TileRules.Directions[d]
 			var incompatible_tiles = []
@@ -60,7 +56,7 @@ func _on_Main_game_ready():
 	#emit_signal("map_finished", generate())
 
 func generate() -> Dictionary:
-	var FLAG = MAP_STATE.FAILED
+	var FLAG : int = MAP_STATE.FAILED
 	var tile_matrix = {}
 	while not FLAG == MAP_STATE.FULLY_COLLAPSED:
 		tile_matrix = _generate_tile_matrix(MAX_X, MAX_Y, TileTypes.basic_tiles)
@@ -119,7 +115,7 @@ func _is_fully_collapsed(tile_matrix : Dictionary) -> int:
 	return MAP_STATE.FULLY_COLLAPSED
 
 func _generate_map(tile_matrix : Dictionary) -> int:
-		var FLAG = MAP_STATE.NOT_COLLAPSED
+		var FLAG : int = MAP_STATE.NOT_COLLAPSED
 		while FLAG == MAP_STATE.NOT_COLLAPSED:
 			var random_pos = _get_low_entropy_pos(tile_matrix)
 			var random_tile = _collapse(random_pos, tile_matrix)

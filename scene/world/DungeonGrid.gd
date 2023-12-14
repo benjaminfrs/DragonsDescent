@@ -39,7 +39,7 @@ func is_legal_move_dwarf(pos : Vector2i) -> bool:
 	return true
 
 func _init_actors():
-	var floor_groups = get_floor_groups(0)
+	var floor_groups = get_floor_groups()
 	var pc_pos = floor_groups.pop_front()
 	
 	Globals.Player.set_grid_pos(pc_pos)
@@ -47,20 +47,28 @@ func _init_actors():
 	set_sprite_at_pos(pc_pos, Globals.Player.get_pc())
 
 func _place_dwarves(n_dwarves : int):
-	var floor_groups = get_floor_groups(0)
+	var floor_groups = get_floor_groups()
 	while n_dwarves:
 		var dwarf = _create_sprite(TileTypes.DWARF, floor_groups.pop_back(), Vector2(1, 1))
 		emit_signal("dwarf_placed", dwarf)
 		n_dwarves -= 1
 
 func place_stairs():
-	var stair_pos = get_floor_groups(0).pick_random()
-	var stairs = AssetLoader.DownStairs.instantiate() as Sprite2D
+	var stair_pos = get_floor_groups().pick_random()
+	var stairs = AssetLoader.get_asset(TileTypes.DOWN_STAIRS).instantiate() as Sprite2D
 	stairs.position = ConvertCoords.get_local_coords(stair_pos)
 	stairs.scale = Vector2(2, 2)
 	stairs.add_to_group(TileTypes.DOWN_STAIRS)
 	add_child(stairs)
 	set_sprite_at_pos(stair_pos, stairs)
+
+func _on_WandOfFireBolt_hit_dwarf(dwarf : Sprite2D):
+	remove_sprite_at_pos(dwarf.get_grid_pos(), dwarf)
+	_number_of_dwarves -= 1
+	if not _number_of_dwarves:
+		emit_signal("dungeon_complete")
+		place_stairs()
+	print("Dwarf killed!", dwarf)
 
 func _on_PCAttack_pc_killed_dwarf(pos : Vector2i, dwarf : Sprite2D):
 	remove_sprite_at_pos(pos, dwarf)
