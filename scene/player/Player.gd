@@ -6,7 +6,7 @@ signal ended_turn()
 signal took_action()
 signal item_picked_up(item)
 signal pressed_skill(skill_ind)
-signal shot_projectile(bolt)
+signal shot_projectile(bolt, signals)
 
 enum {STATUS, STATUS_DURATION}
 
@@ -141,9 +141,9 @@ func _on_CloakOfInvisibility_used_item(status : String, status_duration : int, a
 		self.get_property("status_list").append([status, status_duration])
 		self.self_modulate.a = 0.33
 
-func _on_WandOfFire_fired_wand(bolt : Area2D):
+func _on_WandOfFire_fired_wand(bolt : Area2D, signals : Array):
 	print(bolt)
-	emit_signal("shot_projectile", bolt)
+	emit_signal("shot_projectile", bolt, signals)
 
 func _is_dir_input(event: InputEvent) -> bool:
 	for m in InputNames.MOVE_INPUTS:

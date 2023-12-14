@@ -206,10 +206,15 @@ func _on_Player_down_stairs(pos : Vector2i):
 	if does_tile_contain_sprite(pos, TileTypes.DOWN_STAIRS):
 		emit_signal("leaving_dungeon")
 
-func _on_Player_shot_projectile(bolt : Area2D):
+func _on_Player_shot_projectile(bolt : Area2D, signals : Array):
 	print("adding bolt to dungeon: ", bolt)
 	add_child(bolt)
-	
+	for s in signals:
+		s[1][s[0]].connect(self._on_WandOfFireBolt_hit_dwarf)
+
+func _on_WandOfFireBolt_hit_dwarf(dwarf : Sprite2D):
+	remove_sprite_at_pos(dwarf.get_grid_pos(), dwarf)
+	print("Dwarf killed!", dwarf)
 
 func _create_sprite(sprite_type : String, pos : Vector2i, s_scale : Vector2 = Vector2(3,3)):
 	#print("creating sprite: ", pos, ConvertCoords.get_local_coords(pos))

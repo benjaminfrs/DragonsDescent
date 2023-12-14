@@ -49,6 +49,6 @@ func shoot(source : Vector2i, event : InputEvent):
 			print("angle: ", angle)
 	var bolt = Bolt.instantiate()
 	bolt.transform = Transform2D(angle, Vector2(ConvertCoords.get_local_coords(source)))
-	print(bolt.transform)
+	print(bolt.transform, bolt)
 	
-	emit_signal("fired_wand", bolt)
+	emit_signal("fired_wand", bolt, bolt["BOLT_SIGNALS"])
