@@ -1,7 +1,7 @@
 extends Sprite2D
 class_name ActorTemplate
 
-var _properties : Dictionary = {}
+var _properties : Dictionary = {"throwable":false, "can_throw":false,}
 
 func get_grid_pos() -> Vector2i:
 	return ConvertCoords.get_world_coords(self.position)
@@ -14,3 +14,6 @@ func get_property(prop : String):
 
 func set_property(prop : String, value):
 	_properties[prop] = value
+
+func update():
+	pass

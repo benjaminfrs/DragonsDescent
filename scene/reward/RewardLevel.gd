@@ -22,6 +22,11 @@ var REWARD_LEVEL = self
 		REWARD_GRID,
 	],
 	[
+		"created_particle_effect", "_on_Player_created_particle_effect",
+		PLAYER,
+		REWARD_GRID,
+	],
+	[
 		"down_stairs", "_on_Player_down_stairs",
 		PLAYER,
 		REWARD_GRID,

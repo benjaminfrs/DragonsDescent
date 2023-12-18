@@ -64,6 +64,11 @@ var dwarf_map = {}
 		PLAYER,
 		DUNGEON_GRID,
 	],
+	[
+		"created_particle_effect", "_on_Player_created_particle_effect",
+		PLAYER,
+		DUNGEON_GRID,
+	],
 ]
 
 @onready var NODE_REF: Array = [

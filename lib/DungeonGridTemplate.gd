@@ -21,7 +21,6 @@ func set_dungeon_size(max_x : int, max_y : int):
 	_astargrid = AStarGrid2D.new()
 	_astargrid.region = Rect2i(
 		Vector2i(0, 0),
-		#Vector2i(ConvertCoords.START_X, ConvertCoords.START_Y),
 		Vector2i(_max_x, _max_y),
 		)
 	_astargrid.cell_size = Vector2i(ConvertCoords.STEP_X, ConvertCoords.STEP_Y)
@@ -211,12 +210,11 @@ func _on_Player_down_stairs(pos : Vector2i):
 		emit_signal("leaving_dungeon")
 
 func _on_Player_shot_projectile(bolt : Area2D, signals : Array):
-	print("adding bolt to dungeon: ", bolt)
-	add_child(bolt)
-	for s in signals:
-		s[1][s[0]].connect(self._on_WandOfFireBolt_hit_dwarf)
+	self.add_child(bolt)
 
-
+func _on_Player_created_particle_effect(effect):
+	print(effect)
+	add_child(effect)
 
 func _create_sprite(sprite_type : String, pos : Vector2i, s_scale : Vector2 = Vector2(3,3)):
 	#print("creating sprite: ", pos, ConvertCoords.get_local_coords(pos))

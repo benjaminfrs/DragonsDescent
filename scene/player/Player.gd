@@ -7,6 +7,7 @@ signal took_action()
 signal item_picked_up(item)
 signal pressed_skill(skill_ind)
 signal shot_projectile(bolt, signals)
+signal created_particle_effect(effect)
 
 enum {STATUS, STATUS_DURATION}
 
@@ -56,6 +57,8 @@ func take_turn():
 	#_current_energy = _movement_speed
 
 	self.set_process_unhandled_input(false)
+	for item in RELIC_INVENTORY.EquippedRelics:
+		item.update()
 	emit_signal("ended_turn")
 
 func process_status():
@@ -87,15 +90,26 @@ func _unhandled_input(event: InputEvent) -> void:
 	if skill_ind > -1:
 		emit_signal("pressed_skill", skill_ind)
 	if _is_dir_input(event):
-		if _most_recent_key and _most_recent_key.is_action(InputNames.SHOOT):
-			if try_shoot(source, event):
-				_current_energy -= 1
-				emit_signal("took_action")
-		elif not try_get(source, event):
-			if PC_MOVE.try_move(source, event):
-				_current_energy -= 1
+		if _most_recent_key:
+			if _most_recent_key.is_action(InputNames.SHOOT):
+				if try_shoot(source, event):
+					_current_energy -= 1
+					emit_signal("took_action")
+			elif _most_recent_key.is_action(InputNames.THROW):
+				print("trying to throw!")
+				if try_throw(source, event):
+					_current_energy -= 1
+			elif not try_get(source, event):
+				if PC_MOVE.try_move(source, event):
+					_current_energy -= 1
 	_most_recent_key = event
 	emit_signal("took_action")
+
+func try_throw(source : Vector2i, event : InputEvent) -> bool:
+	if self.get_property("can_throw"):
+		self.get_property("throwable_item").throw(source, event)
+		return true
+	return false
 
 func try_shoot(source : Vector2i, event : InputEvent) -> bool:
 	if self.get_property("can_shoot"):
@@ -126,6 +140,9 @@ func try_get(source : Vector2i, event : InputEvent) -> bool:
 						self.set_property("can_shoot", true)
 						self.set_property("equipped_wand", item)
 						print(self.get_property("can_shoot"))
+					if item.get_property("throwable"):
+						self.set_property("can_throw", true)
+						self.set_property("throwable_item", item)
 				return true
 	return false
 
@@ -140,8 +157,13 @@ func _on_CloakOfInvisibility_used_item(status : String, status_duration : int, a
 		self.set_property(status, true)
 		self.get_property("status_list").append([status, status_duration])
 		self.self_modulate.a = 0.33
+
 func _on_SmokeBomb_used_item():
 	print("Player uses smoke bomb")
+
+func _on_SmokeBomb_threw_bomb(smoke_effect):
+	print("Player uses smoke bomb")
+	emit_signal("created_particle_effect", smoke_effect)
 
 func _on_WandOfFire_fired_wand(bolt : Area2D, signals : Array):
 	print(bolt)

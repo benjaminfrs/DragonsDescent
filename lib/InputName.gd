@@ -6,6 +6,7 @@ const MOVE_UP: String = "move_up"
 const MOVE_DOWN: String = "move_down"
 
 const SHOOT: String = "shoot"
+const THROW: String = "throw"
 
 const WAIT: String = "wait" 
 const GO_DOWN: String = "down_stairs"

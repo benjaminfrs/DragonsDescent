@@ -77,6 +77,12 @@ func _on_PCAttack_pc_killed_dwarf(pos : Vector2i, dwarf : Sprite2D):
 		emit_signal("dungeon_complete")
 		place_stairs()
 
+func _on_Player_shot_projectile(bolt : Area2D, signals : Array):
+	print("adding bolt to dungeon: ", bolt)
+	add_child(bolt)
+	for s in signals:
+		s[1][s[0]].connect(self._on_WandOfFireBolt_hit_dwarf)
+
 func _on_PCMove_down_stairs(pos : Vector2i):
 	#print("moving down stairs")
 	if does_tile_contain_sprite(pos, TileTypes.DOWN_STAIRS):
