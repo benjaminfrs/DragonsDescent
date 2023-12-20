@@ -1,5 +1,7 @@
 extends CPUParticles2D
 
 func _ready():
-	pass
-	#self.position = Vector2i(1250, 1250)
+	$SmokeArea.add_to_group("SmokeBombArea")
+
+func set_grid_pos(pos : Vector2):
+	self.position = pos

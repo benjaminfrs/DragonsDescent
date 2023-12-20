@@ -4,7 +4,7 @@ signal used_item()
 signal threw_bomb(smoke_effect)
 
 const smoke_effect := preload("res://scene/reward/reward_items/smoke_bomb/smoke_effect_cpu_particles_2d.tscn")
-const BASE_SMOKE_DUR = 3
+const BASE_SMOKE_DUR = 4
 
 @onready var SMOKE_BOMB_SIGNALS = [
 	[
@@ -17,11 +17,12 @@ const BASE_SMOKE_DUR = 3
 	],
 ]
 
-var DirectionAngles = [
-	Vector2.RIGHT.angle(), 
-	Vector2.DOWN.angle(),
-	Vector2.LEFT.angle(), 
-	Vector2.UP.angle(),
+var DirectionVectorScale = Vector2(ConvertCoords.STEP_X, ConvertCoords.STEP_Y)
+var DirectionVectors = [
+	Vector2.RIGHT * DirectionVectorScale, 
+	Vector2.DOWN * DirectionVectorScale,
+	Vector2.LEFT * DirectionVectorScale, 
+	Vector2.UP * DirectionVectorScale,
 ]
 
 func _ready():
@@ -44,20 +45,23 @@ func unequip(actor : Sprite2D):
 	self.set_property("equipped", false)
 
 
-func throw(source : Vector2i, event : InputEvent):
-	print("Throwing!!!")
-	var angle : float
-	for i in InputNames.MOVE_INPUTS.size():
-		if event.is_action_pressed(InputNames.MOVE_INPUTS[i]):
-			angle = DirectionAngles[i]
-			print("angle: ", angle)
-	var smoke_particle_system = smoke_effect.instantiate()
-	smoke_particle_system.transform = Transform2D(angle, Vector2(ConvertCoords.get_local_coords(source)))
-	print(smoke_particle_system.transform, smoke_particle_system)
-	emit_signal("threw_bomb", smoke_particle_system)
-	self.set_property("smoke_duration", BASE_SMOKE_DUR)
-	self.set_property("current_effect", smoke_particle_system)
-	self.set_property("smoking", true)
+func throw(source : Vector2i, event : InputEvent) -> bool:
+	if not self.get_property("smoking"):
+		print("Throwing!!!", source)
+		var new_pos : Vector2
+		for i in InputNames.MOVE_INPUTS.size():
+			if event.is_action_pressed(InputNames.MOVE_INPUTS[i]):
+				new_pos = DirectionVectors[i] + Vector2(ConvertCoords.get_local_coords(source))
+				print("smoke pos:", new_pos, DirectionVectors[i], source)
+		var smoke_particle_system = smoke_effect.instantiate()
+		smoke_particle_system.set_grid_pos(new_pos)
+
+		emit_signal("threw_bomb", smoke_particle_system)
+		self.set_property("smoke_duration", BASE_SMOKE_DUR)
+		self.set_property("current_effect", smoke_particle_system)
+		self.set_property("smoking", true)
+		return true
+	return false
 
 func update():
 	if self.get_property("smoking"):

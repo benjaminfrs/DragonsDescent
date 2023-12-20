@@ -32,3 +32,8 @@ color = Color(0.427451, 0.427451, 0.427451, 0.631373)
 anim_speed_min = 1.0
 anim_speed_max = 1.0
 script = ExtResource("2_pf8pk")
+
+[node name="SmokeArea" type="Area2D" parent="."]
+
+[node name="SmokeCollisionArea" type="CollisionPolygon2D" parent="SmokeArea"]
+polygon = PackedVector2Array(-45, -63, -66, -46, -83, -13, -84, 8, -70, 14, -66, 30, -50, 33, -45, 48, -32, 52, -26, 65, -10, 71, -5, 85, 10, 85, 14, 68, 29, 67, 33, 50, 48, 47, 36, 39, 32, 19, 47, 11, 46, -11, 34, -17, 30, -34, 17, -34, 12, -44, -4, -51, -6, -64)

@@ -82,7 +82,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	var source: Vector2i = ConvertCoords.get_world_coords(self.position)
 	if event.is_action_pressed(InputNames.WAIT):
 		self.set_process_unhandled_input(false)
-		emit_signal("ended_turn")
+		_current_energy = 0
+		#emit_signal("ended_turn")
 	if event.is_action_pressed(InputNames.GO_DOWN):
 		_current_energy -= 1
 		emit_signal("down_stairs", ConvertCoords.get_world_coords(self.position))
@@ -107,8 +108,8 @@ func _unhandled_input(event: InputEvent) -> void:
 
 func try_throw(source : Vector2i, event : InputEvent) -> bool:
 	if self.get_property("can_throw"):
-		self.get_property("throwable_item").throw(source, event)
-		return true
+		if self.get_property("throwable_item").throw(source, event):
+			return true
 	return false
 
 func try_shoot(source : Vector2i, event : InputEvent) -> bool:
