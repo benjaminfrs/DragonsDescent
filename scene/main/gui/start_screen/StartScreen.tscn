@@ -1,0 +1,40 @@
+[gd_scene load_steps=3 format=3 uid="uid://dqg0y8pv70n43"]
+
+[ext_resource type="FontFile" uid="uid://b1day01kiq4ll" path="res://resource/FiraCode-Regular.ttf" id="1_wlmb8"]
+[ext_resource type="Script" path="res://scene/main/gui/start_screen/StartGameButton.gd" id="2_0d8fs"]
+
+[node name="StartScreen" type="CanvasLayer"]
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 40.0
+offset_bottom = 40.0
+theme_override_constants/margin_left = 260
+theme_override_constants/margin_top = 260
+theme_override_constants/margin_right = 260
+theme_override_constants/margin_bottom = 260
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+theme_override_constants/separation = 24
+
+[node name="StartGameButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_colors/font_color = Color(0.670588, 0.698039, 0.74902, 1)
+theme_override_fonts/font = ExtResource("1_wlmb8")
+theme_override_font_sizes/font_size = 24
+text = "Start Game"
+script = ExtResource("2_0d8fs")
+
+[node name="ContinueGameButton" type="Button" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 6
+theme_override_colors/font_color = Color(0.670588, 0.698039, 0.74902, 1)
+theme_override_fonts/font = ExtResource("1_wlmb8")
+theme_override_font_sizes/font_size = 24
+text = "Continue"

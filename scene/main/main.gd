@@ -6,6 +6,8 @@ signal map_ready(map)
 
 const world_scene = preload("res://scene/world/World.tscn")
 const reward_scene = preload("res://scene/reward/RewardMain.tscn")
+const game_gui = preload("res://scene/main/gui/MainGUI.tscn")
+const start_screen_gui = preload("res://scene/main/gui/start_screen/StartScreen.tscn")
 
 var current_level : Node2D
 var level_ind : int = 2
@@ -103,6 +105,13 @@ const SIGNAL_BIND_DWARVES = [
 ]
 
 func _ready():
+	var start_screen = start_screen_gui.instantiate()
+	self.add_child(start_screen)
+	start_screen.get_node("MarginContainer/VBoxContainer/StartGameButton").game_start_pressed.connect(self._on_StartGameButton_game_start_pressed)
+
+func _on_StartGameButton_game_start_pressed():
+	self.get_node("StartScreen").queue_free()
+	self.add_child(game_gui.instantiate())
 	Globals.setup_globals()
 	_setup_signals(Globals.Player, SIGNAL_BIND_PLAYER)
 	_build_next_level()
