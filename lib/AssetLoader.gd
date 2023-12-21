@@ -17,6 +17,7 @@ const boots_of_speed_reward := preload("res://scene/reward/reward_items/BootsOfS
 const cloak_of_invisibility_reward := preload("res://scene/reward/reward_items/CloakOfInvisibility.tscn")
 const wand_of_fire_reward := preload("res://scene/reward/reward_items/WandOfFire.tscn")
 const smoke_bomb_reward := preload("res://scene/reward/reward_items/SmokeBomb.tscn")
+const dragons_lamp_reward := preload("res://scene/reward/reward_items/DragonsGold.tscn")
 
 const cloak_of_invisibility_reward_icon = "res://resource/textures/cloak_of_invisibility_icon.png"
 const wand_of_fire_reward_icon = "res://resource/textures/wand_of_fire_icon.png"

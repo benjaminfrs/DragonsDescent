@@ -45,7 +45,7 @@ func _place_rewards():
 		var pos = Vector2i(i, (_max_y - 1))
 		_create_sprite(TileTypes.ITEM_HOLDER, pos, Vector2(1.5, 1.5))
 		#var item = TileTypes.reward_items.pick_random()
-		var item = TileTypes.SMOKE_BOMB
+		var item = TileTypes.DRAGONS_LAMP
 		_create_sprite(item, pos, Vector2(3, 3))
 		_astargrid.set_point_solid(pos, true)
 

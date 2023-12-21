@@ -80,6 +80,11 @@ const SIGNAL_BIND_PLAYER = [
 		SKILL_BAR,
 	],
 	[
+		"found_lamp", "_on_Player_found_lamp",
+		PLAYER,
+		MAIN,
+	],
+	[
 		"found_duplicate_relic", "_on_RelicInventory_found_duplicate_relic",
 		RELIC_INVENTORY,
 		MODELINE,
@@ -151,6 +156,10 @@ func _setup_reward_level():
 	_setup_signals(current_level, SIGNAL_BIND_REWARD_LEVEL)
 
 	current_level.build_level()
+
+func _on_Player_found_lamp():
+	print("You found the lamp!!! GAME OVER")
+	get_tree().quit()
 
 func _setup_signals(node : Node2D, signals : Array):
 # [signal_name, func_name, source_node, target_node]

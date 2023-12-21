@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://dav0nls2smew2"]
+
+[ext_resource type="Texture2D" uid="uid://c8ut5jkuw1r44" path="res://resource/tile_sets/crawl_tiles.png" id="1_u6fdd"]
+[ext_resource type="Script" path="res://scene/reward/reward_items/DragonsGold.gd" id="2_o3t70"]
+
+[node name="DragonsGold" type="Sprite2D"]
+z_index = 3
+texture = ExtResource("1_u6fdd")
+region_enabled = true
+region_rect = Rect2(1792, 1440, 32, 32)
+script = ExtResource("2_o3t70")

@@ -8,6 +8,7 @@ signal item_picked_up(item)
 signal pressed_skill(skill_ind)
 signal shot_projectile(bolt, signals)
 signal created_particle_effect(effect)
+signal found_lamp()
 
 enum {STATUS, STATUS_DURATION}
 
@@ -135,6 +136,8 @@ func try_get(source : Vector2i, event : InputEvent) -> bool:
 				RELIC_INVENTORY.add_child(item)
 				item.visible = false
 				if RELIC_INVENTORY.item_equipped(item):
+					if item.get_property("type") == TileTypes.DRAGONS_LAMP:
+						emit_signal("found_lamp")
 					var item_signals = item.equip(self)
 					_setup_item_signals(item_signals)
 					if item.get_property("ranged_weapon"):
