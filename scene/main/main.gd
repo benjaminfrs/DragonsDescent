@@ -8,9 +8,12 @@ const world_scene = preload("res://scene/world/World.tscn")
 const reward_scene = preload("res://scene/reward/RewardMain.tscn")
 const game_gui = preload("res://scene/main/gui/MainGUI.tscn")
 const start_screen_gui = preload("res://scene/main/gui/start_screen/StartScreen.tscn")
+const you_win_screen_gui = preload("res://scene/main/gui/you_win_screen/YouWinScreen.tscn")
+const game_over_screen_gui = preload("res://scene/main/gui/game_over_screen/GameOverScreen.tscn")
 
 var current_level : Node2D
-var level_ind : int = 1
+var level_base : int = 5
+var level_ind : int = level_base
 
 const PLAYER: String = "SELF"
 const PLAYER_REF: = "Player"
@@ -110,20 +113,54 @@ const SIGNAL_BIND_DWARVES = [
 ]
 
 func _ready():
+	_load_main_screen()
+
+func _load_main_screen():
 	var start_screen = start_screen_gui.instantiate()
 	self.add_child(start_screen)
 	start_screen.get_node("MarginContainer/VBoxContainer/StartGameButton").game_start_pressed.connect(self._on_StartGameButton_game_start_pressed)
 
+func _load_you_win_screen():
+	var you_win_screen = you_win_screen_gui.instantiate()
+	self.add_child(you_win_screen)
+	you_win_screen.get_node("MarginContainer/VBoxContainer/YouWinMainScreenButton").main_screen_pressed.connect(self._on_YouWinMainScreenButton_main_screen_pressed)
+
+func _load_game_over_screen():
+	var game_over_screen = game_over_screen_gui.instantiate()
+	self.add_child(game_over_screen)
+	game_over_screen.get_node("MarginContainer/VBoxContainer/GameOverMainScreenButton").main_screen_pressed.connect(self._on_GameOverMainScreenButton_main_screen_pressed)
+
 func _on_StartGameButton_game_start_pressed():
 	self.get_node("StartScreen").queue_free()
-	self.add_child(game_gui.instantiate())
+	var game_ui = game_gui.instantiate()
+	self.add_child(game_ui)
 	Globals.setup_globals()
 	_setup_signals(Globals.Player, SIGNAL_BIND_PLAYER)
+	game_ui.get_node("MarginContainer/MainHBox/VBoxContainer/HealthLine").player_died.connect(self._on_HealthLine_player_died)
 	_build_next_level()
+
+func _on_YouWinMainScreenButton_main_screen_pressed():
+	self.get_node("YouWinScreen").queue_free()
+	_load_main_screen()
+
+func _on_GameOverMainScreenButton_main_screen_pressed():
+	self.get_node("GameOverScreen").queue_free()
+	_load_main_screen()
 
 func _on_DungeonGrid_leaving_dungeon():
 	print("Leaving dungeon!")
 	_build_next_level()
+
+func _on_HealthLine_player_died():
+	print("Player died game over")
+	current_level.close_level()
+	current_level.queue_free()
+	current_level = null
+	Globals.Player.queue_free()
+	self.get_node("MainGUI").queue_free()
+	level_ind = level_base
+	
+	_load_game_over_screen()
 
 func _build_next_level():
 	if current_level:
@@ -159,7 +196,14 @@ func _setup_reward_level():
 
 func _on_Player_found_lamp():
 	print("You found the lamp!!! GAME OVER")
-	get_tree().quit()
+	current_level.close_level()
+	current_level.queue_free()
+	current_level = null
+	Globals.Player.queue_free()
+	self.get_node("MainGUI").queue_free()
+	level_ind = level_base
+	
+	_load_you_win_screen()
 
 func _setup_signals(node : Node2D, signals : Array):
 # [signal_name, func_name, source_node, target_node]
