@@ -40,6 +40,11 @@ var dwarf_map = {}
 		DUNGEON_GRID,
 	],
 	[
+		"item_picked_up", "_on_Player_item_picked_up",
+		PLAYER,
+		DUNGEON_GRID,
+	],
+	[
 		"sprite_created", "_on_DungeonGrid_sprite_created",
 		DUNGEON_GRID,
 		PC_MOVE, SCHEDULE,

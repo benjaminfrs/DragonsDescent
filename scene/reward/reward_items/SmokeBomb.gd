@@ -36,6 +36,7 @@ func _ready():
 	self.set_property("ranged_weapon", false)
 	self.set_property("throwable", true)
 	self.set_property("smoking", false)
+	self.set_property("is_relic", true)
 
 func equip(actor : Sprite2D) -> Array:
 	self.set_property("equipped", true)
@@ -67,7 +68,8 @@ func update():
 	if self.get_property("smoking"):
 		self.set_property("smoke_duration", get_property("smoke_duration") - 1)
 		if self.get_property("smoke_duration") <= 0:
-			self.get_property("current_effect").queue_free()
+			if self.get_property("current_effect") != null:
+				self.get_property("current_effect").queue_free()
 			self.set_property("smoking", false)
 
 func use(actor : Sprite2D):

@@ -10,7 +10,7 @@ const game_gui = preload("res://scene/main/gui/MainGUI.tscn")
 const start_screen_gui = preload("res://scene/main/gui/start_screen/StartScreen.tscn")
 
 var current_level : Node2D
-var level_ind : int = 2
+var level_ind : int = 1
 
 const PLAYER: String = "SELF"
 const PLAYER_REF: = "Player"

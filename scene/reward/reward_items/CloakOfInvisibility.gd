@@ -20,6 +20,7 @@ func _ready():
 	self.set_property("consumable", false)
 	self.set_property("status_duration", 3)
 	self.set_property("ranged_weapon", false)
+	self.set_property("is_relic", true)
 
 func equip(actor : Sprite2D) -> Array:
 	self.set_property("equipped", true)

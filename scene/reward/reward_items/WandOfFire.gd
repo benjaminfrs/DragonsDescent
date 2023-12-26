@@ -25,6 +25,7 @@ func _ready():
 	self.set_property("type", TileTypes.WAND_OF_FIRE)
 	self.set_property("equipped", false)
 	self.set_property("ranged_weapon", true)
+	self.set_property("is_relic", true)
 
 
 func equip(actor : Sprite2D) -> Array:

@@ -125,12 +125,13 @@ func try_get(source : Vector2i, event : InputEvent) -> bool:
 		print("trying to pickup")
 		var item = PC_MOVE.try_pickup(source, event) as Sprite2D
 		print(item)
-		if item and item.get_groups().any(func(group):
-			for relic_type in TileTypes.reward_items:
-				if group == relic_type:
-					return true
-			return false
-			):
+#		if item and item.get_groups().any(func(group):
+#			for relic_type in TileTypes.reward_items:
+#				if group == relic_type:
+#					return true
+#			return false
+#			):
+		if item and item.get_property("is_relic"):
 			if RELIC_INVENTORY.try_pickup_relic(item):
 				emit_signal("item_picked_up", item)
 				RELIC_INVENTORY.add_child(item)
@@ -147,7 +148,7 @@ func try_get(source : Vector2i, event : InputEvent) -> bool:
 					if item.get_property("throwable"):
 						self.set_property("can_throw", true)
 						self.set_property("throwable_item", item)
-				return true
+		return true
 	return false
 
 func _on_DungeonGrid_sprite_created(new_sprite: Sprite2D) -> void:

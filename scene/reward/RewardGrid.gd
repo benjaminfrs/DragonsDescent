@@ -44,8 +44,8 @@ func _place_rewards():
 	for i in range(1, N_REWARDS + 1):
 		var pos = Vector2i(i, (_max_y - 1))
 		_create_sprite(TileTypes.ITEM_HOLDER, pos, Vector2(1.5, 1.5))
-		#var item = TileTypes.reward_items.pick_random()
-		var item = TileTypes.DRAGONS_LAMP
+		var item = TileTypes.reward_items.pick_random()
+		#var item = TileTypes.DRAGONS_LAMP
 		_create_sprite(item, pos, Vector2(3, 3))
 		_astargrid.set_point_solid(pos, true)
 
@@ -54,10 +54,10 @@ func _init_player_reward(pos : Vector2i):
 	emit_signal("sprite_created", Globals.Player.get_pc())
 	set_sprite_at_pos(pos, Globals.Player.get_pc())
 
-func _on_Player_item_picked_up(item : Sprite2D):
-	remove_item(item)
-
-func remove_item(item : Sprite2D):
-	var pos = ConvertCoords.get_world_coords(item.position)
-	_arr[pos].erase(item)
-	remove_child(item)
+#func _on_Player_item_picked_up(item : Sprite2D):
+#	remove_item(item)
+#
+#func remove_item(item : Sprite2D):
+#	var pos = ConvertCoords.get_world_coords(item.position)
+#	_arr[pos].erase(item)
+#	remove_child(item)

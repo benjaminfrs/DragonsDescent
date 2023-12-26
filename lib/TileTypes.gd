@@ -38,7 +38,8 @@ const WAND_OF_FIRE: String = "wand_of_fire_reward"
 const SMOKE_BOMB: String = "smoke_bomb_reward"
 const DRAGONS_LAMP: String = "dragons_lamp_reward"
 
-const reward_items = [BOOTS_OF_SPEED, CLOAK_OF_INVISIBILITY, WAND_OF_FIRE, SMOKE_BOMB, DRAGONS_LAMP]
+const reward_items = [BOOTS_OF_SPEED, CLOAK_OF_INVISIBILITY, WAND_OF_FIRE, SMOKE_BOMB]
+#const reward_items = [BOOTS_OF_SPEED, CLOAK_OF_INVISIBILITY, WAND_OF_FIRE, SMOKE_BOMB, DRAGONS_LAMP]
 const mapTileNames: Array = [DWARF, FLOOR, WALL, ULWALL, BLWALL, URWALL, BRWALL, BEWALL, LEWALL, REWALL, UEWALL]
 const basic_tiles: Array = [FLOOR, WALL, ULWALL, URWALL, BLWALL, BRWALL, BEWALL, LEWALL, REWALL, UEWALL]
 const actor_types: Array = [DWARF, PC]

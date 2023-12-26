@@ -6,9 +6,11 @@ signal dwarf_placed(dwarf)
 signal dungeon_initialized()
 
 var _number_of_dwarves : int
+var _difficulty : int
 
 func _setup(number_of_dwarves : int = 0):
 	_number_of_dwarves = number_of_dwarves
+	_difficulty = number_of_dwarves
 	#print("n dwarves: ", _number_of_dwarves)
 
 func _on_Main_game_ready():
@@ -53,6 +55,10 @@ func _place_dwarves(n_dwarves : int):
 		emit_signal("dwarf_placed", dwarf)
 		n_dwarves -= 1
 
+func place_lamp():
+	var lamp_pos = get_floor_groups().pick_random()
+	_create_sprite(TileTypes.DRAGONS_LAMP, lamp_pos, Vector2(1.5, 1.5))
+
 func place_stairs():
 	var stair_pos = get_floor_groups().pick_random()
 	var stairs = AssetLoader.get_asset(TileTypes.DOWN_STAIRS).instantiate() as Sprite2D
@@ -62,12 +68,17 @@ func place_stairs():
 	add_child(stairs)
 	set_sprite_at_pos(stair_pos, stairs)
 
+
+
 func _on_WandOfFireBolt_hit_dwarf(dwarf : Sprite2D):
 	remove_sprite_at_pos(dwarf.get_grid_pos(), dwarf)
 	_number_of_dwarves -= 1
 	if not _number_of_dwarves:
 		emit_signal("dungeon_complete")
-		place_stairs()
+		if _difficulty != 5:
+			place_stairs()
+		else:
+			place_lamp()
 	print("Dwarf killed!", dwarf)
 
 func _on_PCAttack_pc_killed_dwarf(pos : Vector2i, dwarf : Sprite2D):
@@ -75,7 +86,10 @@ func _on_PCAttack_pc_killed_dwarf(pos : Vector2i, dwarf : Sprite2D):
 	_number_of_dwarves -= 1
 	if not _number_of_dwarves:
 		emit_signal("dungeon_complete")
-		place_stairs()
+		if _difficulty != 5:
+			place_stairs()
+		else:
+			place_lamp()
 
 func _on_Player_shot_projectile(bolt : Area2D, signals : Array):
 	print("adding bolt to dungeon: ", bolt)

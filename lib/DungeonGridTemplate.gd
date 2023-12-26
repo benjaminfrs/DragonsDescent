@@ -138,11 +138,15 @@ func get_actor_at_pos(pos : Vector2i) -> Sprite2D:
 	return null
 
 func get_item_at_pos(pos : Vector2i) -> Sprite2D:
-	for item in TileTypes.reward_items:
-		for sprite in _arr[pos]:
-			if sprite.get_groups().find(item) > -1:
-				return sprite
+	for sprite in _arr[pos]:
+		if TileTypes.object_group_fuzzy_search(sprite, "reward"):
+			return sprite
 	return null
+#	for item in TileTypes.reward_items:
+#		for sprite in _arr[pos]:
+#			if sprite.get_groups().find(item) > -1:
+#				return sprite
+#	return null
 
 func does_tile_contain_sprite(pos : Vector2i, sprite_type : String) -> bool:
 	for sprite in _arr[pos]:
@@ -203,6 +207,13 @@ func place_stairs():
 	add_child(stairs)
 	set_sprite_at_pos(stair_pos, stairs)
 
+func _on_Player_item_picked_up(item : Sprite2D):
+	remove_item(item)
+
+func remove_item(item : Sprite2D):
+	var pos = ConvertCoords.get_world_coords(item.position)
+	_arr[pos].erase(item)
+	remove_child(item)
 
 func _on_Player_down_stairs(pos : Vector2i):
 	#print("moving down stairs")
