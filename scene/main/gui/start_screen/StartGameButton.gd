@@ -1,4 +1,4 @@
-extends Button
+extends TextureButton
 
 signal game_start_pressed()
 

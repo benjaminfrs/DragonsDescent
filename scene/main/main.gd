@@ -12,7 +12,7 @@ const you_win_screen_gui = preload("res://scene/main/gui/you_win_screen/YouWinSc
 const game_over_screen_gui = preload("res://scene/main/gui/game_over_screen/GameOverScreen.tscn")
 
 var current_level : Node2D
-var level_base : int = 5
+var level_base : int = 1
 var level_ind : int = level_base
 
 const PLAYER: String = "SELF"
@@ -118,7 +118,7 @@ func _ready():
 func _load_main_screen():
 	var start_screen = start_screen_gui.instantiate()
 	self.add_child(start_screen)
-	start_screen.get_node("MarginContainer/VBoxContainer/StartGameButton").game_start_pressed.connect(self._on_StartGameButton_game_start_pressed)
+	start_screen.get_node("MarginContainer/MarginContainer/VBoxContainer/StartGameButton").game_start_pressed.connect(self._on_StartGameButton_game_start_pressed)
 
 func _load_you_win_screen():
 	var you_win_screen = you_win_screen_gui.instantiate()

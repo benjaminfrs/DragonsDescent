@@ -16,7 +16,7 @@ var _max_y : int
 func set_dungeon_size(max_x : int, max_y : int):
 	_max_x = max_x
 	_max_y = max_y
-	print(self, _max_x, _max_y)
+	#print(self, _max_x, _max_y)
 	
 	_astargrid = AStarGrid2D.new()
 	_astargrid.region = Rect2i(
@@ -35,7 +35,7 @@ func _init_out_of_bounds_area():
 	var grid_height = ConvertCoords.STEP_Y * _max_y
 	var bottom_box_height_midpoint = height - ((height - ConvertCoords.START_Y - grid_height) / 2.0)
 	var right_box_width_midpoint = screen_width - ((screen_width - ConvertCoords.START_X - grid_width) / 2.0)
-	print("window size(width x height): ", screen_width, " x ", height, "  grid width x height", grid_width, " x ", grid_height)
+	#print("window size(width x height): ", screen_width, " x ", height, "  grid width x height", grid_width, " x ", grid_height)
 
 # Top OOB Box
 	var collision_shape_top = CollisionShape2D.new()
@@ -89,7 +89,7 @@ func _init_out_of_bounds_area():
 	self.add_child(OOB_area2)
 	self.add_child(OOB_area3)
 	self.add_child(OOB_area4)
-	print(self.get_children())
+	#print(self.get_children())
 
 func is_inside_dungeon(pos : Vector2i) -> bool:
 	if pos.x < 0 or pos.x >= _max_x:
@@ -99,8 +99,8 @@ func is_inside_dungeon(pos : Vector2i) -> bool:
 	return true
 
 
-func _ready():
-	print(self, "READYYYYYYYY")
+#func _ready():
+#	print(self, "READYYYYYYYY")
 
 func get_astar_path(a : Vector2i, b : Vector2i) -> Array:
 	return _astargrid.get_id_path(a, b)
@@ -224,7 +224,7 @@ func _on_Player_shot_projectile(bolt : Area2D, signals : Array):
 	self.add_child(bolt)
 
 func _on_Player_created_particle_effect(effect):
-	print(effect)
+	#print(effect)
 	add_child(effect)
 
 func _create_sprite(sprite_type : String, pos : Vector2i, s_scale : Vector2 = Vector2(3,3)):
@@ -233,7 +233,7 @@ func _create_sprite(sprite_type : String, pos : Vector2i, s_scale : Vector2 = Ve
 	new_sprite.add_to_group(sprite_type)
 	new_sprite.scale = s_scale
 	new_sprite.position = ConvertCoords.get_local_coords(pos)
-	print(new_sprite, new_sprite.position, s_scale)
+	#print(new_sprite, new_sprite.position, s_scale)
 	add_child(new_sprite)
 	emit_signal("sprite_created", new_sprite)
 	set_sprite_at_pos(pos, new_sprite)

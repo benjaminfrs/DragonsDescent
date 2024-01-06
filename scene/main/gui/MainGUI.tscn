@@ -1,6 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://tclgxlccwliq"]
+[gd_scene load_steps=8 format=3 uid="uid://tclgxlccwliq"]
 
 [ext_resource type="FontFile" uid="uid://b1day01kiq4ll" path="res://resource/FiraCode-Regular.ttf" id="1_rvuv3"]
+[ext_resource type="Script" path="res://scene/main/gui/MarginContainer.gd" id="1_u7j0u"]
 [ext_resource type="Script" path="res://scene/main/gui/ModeLine.gd" id="2_qrxsk"]
 [ext_resource type="Script" path="res://scene/main/gui/HealthLine.gd" id="3_b1yd6"]
 [ext_resource type="Script" path="res://scene/main/gui/TurnLine.gd" id="5_4cyty"]
@@ -20,14 +21,11 @@ size_flags_horizontal = 4
 size_flags_vertical = 0
 
 [node name="MarginContainer" type="MarginContainer" parent="."]
-anchors_preset = -1
-anchor_top = 0.85
-anchor_right = 0.5
-anchor_bottom = 1.0
 theme_override_constants/margin_left = 32
 theme_override_constants/margin_top = 32
 theme_override_constants/margin_right = 32
 theme_override_constants/margin_bottom = 32
+script = ExtResource("1_u7j0u")
 
 [node name="MainHBox" type="HBoxContainer" parent="MarginContainer"]
 layout_mode = 2
