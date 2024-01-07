@@ -23,10 +23,7 @@ layout_mode = 2
 texture = ExtResource("1_jxxm3")
 stretch_mode = 3
 
-[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
-layout_mode = 2
-
-[node name="GameOverMainScreenButton" type="TextureButton" parent="MarginContainer/VBoxContainer"]
+[node name="GameOverMainScreenButton" type="TextureButton" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 10
@@ -34,7 +31,7 @@ texture_normal = ExtResource("2_mdja5")
 texture_pressed = ExtResource("2_mdja5")
 script = ExtResource("2_c1i3o")
 
-[node name="Label" type="Label" parent="MarginContainer/VBoxContainer/GameOverMainScreenButton"]
+[node name="Label" type="Label" parent="MarginContainer/GameOverMainScreenButton"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.4

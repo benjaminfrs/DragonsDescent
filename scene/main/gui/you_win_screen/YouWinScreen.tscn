@@ -23,7 +23,7 @@ layout_mode = 2
 texture = ExtResource("1_1n2li")
 stretch_mode = 3
 
-[node name="GameOverMainScreenButton" type="TextureButton" parent="MarginContainer"]
+[node name="YouWinMainScreenButton" type="TextureButton" parent="MarginContainer"]
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 10
@@ -31,7 +31,7 @@ texture_normal = ExtResource("2_qyyox")
 texture_pressed = ExtResource("2_qyyox")
 script = ExtResource("3_o742n")
 
-[node name="Label" type="Label" parent="MarginContainer/GameOverMainScreenButton"]
+[node name="Label" type="Label" parent="MarginContainer/YouWinMainScreenButton"]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.4

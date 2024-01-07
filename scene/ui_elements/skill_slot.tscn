@@ -2,5 +2,6 @@
 
 [node name="TextureRect" type="TextureRect"]
 z_index = 2
-custom_minimum_size = Vector2(90, 40)
-size_flags_horizontal = 0
+custom_minimum_size = Vector2(58, 58)
+expand_mode = 1
+stretch_mode = 2
