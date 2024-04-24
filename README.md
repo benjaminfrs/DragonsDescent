@@ -5,7 +5,6 @@ https://runebytegames.itch.io/dragons-descent
 https://github.com/benjaminfrs/DragonsDescent/assets/63012709/92bd2cab-38e0-4310-aa0f-a8caa356a7c1
 
 
-""
 The basics of the story is that there is a dragon who has had his lamp stolen, but he can't fit into the caves to get it himself so he sends you. The lamp was stolen by dwarves and they will attack you on sight!
 
 Every time you complete a level you go to a reward level where you can get new items.
@@ -27,7 +26,7 @@ You use the smoke bomb by pressing 't' and then a direction to throw the bomb in
 You use the wand of fire by pressing 's' and then a direction to shoot in with the arrow keys.
 
 Let me know what you think! It's pretty basic, but it has been fun to make.
-""
+
 
 Dragon's Descent is a roguelike inspired by games such as Nethack, Caves of Qud, Tales of Maj'Eyal. 
 My goals were to experiment with the Godot Engine and to create a roguelike with improved moment to moment
